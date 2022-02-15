@@ -1256,14 +1256,14 @@ class InitDB extends Phinx\Migration\AbstractMigration
             'products',
             'id',
             ['constraint' => 'FK_products_attributes_categories'],
-            ['delete' => 'SET_NULL', 'update' => 'NO_ACTION']
+            ['delete' => 'NO_ACTION', 'update' => 'NO_ACTION']
         );
         $table->addForeignKey(
             'attributes_id',
             'attributes',
             'id',
             ['constraint' => 'FK_products_attributes_attributes'],
-            ['delete' => 'SET_NULL', 'update' => 'NO_ACTION']
+            ['delete' => 'NO_ACTION', 'update' => 'NO_ACTION']
         );
         $table->save();
 
@@ -1273,14 +1273,14 @@ class InitDB extends Phinx\Migration\AbstractMigration
             'products',
             'id',
             ['constraint' => 'FK_categories_products_products'],
-            ['delete' => 'SET_NULL', 'update' => 'NO_ACTION']
+            ['delete' => 'NO_ACTION', 'update' => 'NO_ACTION']
         );
         $table->addForeignKey(
             'categories_id',
             'categories',
             'id',
             ['constraint' => 'FK_categories_products_categories'],
-            ['delete' => 'SET_NULL', 'update' => 'NO_ACTION']
+            ['delete' => 'NO_ACTION', 'update' => 'NO_ACTION']
         );
         $table->save();
 
@@ -1290,7 +1290,7 @@ class InitDB extends Phinx\Migration\AbstractMigration
             'products_attributes',
             'id',
             ['constraint' => 'FK_products_attributes_values_products_attributes'],
-            ['delete' => 'SET_NULL', 'update' => 'NO_ACTION']
+            ['delete' => 'NO_ACTION', 'update' => 'NO_ACTION']
         );
         $table->save();
 
@@ -1300,7 +1300,7 @@ class InitDB extends Phinx\Migration\AbstractMigration
             'products',
             'id',
             ['constraint' => 'FK_products_variants_products'],
-            ['delete' => 'SET_NULL', 'update' => 'NO_ACTION']
+            ['delete' => 'NO_ACTION', 'update' => 'NO_ACTION']
         );
         $table->save();
 
@@ -1311,14 +1311,14 @@ class InitDB extends Phinx\Migration\AbstractMigration
             'products_variants',
             'id',
             ['constraint' => 'FK_products_variants_attributes_products_attributes_variant'],
-            ['delete' => 'SET_NULL', 'update' => 'NO_ACTION']
+            ['delete' => 'NO_ACTION', 'update' => 'NO_ACTION']
         );
         $table->addForeignKey(
             'products_attributes_values_id',
             'products_attribute_values',
             'id',
             ['constraint' => 'FK_products_variants_attributes_products_attributes_values'],
-            ['delete' => 'SET_NULL', 'update' => 'NO_ACTION']
+            ['delete' => 'NO_ACTION', 'update' => 'NO_ACTION']
         );
         $table->save();
 
@@ -1328,14 +1328,14 @@ class InitDB extends Phinx\Migration\AbstractMigration
             'products_variants',
             'id',
             ['constraint' => 'FK_products_variants_warehouse_products_variant'],
-            ['delete' => 'SET_NULL', 'update' => 'NO_ACTION']
+            ['delete' => 'NO_ACTION', 'update' => 'NO_ACTION']
         );
         $table->addForeignKey(
             'warehouse_id',
             'warehouse',
             'id',
             ['constraint' => 'FK_products_variants_warehouse_warehouse'],
-            ['delete' => 'SET_NULL', 'update' => 'NO_ACTION']
+            ['delete' => 'NO_ACTION', 'update' => 'NO_ACTION']
         );
         $table->save();
 
@@ -1346,14 +1346,14 @@ class InitDB extends Phinx\Migration\AbstractMigration
             'products_variants',
             'id',
             ['constraint' => 'FK_products_variants_warehouse_price_products_variant'],
-            ['delete' => 'SET_NULL', 'update' => 'NO_ACTION']
+            ['delete' => 'NO_ACTION', 'update' => 'NO_ACTION']
         );
         $table->addForeignKey(
             'warehouse_id',
             'warehouse',
             'id',
             ['constraint' => 'FK_products_variants_warehouse_price_warehouse'],
-            ['delete' => 'SET_NULL', 'update' => 'NO_ACTION']
+            ['delete' => 'NO_ACTION', 'update' => 'NO_ACTION']
         );
         $table->save();
 
@@ -1363,14 +1363,14 @@ class InitDB extends Phinx\Migration\AbstractMigration
             'products',
             'id',
             ['constraint' => 'FK_products_warehouse_products'],
-            ['delete' => 'SET_NULL', 'update' => 'NO_ACTION']
+            ['delete' => 'NO_ACTION', 'update' => 'NO_ACTION']
         );
         $table->addForeignKey(
             'warehouse_id',
             'warehouse',
             'id',
             ['constraint' => 'FK_products_warehouse_warehouse'],
-            ['delete' => 'SET_NULL', 'update' => 'NO_ACTION']
+            ['delete' => 'NO_ACTION', 'update' => 'NO_ACTION']
         );
         $table->save();
     }
