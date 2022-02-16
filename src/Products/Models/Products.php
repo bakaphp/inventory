@@ -7,6 +7,7 @@ use Baka\Support\Str;
 use Canvas\Models\Behaviors\Uuid;
 use Kanvas\Inventory\Attributes\Models\Attributes as ModelsAttributes;
 use Kanvas\Inventory\BaseModel;
+use Kanvas\Inventory\Categories\Models\Categories as ModelsCategories;
 use Kanvas\Inventory\Warehouses\Models\Warehouse as ModelsWarehouse;
 
 class Products extends BaseModel
@@ -55,6 +56,20 @@ class Products extends BaseModel
             'id',
             [
                 'alias' => 'attributes',
+                'elasticIndex' => false,
+                'reusable' => true,
+            ]
+        );
+
+        $this->hasManyToMany(
+            'id',
+            Categories::class,
+            'products_id',
+            'categories_id',
+            ModelsCategories::class,
+            'id',
+            [
+                'alias' => 'categories',
                 'elasticIndex' => false,
                 'reusable' => true,
             ]

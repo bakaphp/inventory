@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Kanvas\Inventory\Products\Models\Variants\Warehouse;
+namespace Kanvas\Inventory\Variants\Models\Warehouse;
 
 use Kanvas\Inventory\BaseModel;
 use Kanvas\Inventory\Products\Models\Variants;

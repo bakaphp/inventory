@@ -1,9 +1,8 @@
 <?php
 declare(strict_types=1);
 
-namespace Kanvas\Inventory\Products\Models\Variants;
+namespace Kanvas\Inventory\Variants\Models;
 
-use Canvas\Models\Behaviors\Uuid;
 use Kanvas\Inventory\Attributes\Models\Attributes as ModelsAttributes;
 use Kanvas\Inventory\Products\Models\Attributes as ProductsModelsAttributes;
 use Kanvas\Inventory\Products\Models\Variants;
@@ -22,9 +21,6 @@ class Attributes extends ProductsModelsAttributes
     public function initialize()
     {
         parent::initialize();
-        $this->addBehavior(
-            new Uuid()
-        );
 
         $this->setSource('products_variants_attributes');
 
