@@ -212,10 +212,6 @@ class InitDB extends Phinx\Migration\AbstractMigration
                 'null' => true,
                 'after' => 'created_at',
             ])
-            ->addIndex(['categories_id', 'products_id'], [
-                'name' => 'categories_id_products_iduni',
-                'unique' => true,
-            ])
             ->addIndex(['created_at'], [
                 'name' => 'created_at',
                 'unique' => false,
@@ -1280,16 +1276,6 @@ class InitDB extends Phinx\Migration\AbstractMigration
             'categories',
             'id',
             ['constraint' => 'FK_categories_products_categories'],
-            ['delete' => 'NO_ACTION', 'update' => 'NO_ACTION']
-        );
-        $table->save();
-
-        $table = $this->table('products_attribute_values');
-        $table->addForeignKey(
-            'products_attributes_id',
-            'products_attributes',
-            'id',
-            ['constraint' => 'FK_products_attributes_values_products_attributes'],
             ['delete' => 'NO_ACTION', 'update' => 'NO_ACTION']
         );
         $table->save();
