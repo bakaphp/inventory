@@ -7,6 +7,8 @@ use Canvas\Models\Apps;
 use Canvas\Models\Users;
 use Codeception\Module;
 use Codeception\TestInterface;
+use Faker\Factory;
+use Faker\Generator;
 use Kanvas\Packages\Test\Support\Helper\Phinx;
 use Phalcon\Config as PhConfig;
 use Phalcon\Di;
@@ -66,6 +68,16 @@ class Integration extends Module
     public function grabDi()
     {
         return $this->diContainer;
+    }
+
+    /**
+     * Faker data.
+     *
+     * @return void
+     */
+    public function faker() : Generator
+    {
+        return Factory::create();
     }
 
     /**

@@ -16,7 +16,7 @@ use Canvas\Providers\RequestProvider;
 use Canvas\Providers\ResponseProvider;
 use Canvas\Providers\UserProvider;
 use Canvas\Providers\ViewProvider;
-use Kanvas\Moderation\Providers\DatabaseProvider as ModerationDatabaseProvider;
+use Kanvas\Inventory\Providers\DatabaseProvider;
 use Kanvas\Moderation\Test\Support\Providers\ConfigProvider;
 
 return [
@@ -25,7 +25,7 @@ return [
     RegistryProvider::class,
     AppProvider::class,
     UserProvider::class,
-    ModerationDatabaseProvider::class,
+    DatabaseProvider::class,
     RequestProvider::class,
     ResponseProvider::class,
     CacheDataProvider::class,
