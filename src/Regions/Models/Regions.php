@@ -62,4 +62,18 @@ class Regions extends BaseModel
             $this->short_slug = $this->slug;
         }
     }
+
+    /**
+     * before save.
+     *
+     * @return void
+     */
+    public function beforeSave()
+    {
+        parent::beforeSave();
+
+        if ($this->settings !== null) {
+            $this->settings = json_encode($this->settings);
+        }
+    }
 }

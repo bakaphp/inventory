@@ -5,7 +5,6 @@ namespace Kanvas\Inventory\Warehouses;
 
 use Baka\Contracts\Auth\UserInterface;
 use Canvas\Enums\App;
-use Kanvas\Inventory\Categories\Models\Categories;
 use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Regions\Models\Regions;
 use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
@@ -20,7 +19,7 @@ class Warehouse
      * @param string $name
      * @param array $options
      *
-     * @return Categories
+     * @return ModelsWarehouse
      */
     public static function create(UserInterface $user, string $name, Regions $region, array $options) : ModelsWarehouse
     {
@@ -44,7 +43,7 @@ class Warehouse
      * @param int $id
      * @param UserInterface $user
      *
-     * @return Categories
+     * @return ModelsWarehouse
      */
     public static function getById(int $id, UserInterface $user) : ModelsWarehouse
     {
@@ -64,7 +63,7 @@ class Warehouse
      * @param string $uuid
      * @param UserInterface $user
      *
-     * @return Categories
+     * @return ModelsWarehouse
      */
     public static function getByUuid(string $uuid, UserInterface $user) : ModelsWarehouse
     {
