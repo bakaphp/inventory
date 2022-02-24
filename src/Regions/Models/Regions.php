@@ -70,8 +70,6 @@ class Regions extends BaseModel
      */
     public function beforeSave()
     {
-        parent::beforeSave();
-
         if ($this->settings !== null) {
             $this->settings = json_encode($this->settings);
         }

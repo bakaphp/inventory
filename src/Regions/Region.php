@@ -27,11 +27,11 @@ class Region
         $warehouse->users_id = $user->getId();
         $warehouse->apps_id = App::GLOBAL_APP_ID;
         $warehouse->companies_id = $user->currentCompanyId();
-        $warehouse->currencies_id = $currency->getId();
-        $warehouse->settings = $options['settings'] ?? [];
+        $warehouse->currency_id = $currency->getId();
+        $warehouse->settings = $options['settings'] ?? null;
+        $warehouse->slug = $options['slug'] ?? '';
         $warehouse->is_default = isset($options['is_default']) ? (int) $options['is_default'] : State::IS_DEFAULT;
-        $warehouse->is_published = isset($options['is_default']) ? (int) $options['is_published'] : State::PUBLISHED;
-        $warehouse->location = $options['location'] ?? null;
+        $warehouse->is_published = isset($options['is_published']) ? (int) $options['is_published'] : State::PUBLISHED;
         $warehouse->saveOrFail();
 
         return $warehouse;

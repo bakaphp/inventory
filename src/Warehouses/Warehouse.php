@@ -30,7 +30,7 @@ class Warehouse
         $warehouse->companies_id = $user->currentCompanyId();
         $warehouse->regions_id = $region->getId();
         $warehouse->is_default = isset($options['is_default']) ? (int) $options['is_default'] : State::IS_DEFAULT;
-        $warehouse->is_published = isset($options['is_default']) ? (int) $options['is_published'] : State::PUBLISHED;
+        $warehouse->is_published = isset($options['is_published']) ? (int) $options['is_published'] : State::PUBLISHED;
         $warehouse->location = $options['location'] ?? null;
         $warehouse->saveOrFail();
 
