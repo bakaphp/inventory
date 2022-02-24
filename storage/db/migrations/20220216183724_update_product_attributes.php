@@ -255,7 +255,7 @@ class UpdateProductAttributes extends Phinx\Migration\AbstractMigration
         );
         $table->save();
 
-        $table = $this->table('warehouse');
+        $table = $this->table('warehouses');
         $table->addForeignKey(
             'regions_id',
             'regions',
