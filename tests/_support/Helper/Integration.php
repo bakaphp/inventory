@@ -9,8 +9,8 @@ use Codeception\Module;
 use Codeception\TestInterface;
 use Faker\Factory;
 use Faker\Generator;
+use Kanvas\Inventory\Tests\Support\Models\Users as ModelsUsers;
 use Kanvas\Packages\Test\Support\Helper\Phinx;
-use Phalcon\Config as PhConfig;
 use Phalcon\Di;
 use Phalcon\DI\FactoryDefault as PhDI;
 use Phalcon\Mvc\Model\Manager as ModelsManager;
@@ -39,7 +39,7 @@ class Integration extends Module
         $this->diContainer = new Di();
         $this->setDi($this->diContainer);
 
-        $this->diContainer->setShared('userData', Users::findFirst(1));
+        $this->diContainer->setShared('userData', new ModelsUsers());
         $this->diContainer->setShared('userProvider', new Users());
         $this->diContainer->setShared('app', new Apps());
         $this->diContainer->setShared('request', new Request());
@@ -91,36 +91,6 @@ class Integration extends Module
     }
 
     /**
-     * @param array $configData
-     */
-    public function haveConfig(array $configData)
-    {
-        $config = new PhConfig($configData);
-        $this->diContainer->set('config', $config);
-    }
-
-    /**
-     * Create a record for $modelName with fields provided.
-     *
-     * @param string $modelName
-     * @param array  $fields
-     *
-     * @return mixed
-     */
-    public function haveRecordWithFields(string $modelName, array $fields = [])
-    {
-        $record = new $modelName;
-        foreach ($fields as $key => $val) {
-            $record->set($key, $val);
-        }
-        $this->savedModels[$modelName] = $fields;
-        $result = $record->save();
-        $this->assertNotSame(false, $result);
-        $this->savedRecords[] = $record;
-        return $record;
-    }
-
-    /**
      * @param string $name
      * @param mixed  $service
      */
@@ -137,24 +107,6 @@ class Integration extends Module
         if ($this->diContainer->has($name)) {
             $this->diContainer->remove($name);
         }
-    }
-
-    /**
-     * Checks that record exists and has provided fields.
-     *
-     * @param $model
-     * @param $by
-     * @param $fields
-     */
-    public function seeRecordSaved($model, $by, $fields)
-    {
-        $this->savedModels[$model] = array_merge($by, $fields);
-        $record = $this->seeRecordFieldsValid(
-            $model,
-            array_keys($by),
-            array_keys($by)
-        );
-        $this->savedRecords[] = $record;
     }
 
     protected function setDi()

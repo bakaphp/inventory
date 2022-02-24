@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Kanvas\Guild\Tests\Integration\Categories;
 
-use Canvas\Models\Users;
 use IntegrationTester;
 use Kanvas\Inventory\Categories\Category;
 use Kanvas\Inventory\Categories\Enums\State;
 use Kanvas\Inventory\Categories\Models\Categories;
+use Kanvas\Inventory\Tests\Support\Models\Users;
 
 class CategoriesCest
 {
@@ -19,7 +19,7 @@ class CategoriesCest
      */
     protected function createCategory(IntegrationTester $I) : Categories
     {
-        $user = Users::findFirst('id > 0');
+        $user = new Users();
         $category = Category::create(
             $user,
             $I->faker()->name(),
@@ -35,7 +35,7 @@ class CategoriesCest
 
     public function tesCreate(IntegrationTester $I) : void
     {
-        $user = Users::findFirst('id > 0');
+        $user = new Users();
 
         $category = $this->createCategory($I);
 
@@ -44,7 +44,7 @@ class CategoriesCest
 
     public function testUpdateCategory(IntegrationTester $I) : void
     {
-        $user = Users::findFirst('id > 0');
+        $user = new Users();
 
         $category = $this->createCategory($I);
 
@@ -57,7 +57,7 @@ class CategoriesCest
 
     public function testGetById(IntegrationTester $I) : void
     {
-        $user = Users::findFirst('id > 0');
+        $user = new Users();
 
         $category = $this->createCategory($I);
 
@@ -68,7 +68,7 @@ class CategoriesCest
 
     public function testGetByUuid(IntegrationTester $I) : void
     {
-        $user = Users::findFirst('id > 0');
+        $user = new Users();
 
         $categories = Category::getAll($user);
 
@@ -79,7 +79,7 @@ class CategoriesCest
 
     public function testGetBySlug(IntegrationTester $I) : void
     {
-        $user = Users::findFirst('id > 0');
+        $user = new Users();
 
         $category = Category::create(
             $user,
@@ -99,7 +99,7 @@ class CategoriesCest
 
     public function testGetAll(IntegrationTester $I) : void
     {
-        $user = Users::findFirst('id > 0');
+        $user = new Users();
 
         $categories = Category::getAll($user);
         $categoriesSecond = Category::getAll($user, 1, 1);
@@ -110,7 +110,7 @@ class CategoriesCest
 
     public function testPublish(IntegrationTester $I) : void
     {
-        $user = Users::findFirst('id > 0');
+        $user = new Users();
 
         $category = $this->createCategory($I);
 
@@ -121,7 +121,7 @@ class CategoriesCest
 
     public function testUnPublish(IntegrationTester $I) : void
     {
-        $user = Users::findFirst('id > 0');
+        $user = new Users();
 
         $category = $this->createCategory($I);
 

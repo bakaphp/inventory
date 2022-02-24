@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Categories;
 
 use Baka\Contracts\Auth\UserInterface;
+use Canvas\Enums\App;
 use Kanvas\Inventory\Categories\Enums\State;
 use Kanvas\Inventory\Categories\Models\Categories;
 use Phalcon\Mvc\Model\ResultsetInterface;
@@ -24,8 +25,8 @@ class Category
         $category = new Categories();
         $category->name = $name;
         $category->users_id = $user->getId();
-        $category->apps_id = $user->getDI()->get('app')->getId();
-        $category->companies_id = $user->getDefaultCompany()->getId();
+        $category->apps_id = App::GLOBAL_APP_ID;
+        $category->companies_id = $user->currentCompanyId();
         $category->parent_id = State::DEFAULT_PARENT_ID;
         $category->position = (int) $options['position'] ?? State::DEFAULT_POSITION;
         $category->is_published = $options['is_published'] ?? State::PUBLISHED;
@@ -51,7 +52,7 @@ class Category
                             AND companies_id = :companies_id:',
             'bind' => [
                 'id' => $id,
-                'companies_id' => $user->getDefaultCompany()->getId(),
+                'companies_id' => $user->currentCompanyId(),
             ]
         ]);
     }
@@ -71,7 +72,7 @@ class Category
                             AND companies_id = :companies_id:',
             'bind' => [
                 'uuid' => $uuid,
-                'companies_id' => $user->getDefaultCompany()->getId(),
+                'companies_id' => $user->currentCompanyId(),
             ]
         ]);
     }
@@ -91,7 +92,7 @@ class Category
                             AND companies_id = :companies_id:',
             'bind' => [
                 'slug' => $slug,
-                'companies_id' => $user->getDefaultCompany()->getId(),
+                'companies_id' => $user->currentCompanyId(),
             ]
         ]);
     }
@@ -111,7 +112,7 @@ class Category
         return Categories::find([
             'conditions' => 'companies_id = :company_id: AND is_deleted = 0',
             'bind' => [
-                'company_id' => $user->getDefaultCompany()->getId()
+                'company_id' => $user->currentCompanyId()
             ],
             'limit' => $limit,
             'offset' => $offset
