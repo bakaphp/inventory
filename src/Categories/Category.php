@@ -5,7 +5,7 @@ namespace Kanvas\Inventory\Categories;
 
 use Baka\Contracts\Auth\UserInterface;
 use Canvas\Enums\App;
-use Kanvas\Inventory\Categories\Enums\State;
+use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Categories\Models\Categories;
 use Phalcon\Mvc\Model\ResultsetInterface;
 

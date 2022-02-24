@@ -5,11 +5,13 @@ namespace Kanvas\Inventory\Attributes\Models;
 
 use Canvas\Models\Behaviors\Uuid;
 use Kanvas\Inventory\BaseModel;
+use Kanvas\Inventory\Enums\State;
 
 class Attributes extends BaseModel
 {
     public string $uuid;
     public string $name;
+    public int $is_published = 1;
 
     /**
      * Initialize.
@@ -24,5 +26,27 @@ class Attributes extends BaseModel
         );
 
         $this->setSource('attributes');
+    }
+
+    /**
+     * Publish the category.
+     *
+     * @return void
+     */
+    public function publish() : void
+    {
+        $this->is_published = State::PUBLISHED;
+        $this->saveOrFail();
+    }
+
+    /**
+     * Un publish the category.
+     *
+     * @return void
+     */
+    public function unPublish() : void
+    {
+        $this->is_published = State::UN_PUBLISHED;
+        $this->saveOrFail();
     }
 }

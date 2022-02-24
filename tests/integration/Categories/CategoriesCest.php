@@ -6,7 +6,7 @@ namespace Kanvas\Guild\Tests\Integration\Categories;
 
 use IntegrationTester;
 use Kanvas\Inventory\Categories\Category;
-use Kanvas\Inventory\Categories\Enums\State;
+use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Categories\Models\Categories;
 use Kanvas\Inventory\Tests\Support\Models\Users;
 

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Kanvas\Inventory\Categories\Enums;
+namespace Kanvas\Inventory\Enums;
 
 class State
 {

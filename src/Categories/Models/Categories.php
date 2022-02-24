@@ -6,7 +6,7 @@ namespace Kanvas\Inventory\Categories\Models;
 use Baka\Support\Str;
 use Canvas\Models\Behaviors\Uuid;
 use Kanvas\Inventory\BaseModel;
-use Kanvas\Inventory\Categories\Enums\State;
+use Kanvas\Inventory\Enums\State;
 
 class Categories extends BaseModel
 {

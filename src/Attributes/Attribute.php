@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Attributes;
 
 use Baka\Contracts\Auth\UserInterface;
+use Canvas\Enums\App;
 use Kanvas\Inventory\Attributes\Models\Attributes;
 use Phalcon\Mvc\Model\ResultsetInterface;
 
@@ -21,6 +22,9 @@ class Attribute
     {
         $attribute = new Attributes();
         $attribute->name = $name;
+        $attribute->apps_id = App::GLOBAL_APP_ID;
+        $attribute->companies_id = $user->currentCompanyId();
+        $attribute->users_id = $user->getId();
         $attribute->saveOrFail();
 
         return $attribute;
