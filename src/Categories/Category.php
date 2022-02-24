@@ -60,7 +60,7 @@ class Category
     /**
      * Get the category by id.
      *
-     * @param int $id
+     * @param string $uui
      * @param UserInterface $user
      *
      * @return Categories
@@ -80,7 +80,7 @@ class Category
     /**
      * Get the category by id.
      *
-     * @param int $id
+     * @param string $slug
      * @param UserInterface $user
      *
      * @return Categories
@@ -100,6 +100,7 @@ class Category
     /**
      * Get all pipelines associated to a company.
      *
+     * @param UserInterface $user
      * @param int $page
      * @param int $limit
      *
