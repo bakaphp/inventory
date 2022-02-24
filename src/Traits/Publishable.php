@@ -9,7 +9,7 @@ use Kanvas\Inventory\Enums\State;
 trait Publishable
 {
     /**
-     * Publish the category.
+     * Publish the entity.
      *
      * @return void
      */
@@ -20,7 +20,7 @@ trait Publishable
     }
 
     /**
-     * Un publish the category.
+     * Un publish the entity.
      *
      * @return void
      */
@@ -28,5 +28,15 @@ trait Publishable
     {
         $this->is_published = State::UN_PUBLISHED;
         $this->saveOrFail();
+    }
+
+    /**
+     * Check if the entity is published.
+     *
+     * @return bool
+     */
+    public function isPublished() : bool
+    {
+        return $this->is_published === State::PUBLISHED;
     }
 }

@@ -94,7 +94,7 @@ class AttributesCest
 
         $attribute->publish();
 
-        $I->assertEquals($attribute->is_published, State::PUBLISHED);
+        $I->assertEquals($attribute->isPublished(), State::PUBLISHED);
     }
 
     public function testUnPublish(IntegrationTester $I) : void
@@ -105,6 +105,6 @@ class AttributesCest
 
         $attribute->unPublish();
 
-        $I->assertEquals($attribute->is_published, State::UN_PUBLISHED);
+        $I->assertEquals($attribute->isPublished(), State::UN_PUBLISHED);
     }
 }

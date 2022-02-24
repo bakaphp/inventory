@@ -79,4 +79,37 @@ class WarehouseCest
 
         $I->assertInstanceOf(ModelsWarehouse::class, $warehouse);
     }
+
+    public function testGetAll(IntegrationTester $I) : void
+    {
+        $user = new Users();
+
+        $warehouses = Warehouse::getAll($user);
+        $warehousesSecond = Warehouse::getAll($user, 1, 1);
+
+        $I->assertTrue($warehouses->count() > 0);
+        $I->assertTrue($warehousesSecond->count() === 1);
+    }
+
+    public function testPublish(IntegrationTester $I) : void
+    {
+        $user = new Users();
+
+        $warehouse = $this->createWarehouse($I);
+
+        $warehouse->publish();
+
+        $I->assertEquals($warehouse->isPublished(), State::PUBLISHED);
+    }
+
+    public function testUnPublish(IntegrationTester $I) : void
+    {
+        $user = new Users();
+
+        $warehouse = $this->createWarehouse($I);
+
+        $warehouse->unPublish();
+
+        $I->assertEquals($warehouse->isPublished(), State::UN_PUBLISHED);
+    }
 }
