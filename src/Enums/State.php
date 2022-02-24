@@ -9,4 +9,5 @@ class State
     public const DEFAULT_POSITION = 0;
     public const PUBLISHED = 1;
     public const UN_PUBLISHED = 0;
+    public const IS_DEFAULT = 0;
 }

@@ -7,9 +7,12 @@ use Baka\Support\Str;
 use Canvas\Models\Behaviors\Uuid;
 use Canvas\Models\Currencies;
 use Kanvas\Inventory\BaseModel;
+use Kanvas\Inventory\Traits\Publishable;
 
 class Regions extends BaseModel
 {
+    use Publishable;
+
     public int $apps_id;
     public int $companies_id;
     public string $uuid;

@@ -6,10 +6,12 @@ namespace Kanvas\Inventory\Categories\Models;
 use Baka\Support\Str;
 use Canvas\Models\Behaviors\Uuid;
 use Kanvas\Inventory\BaseModel;
-use Kanvas\Inventory\Enums\State;
+use Kanvas\Inventory\Traits\Publishable;
 
 class Categories extends BaseModel
 {
+    use Publishable;
+
     public int $apps_id;
     public int $companies_id;
     public string $uuid;
@@ -83,27 +85,5 @@ class Categories extends BaseModel
     {
         $child->parent_id = $this->getId();
         $child->saveOrFail();
-    }
-
-    /**
-     * Publish the category.
-     *
-     * @return void
-     */
-    public function publish() : void
-    {
-        $this->is_published = State::PUBLISHED;
-        $this->saveOrFail();
-    }
-
-    /**
-     * Un publish the category.
-     *
-     * @return void
-     */
-    public function unPublish() : void
-    {
-        $this->is_published = State::UN_PUBLISHED;
-        $this->saveOrFail();
     }
 }

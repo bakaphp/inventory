@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Products\Models;
 
 use Kanvas\Inventory\BaseModel;
-use Kanvas\Inventory\Warehouses\Models\Warehouse as ModelsWarehouse;
+use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
 
 class Warehouse extends BaseModel
 {

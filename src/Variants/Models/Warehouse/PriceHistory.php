@@ -5,7 +5,7 @@ namespace Kanvas\Inventory\Variants\Models\Warehouse;
 
 use Kanvas\Inventory\BaseModel;
 use Kanvas\Inventory\Products\Models\Variants;
-use Kanvas\Inventory\Warehouses\Models\Warehouse as ModelsWarehouse;
+use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
 
 class PriceHistory extends BaseModel
 {
