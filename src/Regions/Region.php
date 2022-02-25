@@ -8,9 +8,22 @@ use Canvas\Enums\App;
 use Canvas\Models\Currencies;
 use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Regions\Models\Regions;
+use Kanvas\Inventory\Traits\Searchable;
 
 class Region
 {
+    use Searchable;
+
+    /**
+     * Get model.
+     *
+     * @return ModelInterface
+     */
+    public static function getModel() : ModelInterface
+    {
+        return new Regions();
+    }
+
     /**
      * Create new Region.
      *
