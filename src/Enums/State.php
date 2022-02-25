@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Kanvas\Inventory\Categories\Enums;
+namespace Kanvas\Inventory\Enums;
 
 class State
 {
@@ -9,4 +9,6 @@ class State
     public const DEFAULT_POSITION = 0;
     public const PUBLISHED = 1;
     public const UN_PUBLISHED = 0;
+    public const IS_DEFAULT = 0;
+    public const DEFAULT = 1;
 }

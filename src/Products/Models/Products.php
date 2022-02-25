@@ -8,7 +8,7 @@ use Canvas\Models\Behaviors\Uuid;
 use Kanvas\Inventory\Attributes\Models\Attributes as ModelsAttributes;
 use Kanvas\Inventory\BaseModel;
 use Kanvas\Inventory\Categories\Models\Categories as ModelsCategories;
-use Kanvas\Inventory\Warehouses\Models\Warehouse as ModelsWarehouse;
+use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
 
 class Products extends BaseModel
 {

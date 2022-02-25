@@ -26,7 +26,7 @@ class AddUserInfo extends Phinx\Migration\AbstractMigration
             ])
             ->save();
 
-        $this->table('warehouse', [
+        $this->table('warehouses', [
             'id' => false,
             'primary_key' => ['id'],
             'engine' => 'InnoDB',

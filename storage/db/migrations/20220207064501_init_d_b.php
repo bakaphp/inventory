@@ -67,7 +67,7 @@ class InitDB extends Phinx\Migration\AbstractMigration
                 'unique' => false,
             ])
             ->create();
-        $this->table('warehouse', [
+        $this->table('warehouses', [
             'id' => false,
             'primary_key' => ['id'],
             'engine' => 'InnoDB',
@@ -1318,7 +1318,7 @@ class InitDB extends Phinx\Migration\AbstractMigration
         );
         $table->addForeignKey(
             'warehouse_id',
-            'warehouse',
+            'warehouses',
             'id',
             ['constraint' => 'FK_products_variants_warehouse_warehouse'],
             ['delete' => 'NO_ACTION', 'update' => 'NO_ACTION']
@@ -1336,7 +1336,7 @@ class InitDB extends Phinx\Migration\AbstractMigration
         );
         $table->addForeignKey(
             'warehouse_id',
-            'warehouse',
+            'warehouses',
             'id',
             ['constraint' => 'FK_products_variants_warehouse_price_warehouse'],
             ['delete' => 'NO_ACTION', 'update' => 'NO_ACTION']
@@ -1353,7 +1353,7 @@ class InitDB extends Phinx\Migration\AbstractMigration
         );
         $table->addForeignKey(
             'warehouse_id',
-            'warehouse',
+            'warehouses',
             'id',
             ['constraint' => 'FK_products_warehouse_warehouse'],
             ['delete' => 'NO_ACTION', 'update' => 'NO_ACTION']

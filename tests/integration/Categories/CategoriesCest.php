@@ -6,8 +6,8 @@ namespace Kanvas\Guild\Tests\Integration\Categories;
 
 use IntegrationTester;
 use Kanvas\Inventory\Categories\Category;
-use Kanvas\Inventory\Categories\Enums\State;
 use Kanvas\Inventory\Categories\Models\Categories;
+use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Tests\Support\Models\Users;
 
 class CategoriesCest
@@ -25,7 +25,7 @@ class CategoriesCest
             $I->faker()->name(),
             [
                 'position' => 1,
-                'is_published' => State::PUBLISHED,
+                'isPublished()' => State::PUBLISHED,
                 'code' => 'TEST_CODE',
             ]
         );
@@ -86,7 +86,7 @@ class CategoriesCest
             $I->faker()->name(),
             [
                 'position' => 1,
-                'is_published' => 1,
+                'isPublished()' => 1,
                 'code' => 'test_code',
                 'slug' => $I->faker()->slug(),
             ]
@@ -116,7 +116,7 @@ class CategoriesCest
 
         $category->publish();
 
-        $I->assertEquals($category->is_published, State::PUBLISHED);
+        $I->assertEquals($category->isPublished(), State::PUBLISHED);
     }
 
     public function testUnPublish(IntegrationTester $I) : void
@@ -127,6 +127,6 @@ class CategoriesCest
 
         $category->unPublish();
 
-        $I->assertEquals($category->is_published, State::UN_PUBLISHED);
+        $I->assertEquals($category->isPublished(), State::UN_PUBLISHED);
     }
 }

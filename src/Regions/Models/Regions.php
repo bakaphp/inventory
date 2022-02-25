@@ -7,9 +7,12 @@ use Baka\Support\Str;
 use Canvas\Models\Behaviors\Uuid;
 use Canvas\Models\Currencies;
 use Kanvas\Inventory\BaseModel;
+use Kanvas\Inventory\Traits\Publishable;
 
 class Regions extends BaseModel
 {
+    use Publishable;
+
     public int $apps_id;
     public int $companies_id;
     public string $uuid;
@@ -57,6 +60,18 @@ class Regions extends BaseModel
         if (empty($this->slug)) {
             $this->slug = Str::slug($this->name);
             $this->short_slug = $this->slug;
+        }
+    }
+
+    /**
+     * before save.
+     *
+     * @return void
+     */
+    public function beforeSave()
+    {
+        if ($this->settings !== null) {
+            $this->settings = json_encode($this->settings);
         }
     }
 }

@@ -5,11 +5,15 @@ namespace Kanvas\Inventory\Attributes\Models;
 
 use Canvas\Models\Behaviors\Uuid;
 use Kanvas\Inventory\BaseModel;
+use Kanvas\Inventory\Traits\Publishable;
 
 class Attributes extends BaseModel
 {
+    use Publishable;
+
     public string $uuid;
     public string $name;
+    public int $is_published = 1;
 
     /**
      * Initialize.

@@ -4,13 +4,26 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Categories;
 
 use Baka\Contracts\Auth\UserInterface;
+use Baka\Contracts\Database\ModelInterface;
 use Canvas\Enums\App;
-use Kanvas\Inventory\Categories\Enums\State;
 use Kanvas\Inventory\Categories\Models\Categories;
-use Phalcon\Mvc\Model\ResultsetInterface;
+use Kanvas\Inventory\Enums\State;
+use Kanvas\Inventory\Traits\Searchable;
 
 class Category
 {
+    use Searchable;
+
+    /**
+     * Get model.
+     *
+     * @return ModelInterface
+     */
+    public static function getModel() : ModelInterface
+    {
+        return new Categories();
+    }
+
     /**
      * Create new Category.
      *
@@ -40,47 +53,7 @@ class Category
     /**
      * Get the category by id.
      *
-     * @param int $id
-     * @param UserInterface $user
-     *
-     * @return Categories
-     */
-    public static function getById(int $id, UserInterface $user) : Categories
-    {
-        return Categories::findFirstOrFail([
-            'conditions' => 'id = :id: 
-                            AND companies_id = :companies_id:',
-            'bind' => [
-                'id' => $id,
-                'companies_id' => $user->currentCompanyId(),
-            ]
-        ]);
-    }
-
-    /**
-     * Get the category by id.
-     *
-     * @param int $id
-     * @param UserInterface $user
-     *
-     * @return Categories
-     */
-    public static function getByUuid(string $uuid, UserInterface $user) : Categories
-    {
-        return Categories::findFirstOrFail([
-            'conditions' => 'uuid = :uuid: 
-                            AND companies_id = :companies_id:',
-            'bind' => [
-                'uuid' => $uuid,
-                'companies_id' => $user->currentCompanyId(),
-            ]
-        ]);
-    }
-
-    /**
-     * Get the category by id.
-     *
-     * @param int $id
+     * @param string $slug
      * @param UserInterface $user
      *
      * @return Categories
@@ -94,28 +67,6 @@ class Category
                 'slug' => $slug,
                 'companies_id' => $user->currentCompanyId(),
             ]
-        ]);
-    }
-
-    /**
-     * Get all pipelines associated to a company.
-     *
-     * @param int $page
-     * @param int $limit
-     *
-     * @return ResultsetInterface
-     */
-    public static function getAll(UserInterface $user, int $page = 1, int $limit = 25) : ResultsetInterface
-    {
-        $offset = ($page - 1) * $limit;
-
-        return Categories::find([
-            'conditions' => 'companies_id = :company_id: AND is_deleted = 0',
-            'bind' => [
-                'company_id' => $user->currentCompanyId()
-            ],
-            'limit' => $limit,
-            'offset' => $offset
         ]);
     }
 }
