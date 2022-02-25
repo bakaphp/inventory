@@ -2125,6 +2125,39 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'products_id_slug' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'products_variants',
+            'Non_unique' => '0',
+            'Key_name' => 'products_id_slug',
+            'Seq_in_index' => '1',
+            'Column_name' => 'products_id',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+          2 => 
+          array (
+            'Table' => 'products_variants',
+            'Non_unique' => '0',
+            'Key_name' => 'products_id_slug',
+            'Seq_in_index' => '2',
+            'Column_name' => 'slug',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
         'products_id' => 
         array (
           1 => 
@@ -3144,6 +3177,39 @@ return array (
             'Key_name' => 'PRIMARY',
             'Seq_in_index' => '1',
             'Column_name' => 'id',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'companies_id_slug' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'regions',
+            'Non_unique' => '0',
+            'Key_name' => 'companies_id_slug',
+            'Seq_in_index' => '1',
+            'Column_name' => 'companies_id',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+          2 => 
+          array (
+            'Table' => 'regions',
+            'Non_unique' => '0',
+            'Key_name' => 'companies_id_slug',
+            'Seq_in_index' => '2',
+            'Column_name' => 'slug',
             'Collation' => 'A',
             'Sub_part' => NULL,
             'Packed' => NULL,
@@ -4606,6 +4672,39 @@ return array (
             'Key_name' => 'PRIMARY',
             'Seq_in_index' => '1',
             'Column_name' => 'id',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'companies_id_slug' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'products',
+            'Non_unique' => '0',
+            'Key_name' => 'companies_id_slug',
+            'Seq_in_index' => '1',
+            'Column_name' => 'companies_id',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+          2 => 
+          array (
+            'Table' => 'products',
+            'Non_unique' => '0',
+            'Key_name' => 'companies_id_slug',
+            'Seq_in_index' => '2',
+            'Column_name' => 'slug',
             'Collation' => 'A',
             'Sub_part' => NULL,
             'Packed' => NULL,
