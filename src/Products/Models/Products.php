@@ -11,6 +11,7 @@ use Kanvas\Inventory\Categories\Models\Categories as ModelsCategories;
 use Kanvas\Inventory\Products\Models\Categories as ProductCategory;
 use Kanvas\Inventory\Traits\Publishable;
 use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
+use Phalcon\Mvc\Model\ResultsetInterface;
 
 class Products extends BaseModel
 {
@@ -147,5 +148,65 @@ class Products extends BaseModel
         }
 
         return $results;
+    }
+
+    /**
+     * Remove product from category.
+     *
+     * @param Categories $category
+     *
+     * @return bool
+     */
+    public function removeCategory(Categories $category) : bool
+    {
+        $productCategory = ProductCategory::findFirst([
+            'conditions' => 'products_id = :products_id: AND categories_id = :categories_id:',
+            'bind' => [
+                'products_id' => $this->getId(),
+                'categories_id' => $category->getId(),
+            ]
+        ]);
+
+        if ($productCategory) {
+            $productCategory->delete();
+        }
+
+        return false;
+    }
+
+    /**
+     * Move product to a new category.
+     *
+     * @param Categories $category
+     * @param Categories $newCategory
+     *
+     * @return bool
+     */
+    public function moveCategory(Categories $category, Categories $newCategory) : bool
+    {
+        $productCategory = ProductCategory::findFirst([
+            'conditions' => 'products_id = :products_id: AND categories_id = :categories_id:',
+            'bind' => [
+                'products_id' => $this->getId(),
+                'categories_id' => $category->getId(),
+            ]
+        ]);
+
+        if ($productCategory) {
+            $productCategory->categories_id = $newCategory->getId();
+            $productCategory->save();
+        }
+
+        return false;
+    }
+
+    /**
+     * Get categories.
+     *
+     * @return ResultsetInterface <Categories>
+     */
+    public function getCategories() : ResultsetInterface
+    {
+        return $this->categories;
     }
 }
