@@ -8,10 +8,14 @@ use Canvas\Models\Behaviors\Uuid;
 use Kanvas\Inventory\Attributes\Models\Attributes as ModelsAttributes;
 use Kanvas\Inventory\BaseModel;
 use Kanvas\Inventory\Categories\Models\Categories as ModelsCategories;
+use Kanvas\Inventory\Products\Models\Categories as ProductCategory;
+use Kanvas\Inventory\Traits\Publishable;
 use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
 
 class Products extends BaseModel
 {
+    use Publishable;
+
     public int $apps_id;
     public int $companies_id;
     public string $uuid;
@@ -105,5 +109,43 @@ class Products extends BaseModel
             $this->slug = Str::slug($this->name);
             $this->short_slug = $this->slug;
         }
+    }
+
+    /**
+     * Add a product to a specify category.
+     *
+     * @param Categories $category
+     *
+     * @return ProductCategory
+     */
+    public function addCategory(Categories $category) : ProductCategory
+    {
+        return ProductCategory::findFirstOrCreate([
+            'conditions' => 'products_id = :products_id: AND categories_id = :categories_id:',
+            'bind' => [
+                'products_id' => $this->getId(),
+                'categories_id' => $category->getId(),
+            ]
+        ], [
+            'categories_id' => $category->getId(),
+            'products_id' => $this->getId(),
+        ]);
+    }
+
+    /**
+     * Add a product to a specify category.
+     *
+     * @param Categories $category<int, Categories>
+     *
+     * @return array <int, ProductCategory>
+     */
+    public function addCategories(array $categories) : array
+    {
+        $results = [];
+        foreach ($categories as $category) {
+            $results[] = $this->addCategory($category);
+        }
+
+        return $results;
     }
 }
