@@ -8,6 +8,7 @@ use Canvas\Models\Behaviors\Uuid;
 use Kanvas\Inventory\Attributes\Models\Attributes as ModelsAttributes;
 use Kanvas\Inventory\BaseModel;
 use Kanvas\Inventory\Categories\Models\Categories as ModelsCategories;
+use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Products\Models\Categories as ProductCategory;
 use Kanvas\Inventory\Traits\Publishable;
 use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
@@ -208,5 +209,147 @@ class Products extends BaseModel
     public function getCategories() : ResultsetInterface
     {
         return $this->categories;
+    }
+
+    /**
+     * Get Attributes.
+     *
+     * @return ResultsetInterface <Attributes>
+     */
+    public function getAttributes() : ResultsetInterface
+    {
+        return $this->attributes;
+    }
+
+    /**
+     * Add attributes to a product.
+     *
+     * @param Attributes $attribute
+     * @param string $value
+     *
+     * @return Attributes
+     */
+    public function addAttribute(Attributes $attribute, string $value) : Attributes
+    {
+        return Attributes::findFirstOrCreate([
+            'conditions' => 'products_id = :products_id: AND attributes_id = :attributes_id:',
+            'bind' => [
+                'products_id' => $this->getId(),
+                'attributes_id' => $attribute->getId(),
+            ]
+        ], [
+            'attributes_id' => $attribute->getId(),
+            'products_id' => $this->getId(),
+            'value' => $value,
+        ]);
+    }
+
+    /**
+     * Add multiped attributes.
+     *
+     * @param array $attributes<int, <'attribute' => Attributes, 'value' => string>>
+     *
+     * @return array<int, Attributes>
+     */
+    public function addAttributes(array $attributes) : array
+    {
+        $results = [];
+        foreach ($attributes as $attribute) {
+            $results[] = $this->addAttribute(
+                $attribute['attribute'],
+                $attribute['value']
+            );
+        }
+
+        return $results;
+    }
+
+    /**
+     * update attributes to a product.
+     *
+     * @param Attributes $attribute
+     * @param string $value
+     *
+     * @return Attributes
+     */
+    public function updateAttribute(Attributes $attribute, string $value) : Attributes
+    {
+        return Attributes::updateOrCreate([
+            'conditions' => 'products_id = :products_id: AND attributes_id = :attributes_id:',
+            'bind' => [
+                'products_id' => $this->getId(),
+                'attributes_id' => $attribute->getId(),
+            ]
+        ], [
+            'attributes_id' => $attribute->getId(),
+            'products_id' => $this->getId(),
+            'value' => $value,
+        ]);
+    }
+
+    /**
+     * Remove attribute from product.
+     *
+     * @param Attributes $attribute
+     *
+     * @return bool
+     */
+    public function removeAttribute(Attributes $attribute) : bool
+    {
+        $productAttribute = Attributes::findFirst([
+            'conditions' => 'products_id = :products_id: AND attributes_id = :attributes_id:',
+            'bind' => [
+                'products_id' => $this->getId(),
+                'attributes_id' => $attribute->getId(),
+            ]
+        ]);
+
+        if ($productAttribute) {
+            return $productAttribute->delete();
+        }
+
+        return false;
+    }
+
+    /**
+     * Add warehouse for this product.
+     *
+     * @param ModelsWarehouse $warehouse
+     * @param int $isPublished
+     * @param int $rating
+     *
+     * @return ModelsWarehouse
+     */
+    public function addWarehouse(ModelsWarehouse $warehouse, int $isPublished = State::PUBLISHED, int $rating = 0) : ModelsWarehouse
+    {
+        return Warehouse::findFirstOrCreate([
+            'conditions' => 'products_id = :products_id: AND warehouses_id = :warehouses_id:',
+            'bind' => [
+                'products_id' => $this->getId(),
+                'warehouses_id' => $warehouse->getId(),
+            ]
+        ], [
+            'warehouses_id' => $warehouse->getId(),
+            'products_id' => $this->getId(),
+            'is_published' => $isPublished,
+            'rating' => $rating,
+        ]);
+    }
+
+    /**
+     * Add multiped warehouses.
+     *
+     * @param array $warehouses<int, ModelsWarehouse>
+     *
+     * @return array<int, ModelsWarehouse>
+     */
+    public function addWarehouses(array $warehouses) : array
+    {
+        $results = [];
+        foreach ($warehouses as $warehouse) {
+            $results[] = $this->addWarehouse($warehouse);
+        }
+
+        return $results;
     }
 }
