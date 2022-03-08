@@ -222,6 +222,16 @@ class Products extends BaseModel
     }
 
     /**
+     * Get warehouse.
+     *
+     * @return ResultsetInterface <ModelsWarehouse>
+     */
+    public function getWarehouse() : ResultsetInterface
+    {
+        return $this->warehouses;
+    }
+
+    /**
      * Add attributes to a product.
      *
      * @param Attributes $attribute
