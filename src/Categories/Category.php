@@ -41,7 +41,7 @@ class Category
         $category->apps_id = App::GLOBAL_APP_ID;
         $category->companies_id = $user->currentCompanyId();
         $category->parent_id = State::DEFAULT_PARENT_ID;
-        $category->position = (int) $options['position'] ?? State::DEFAULT_POSITION;
+        $category->position = isset($options['position']) && (int) $options['position'] > 0 ? $options['position'] : State::DEFAULT_POSITION;
         $category->is_published = $options['is_published'] ?? State::PUBLISHED;
         $category->code = $options['code'] ?? null;
         $category->slug = $options['slug'] ?? '';

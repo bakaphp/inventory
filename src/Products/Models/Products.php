@@ -116,11 +116,11 @@ class Products extends BaseModel
     /**
      * Add a product to a specify category.
      *
-     * @param Categories $category
+     * @param ModelsCategories $category
      *
      * @return ProductCategory
      */
-    public function addCategory(Categories $category) : ProductCategory
+    public function addCategory(ModelsCategories $category) : ProductCategory
     {
         return ProductCategory::findFirstOrCreate([
             'conditions' => 'products_id = :products_id: AND categories_id = :categories_id:',
@@ -154,11 +154,11 @@ class Products extends BaseModel
     /**
      * Remove product from category.
      *
-     * @param Categories $category
+     * @param ModelsCategories $category
      *
      * @return bool
      */
-    public function removeCategory(Categories $category) : bool
+    public function removeCategory(ModelsCategories $category) : bool
     {
         $productCategory = ProductCategory::findFirst([
             'conditions' => 'products_id = :products_id: AND categories_id = :categories_id:',
@@ -169,7 +169,7 @@ class Products extends BaseModel
         ]);
 
         if ($productCategory) {
-            $productCategory->delete();
+            return $productCategory->delete();
         }
 
         return false;
@@ -178,12 +178,12 @@ class Products extends BaseModel
     /**
      * Move product to a new category.
      *
-     * @param Categories $category
-     * @param Categories $newCategory
+     * @param ModelsCategories $category
+     * @param ModelsCategories $newCategory
      *
      * @return bool
      */
-    public function moveCategory(Categories $category, Categories $newCategory) : bool
+    public function moveCategory(ModelsCategories $category, ModelsCategories $newCategory) : bool
     {
         $productCategory = ProductCategory::findFirst([
             'conditions' => 'products_id = :products_id: AND categories_id = :categories_id:',
@@ -195,7 +195,7 @@ class Products extends BaseModel
 
         if ($productCategory) {
             $productCategory->categories_id = $newCategory->getId();
-            $productCategory->save();
+            return $productCategory->save();
         }
 
         return false;
