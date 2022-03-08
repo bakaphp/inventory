@@ -1,6 +1,5 @@
 <?php
 
-
 class AddUniquelugs extends Phinx\Migration\AbstractMigration
 {
     public function change()
