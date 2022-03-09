@@ -37,7 +37,7 @@ class UpdateProductAttributes extends Phinx\Migration\AbstractMigration
             ->save();
 
 
-        $this->table('categories_products', [
+        $this->table('products_categories', [
             'id' => false,
             'primary_key' => ['categories_id', 'products_id'],
             'engine' => 'InnoDB',
