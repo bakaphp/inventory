@@ -180,7 +180,7 @@ class InitDB extends Phinx\Migration\AbstractMigration
                 'unique' => false,
             ])
             ->create();
-        $this->table('categories_products', [
+        $this->table('products_categories', [
             'id' => false,
             'primary_key' => ['categories_id', 'products_id'],
             'engine' => 'InnoDB',
@@ -1263,19 +1263,19 @@ class InitDB extends Phinx\Migration\AbstractMigration
         );
         $table->save();
 
-        $table = $this->table('categories_products');
+        $table = $this->table('products_categories');
         $table->addForeignKey(
             'products_id',
             'products',
             'id',
-            ['constraint' => 'FK_categories_products_products'],
+            ['constraint' => 'FK_products_categories_products'],
             ['delete' => 'NO_ACTION', 'update' => 'NO_ACTION']
         );
         $table->addForeignKey(
             'categories_id',
             'categories',
             'id',
-            ['constraint' => 'FK_categories_products_categories'],
+            ['constraint' => 'FK_products_categories_categories'],
             ['delete' => 'NO_ACTION', 'update' => 'NO_ACTION']
         );
         $table->save();
