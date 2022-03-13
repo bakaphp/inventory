@@ -10,11 +10,13 @@ use Kanvas\Inventory\Products\Product;
 use Kanvas\Inventory\Regions\Models\Regions;
 use Kanvas\Inventory\Tests\Support\Models\Users;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateProducts;
+use Kanvas\Inventory\Tests\Support\Traits\CanCreateRegion;
 use Kanvas\Inventory\Warehouses\Warehouse;
 
 class ProductsWarehouseCest
 {
     use CanCreateProducts;
+    use CanCreateRegion;
 
     public function testAddWarehouse(IntegrationTester $I)
     {
@@ -22,7 +24,7 @@ class ProductsWarehouseCest
 
         $product = Product::getAll($user)->getFirst();
         $newName = $I->faker()->name();
-        $region = Regions::findFirst();
+        $region = $this->createRegion($I);
 
         $warehouse = Warehouse::create(
             $user,
