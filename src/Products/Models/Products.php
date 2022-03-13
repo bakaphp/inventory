@@ -9,7 +9,11 @@ use Kanvas\Inventory\Attributes\Models\Attributes as ModelsAttributes;
 use Kanvas\Inventory\BaseModel;
 use Kanvas\Inventory\Categories\Models\Categories as ModelsCategories;
 use Kanvas\Inventory\Enums\State;
-use Kanvas\Inventory\Products\Models\Categories as ProductCategory;
+use Kanvas\Inventory\Products\Category;
+use Kanvas\Inventory\Products\Models\Categories as ModelProductCategory;
+use Kanvas\Inventory\Products\ProductAttributes;
+use Kanvas\Inventory\Products\ProductCategory;
+use Kanvas\Inventory\Products\ProductWarehouse;
 use Kanvas\Inventory\Traits\Publishable;
 use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
 use Phalcon\Mvc\Model\ResultsetInterface;
@@ -118,20 +122,12 @@ class Products extends BaseModel
      *
      * @param ModelsCategories $category
      *
-     * @return ProductCategory
+     * @return ModelProductCategory
      */
-    public function addCategory(ModelsCategories $category) : ProductCategory
+    public function addCategory(ModelsCategories $category) : ModelProductCategory
     {
-        return ProductCategory::findFirstOrCreate([
-            'conditions' => 'products_id = :products_id: AND categories_id = :categories_id:',
-            'bind' => [
-                'products_id' => $this->getId(),
-                'categories_id' => $category->getId(),
-            ]
-        ], [
-            'categories_id' => $category->getId(),
-            'products_id' => $this->getId(),
-        ]);
+        $productCategory = new ProductCategory($this);
+        return $productCategory->add($category);
     }
 
     /**
@@ -143,12 +139,8 @@ class Products extends BaseModel
      */
     public function addCategories(array $categories) : array
     {
-        $results = [];
-        foreach ($categories as $category) {
-            $results[] = $this->addCategory($category);
-        }
-
-        return $results;
+        $productCategory = new ProductCategory($this);
+        return $productCategory->addMultiple($categories);
     }
 
     /**
@@ -160,19 +152,8 @@ class Products extends BaseModel
      */
     public function removeCategory(ModelsCategories $category) : bool
     {
-        $productCategory = ProductCategory::findFirst([
-            'conditions' => 'products_id = :products_id: AND categories_id = :categories_id:',
-            'bind' => [
-                'products_id' => $this->getId(),
-                'categories_id' => $category->getId(),
-            ]
-        ]);
-
-        if ($productCategory) {
-            return $productCategory->delete();
-        }
-
-        return false;
+        $productCategory = new ProductCategory($this);
+        return $productCategory->delete($category);
     }
 
     /**
@@ -185,20 +166,8 @@ class Products extends BaseModel
      */
     public function moveCategory(ModelsCategories $category, ModelsCategories $newCategory) : bool
     {
-        $productCategory = ProductCategory::findFirst([
-            'conditions' => 'products_id = :products_id: AND categories_id = :categories_id:',
-            'bind' => [
-                'products_id' => $this->getId(),
-                'categories_id' => $category->getId(),
-            ]
-        ]);
-
-        if ($productCategory) {
-            $productCategory->categories_id = $newCategory->getId();
-            return $productCategory->save();
-        }
-
-        return false;
+        $productCategory = new ProductCategory($this);
+        return $productCategory->move($category, $newCategory);
     }
 
     /**
@@ -234,91 +203,55 @@ class Products extends BaseModel
     /**
      * Add attributes to a product.
      *
-     * @param Attributes $attribute
+     * @param ModelsAttributes $attribute
      * @param string $value
      *
      * @return Attributes
      */
-    public function addAttribute(Attributes $attribute, string $value) : Attributes
+    public function addAttribute(ModelsAttributes $attribute, string $value) : Attributes
     {
-        return Attributes::findFirstOrCreate([
-            'conditions' => 'products_id = :products_id: AND attributes_id = :attributes_id:',
-            'bind' => [
-                'products_id' => $this->getId(),
-                'attributes_id' => $attribute->getId(),
-            ]
-        ], [
-            'attributes_id' => $attribute->getId(),
-            'products_id' => $this->getId(),
-            'value' => $value,
-        ]);
+        $productAttribute = new ProductAttributes($this);
+        return $productAttribute->add($attribute, $value);
     }
 
     /**
      * Add multiped attributes.
      *
-     * @param array $attributes<int, <'attribute' => Attributes, 'value' => string>>
+     * @param array $attributes<int, <'attribute' => ModelsAttributes, 'value' => string>>
      *
-     * @return array<int, Attributes>
+     * @return array<int, ModelsAttributes>
      */
     public function addAttributes(array $attributes) : array
     {
-        $results = [];
-        foreach ($attributes as $attribute) {
-            $results[] = $this->addAttribute(
-                $attribute['attribute'],
-                $attribute['value']
-            );
-        }
-
-        return $results;
+        $productAttribute = new ProductAttributes($this);
+        return $productAttribute->addMultiple($attributes);
     }
 
     /**
      * update attributes to a product.
      *
-     * @param Attributes $attribute
+     * @param ModelsAttributes $attribute
      * @param string $value
      *
      * @return Attributes
      */
-    public function updateAttribute(Attributes $attribute, string $value) : Attributes
+    public function updateAttribute(ModelsAttributes $attribute, string $value) : Attributes
     {
-        return Attributes::updateOrCreate([
-            'conditions' => 'products_id = :products_id: AND attributes_id = :attributes_id:',
-            'bind' => [
-                'products_id' => $this->getId(),
-                'attributes_id' => $attribute->getId(),
-            ]
-        ], [
-            'attributes_id' => $attribute->getId(),
-            'products_id' => $this->getId(),
-            'value' => $value,
-        ]);
+        $productAttribute = new ProductAttributes($this);
+        return $productAttribute->update($attribute, $value);
     }
 
     /**
      * Remove attribute from product.
      *
-     * @param Attributes $attribute
+     * @param ModelsAttributes $attribute
      *
      * @return bool
      */
-    public function removeAttribute(Attributes $attribute) : bool
+    public function removeAttribute(ModelsAttributes $attribute) : bool
     {
-        $productAttribute = Attributes::findFirst([
-            'conditions' => 'products_id = :products_id: AND attributes_id = :attributes_id:',
-            'bind' => [
-                'products_id' => $this->getId(),
-                'attributes_id' => $attribute->getId(),
-            ]
-        ]);
-
-        if ($productAttribute) {
-            return $productAttribute->delete();
-        }
-
-        return false;
+        $productAttribute = new ProductAttributes($this);
+        return $productAttribute->delete($attribute);
     }
 
     /**
@@ -332,18 +265,8 @@ class Products extends BaseModel
      */
     public function addWarehouse(ModelsWarehouse $warehouse, int $isPublished = State::PUBLISHED, int $rating = 0) : ModelsWarehouse
     {
-        return Warehouse::findFirstOrCreate([
-            'conditions' => 'products_id = :products_id: AND warehouses_id = :warehouses_id:',
-            'bind' => [
-                'products_id' => $this->getId(),
-                'warehouses_id' => $warehouse->getId(),
-            ]
-        ], [
-            'warehouses_id' => $warehouse->getId(),
-            'products_id' => $this->getId(),
-            'is_published' => $isPublished,
-            'rating' => $rating,
-        ]);
+        $productWarehouse = new ProductWarehouse($this);
+        return $productWarehouse->add($warehouse, $isPublished, $rating);
     }
 
     /**
@@ -355,11 +278,7 @@ class Products extends BaseModel
      */
     public function addWarehouses(array $warehouses) : array
     {
-        $results = [];
-        foreach ($warehouses as $warehouse) {
-            $results[] = $this->addWarehouse($warehouse);
-        }
-
-        return $results;
+        $productWarehouse = new ProductWarehouse($this);
+        return $productWarehouse->addMultiples($warehouses);
     }
 }

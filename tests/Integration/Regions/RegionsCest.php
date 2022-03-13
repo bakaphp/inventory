@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Kanvas\Guild\Tests\Integration\Categories;
+namespace Kanvas\Inventory\Tests\Integration\Categories;
 
 use Canvas\Models\Currencies;
 use IntegrationTester;

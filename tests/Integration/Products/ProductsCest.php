@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Kanvas\Guild\Tests\Integration\Products;
+namespace Kanvas\Inventory\Tests\Integration\Products;
 
 use IntegrationTester;
 use Kanvas\Inventory\Categories\Category;

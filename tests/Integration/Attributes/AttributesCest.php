@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Kanvas\Guild\Tests\Integration\Attributes;
+namespace Kanvas\Inventory\Tests\Integration\Attributes;
 
 use IntegrationTester;
 use Kanvas\Inventory\Attributes\Attribute;
