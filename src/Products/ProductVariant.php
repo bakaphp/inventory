@@ -22,6 +22,17 @@ class ProductVariant
         $this->product = $product;
     }
 
+    /**
+     * Add a new variant product.
+     *
+     * @param UserInterface $user
+     * @param string $name
+     * @param string $sku
+     * @param string|null $description
+     * @param array $options
+     *
+     * @return ProductVariants
+     */
     public function add(
         UserInterface $user,
         string $name,

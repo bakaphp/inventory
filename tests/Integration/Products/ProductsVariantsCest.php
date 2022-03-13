@@ -10,6 +10,7 @@ use Kanvas\Inventory\Tests\Support\Traits\CanCreateProductVariant;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateWarehouse;
 use Kanvas\Inventory\Variants\Models\ProductVariants as ModelProductVariant;
 use Kanvas\Inventory\Variants\Models\ProductVariantWarehouse;
+use Phalcon\Utils\Slug;
 
 class ProductsVariantsCest
 {
@@ -40,7 +41,13 @@ class ProductsVariantsCest
         $productVariant = $this->createProductVariant($I);
         $warehouse = $this->createWarehouse($I);
 
-        $productVariantWarehouse = $productVariant->warehouse()->add($warehouse, 1, 1, '33', []);
+        $productVariantWarehouse = $productVariant->warehouse()->add(
+            $warehouse,
+            $I->faker()->randomNumber(1),
+            $I->faker()->randomNumber(2),
+            Slug::generate($I->faker()->name),
+            []
+        );
 
         $I->assertInstanceOf(ProductVariantWarehouse::class, $productVariantWarehouse);
     }

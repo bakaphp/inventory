@@ -5,7 +5,7 @@ namespace Kanvas\Inventory\Variants\Models;
 
 use Kanvas\Inventory\BaseModel;
 use Kanvas\Inventory\Products\Models\Variants;
-use Kanvas\Inventory\Products\Models\Variants\Warehouse\PriceHistory;
+use Kanvas\Inventory\Variants\ProductVariantWarehousePrice;
 use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
 
 class ProductVariantWarehouse extends BaseModel
@@ -61,12 +61,23 @@ class ProductVariantWarehouse extends BaseModel
 
         $this->hasMany(
             'products_variants_id',
-            PriceHistory::class,
+            ProductVariantWarehousePriceHistory::class,
             'products_variants_id',
             [
                 'alias' => 'priceHistory',
                 'reusable' => true
             ]
         );
+    }
+
+    /**
+     * After save event.
+     *
+     * @return void
+     */
+    public function afterSave()
+    {
+        $priceHistory = new ProductVariantWarehousePrice($this);
+        $priceHistory->updatePrice($this->price);
     }
 }
