@@ -5,6 +5,7 @@ namespace Kanvas\Inventory\Products;
 
 use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Products\Models\Products;
+use Kanvas\Inventory\Products\Models\Warehouse as ProductsModelsWarehouse;
 use Kanvas\Inventory\Variants\Models\Warehouse;
 use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
 
@@ -29,18 +30,18 @@ class ProductWarehouse
      * @param int $isPublished
      * @param int $rating
      *
-     * @return ModelsWarehouse
+     * @return ProductsModelsWarehouse
      */
-    public function add(ModelsWarehouse $warehouse, int $isPublished = State::PUBLISHED, int $rating = 0) : ModelsWarehouse
+    public function add(ModelsWarehouse $warehouse, int $isPublished = State::PUBLISHED, int $rating = 0) : ProductsModelsWarehouse
     {
-        return Warehouse::findFirstOrCreate([
-            'conditions' => 'products_id = :products_id: AND warehouses_id = :warehouses_id:',
+        return ProductsModelsWarehouse::findFirstOrCreate([
+            'conditions' => 'products_id = :products_id: AND warehouse_id = :warehouses_id:',
             'bind' => [
                 'products_id' => $this->product->getId(),
                 'warehouses_id' => $warehouse->getId(),
             ]
         ], [
-            'warehouses_id' => $warehouse->getId(),
+            'warehouse_id' => $warehouse->getId(),
             'products_id' => $this->product->getId(),
             'is_published' => $isPublished,
             'rating' => $rating,
@@ -62,5 +63,29 @@ class ProductWarehouse
         }
 
         return $results;
+    }
+
+    /**
+     * Soft Delete.
+     *
+     * @param ModelsWarehouse $warehouse
+     *
+     * @return bool
+     */
+    public function delete(ModelsWarehouse $warehouse) : bool
+    {
+        $productWarehouse = ProductsModelsWarehouse::findFirst([
+            'conditions' => 'products_id = :products_id: AND warehouses_id = :warehouses_id:',
+            'bind' => [
+                'products_id' => $this->product->getId(),
+                'warehouses_id' => $warehouse->getId(),
+            ]
+        ]);
+
+        if ($productWarehouse) {
+            return $productWarehouse->softDelete();
+        }
+
+        return false;
     }
 }

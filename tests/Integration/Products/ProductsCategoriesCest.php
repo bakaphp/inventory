@@ -8,9 +8,12 @@ use IntegrationTester;
 use Kanvas\Inventory\Categories\Category;
 use Kanvas\Inventory\Products\Product;
 use Kanvas\Inventory\Tests\Support\Models\Users;
+use Kanvas\Inventory\Tests\Support\Traits\CanCreateProducts;
 
-class ProductsCategoriesCest extends ProductsCest
+class ProductsCategoriesCest
 {
+    use CanCreateProducts;
+
     public function testAddCategory(IntegrationTester $I)
     {
         $user = new Users();

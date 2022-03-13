@@ -7,9 +7,12 @@ namespace Kanvas\Inventory\Tests\Integration\Products;
 use IntegrationTester;
 use Kanvas\Inventory\Attributes\Attribute;
 use Kanvas\Inventory\Tests\Support\Models\Users;
+use Kanvas\Inventory\Tests\Support\Traits\CanCreateProducts;
 
-class ProductsAttributesCest extends ProductsCest
+class ProductsAttributesCest
 {
+    use CanCreateProducts;
+
     public function testAddAttribute(IntegrationTester $I)
     {
         $user = new Users();
