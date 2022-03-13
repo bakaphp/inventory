@@ -7,13 +7,14 @@ namespace Kanvas\Inventory\Tests\Support\Traits;
 use IntegrationTester;
 use Kanvas\Inventory\Categories\Category;
 use Kanvas\Inventory\Enums\State;
-use Kanvas\Inventory\Regions\Models\Regions;
 use Kanvas\Inventory\Tests\Support\Models\Users;
 use Kanvas\Inventory\Warehouses\Models\Warehouses;
 use Kanvas\Inventory\Warehouses\Warehouse;
 
 trait CanCreateWarehouse
 {
+    use CanCreateRegion;
+
     /**
      * Create a category.
      *
@@ -22,7 +23,7 @@ trait CanCreateWarehouse
     protected function createWarehouse(IntegrationTester $I) : Warehouses
     {
         $user = new Users();
-        $region = Regions::findFirst();
+        $region = $this->createRegion($I);
 
         $warehouse = Warehouse::create(
             $user,
