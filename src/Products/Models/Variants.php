@@ -7,6 +7,8 @@ use Baka\Support\Str;
 use Canvas\Models\Behaviors\Uuid;
 use Kanvas\Inventory\Attributes\Models\Attributes as ModelsAttributes;
 use Kanvas\Inventory\BaseModel;
+use Kanvas\Inventory\Variants\Attribute;
+use Kanvas\Inventory\Variants\Warehouse;
 
 class Variants extends BaseModel
 {
@@ -77,5 +79,25 @@ class Variants extends BaseModel
             $this->slug = Str::slug($this->name);
             $this->short_slug = $this->slug;
         }
+    }
+
+    /**
+     * Variant Warehouse domain.
+     *
+     * @return Warehouse
+     */
+    public function warehouse() : Warehouse
+    {
+        return new Warehouse($this);
+    }
+
+    /**
+     * Variant Attribute domain.
+     *
+     * @return Attribute
+     */
+    public function attribute() : Attribute
+    {
+        return new Attribute($this);
     }
 }

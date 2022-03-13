@@ -150,7 +150,7 @@ class Products extends BaseModel
      *
      * @return ProductVariant
      */
-    public function variant() : ProductVariant
+    public function variant()
     {
         return new ProductVariant($this);
     }
@@ -183,5 +183,15 @@ class Products extends BaseModel
     public function getWarehouse() : ResultsetInterface
     {
         return $this->warehouses;
+    }
+
+    /**
+     * Get variants.
+     *
+     * @return ResultsetInterface <ModelsWarehouse>
+     */
+    public function getVariants() : ResultsetInterface
+    {
+        return $this->variants;
     }
 }

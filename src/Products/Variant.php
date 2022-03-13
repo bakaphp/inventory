@@ -3,21 +3,39 @@ declare(strict_types=1);
 
 namespace Kanvas\Inventory\Products;
 
-use Baka\Contracts\Database\ModelInterface;
-use Kanvas\Inventory\Products\Models\Variants;
-use Kanvas\Inventory\Traits\Searchable;
+use Baka\Contracts\Auth\UserInterface;
+use Kanvas\Inventory\Products\Models\Products;
+use Kanvas\Inventory\Products\Models\Variants as ModelProductVariant;
+use Kanvas\Inventory\Variants\Variant as ProductVariant;
 
 class Variant
 {
-    use Searchable;
+    protected Products $product;
 
     /**
-     * Get model.
+     * Constructor.
      *
-     * @return ModelInterface
+     * @param Products $product
      */
-    public static function getModel() : ModelInterface
+    public function __construct(Products $product)
     {
-        return new Variants();
+        $this->product = $product;
+    }
+
+    public function add(
+        UserInterface $user,
+        string $name,
+        string $sku,
+        string $description = null,
+        array $options = []
+    ) : ModelProductVariant {
+        return ProductVariant::create(
+            $this->product,
+            $user,
+            $name,
+            $sku,
+            $description,
+            $options
+        );
     }
 }
