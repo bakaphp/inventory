@@ -60,30 +60,6 @@ class ProductCategory
     }
 
     /**
-     * Remove product from category.
-     *
-     * @param ModelsCategories $category
-     *
-     * @return bool
-     */
-    public function delete(ModelsCategories $category) : bool
-    {
-        $productCategory = ModelProductCategory::findFirst([
-            'conditions' => 'products_id = :products_id: AND categories_id = :categories_id:',
-            'bind' => [
-                'products_id' => $this->product->getId(),
-                'categories_id' => $category->getId(),
-            ]
-        ]);
-
-        if ($productCategory) {
-            return $productCategory->delete();
-        }
-
-        return false;
-    }
-
-    /**
      * Move product to a new category.
      *
      * @param ModelsCategories $category
@@ -104,6 +80,30 @@ class ProductCategory
         if ($productCategory) {
             $productCategory->categories_id = $newCategory->getId();
             return $productCategory->save();
+        }
+
+        return false;
+    }
+
+    /**
+     * Remove product from category.
+     *
+     * @param ModelsCategories $category
+     *
+     * @return bool
+     */
+    public function delete(ModelsCategories $category) : bool
+    {
+        $productCategory = ModelProductCategory::findFirst([
+            'conditions' => 'products_id = :products_id: AND categories_id = :categories_id:',
+            'bind' => [
+                'products_id' => $this->product->getId(),
+                'categories_id' => $category->getId(),
+            ]
+        ]);
+
+        if ($productCategory) {
+            return $productCategory->delete();
         }
 
         return false;

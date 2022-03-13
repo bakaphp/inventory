@@ -55,7 +55,7 @@ class ProductAttributes
     {
         $results = [];
         foreach ($attributes as $attribute) {
-            $results[] = $this->addAttribute(
+            $results[] = $this->add(
                 $attribute['attribute'],
                 $attribute['value']
             );

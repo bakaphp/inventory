@@ -8,9 +8,7 @@ use Canvas\Models\Behaviors\Uuid;
 use Kanvas\Inventory\Attributes\Models\Attributes as ModelsAttributes;
 use Kanvas\Inventory\BaseModel;
 use Kanvas\Inventory\Categories\Models\Categories as ModelsCategories;
-use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Products\Category;
-use Kanvas\Inventory\Products\Models\Categories as ModelProductCategory;
 use Kanvas\Inventory\Products\ProductAttributes;
 use Kanvas\Inventory\Products\ProductCategory;
 use Kanvas\Inventory\Products\ProductWarehouse;
@@ -118,56 +116,33 @@ class Products extends BaseModel
     }
 
     /**
-     * Add a product to a specify category.
+     * Product Category domain.
      *
-     * @param ModelsCategories $category
-     *
-     * @return ModelProductCategory
+     * @return ProductCategory
      */
-    public function addCategory(ModelsCategories $category) : ModelProductCategory
+    public function categories() : ProductCategory
     {
-        $productCategory = new ProductCategory($this);
-        return $productCategory->add($category);
+        return new ProductCategory($this);
     }
 
     /**
-     * Add a product to a specify category.
+     * Product Attribute domain.
      *
-     * @param Categories $category<int, Categories>
-     *
-     * @return array <int, ProductCategory>
+     * @return ProductAttributes
      */
-    public function addCategories(array $categories) : array
+    public function attributes() : ProductAttributes
     {
-        $productCategory = new ProductCategory($this);
-        return $productCategory->addMultiple($categories);
+        return new ProductAttributes($this);
     }
 
     /**
-     * Remove product from category.
+     * Product warehouse domain.
      *
-     * @param ModelsCategories $category
-     *
-     * @return bool
+     * @return ProductWarehouse
      */
-    public function removeCategory(ModelsCategories $category) : bool
+    public function warehouse() : ProductWarehouse
     {
-        $productCategory = new ProductCategory($this);
-        return $productCategory->delete($category);
-    }
-
-    /**
-     * Move product to a new category.
-     *
-     * @param ModelsCategories $category
-     * @param ModelsCategories $newCategory
-     *
-     * @return bool
-     */
-    public function moveCategory(ModelsCategories $category, ModelsCategories $newCategory) : bool
-    {
-        $productCategory = new ProductCategory($this);
-        return $productCategory->move($category, $newCategory);
+        return new ProductWarehouse($this);
     }
 
     /**
@@ -198,87 +173,5 @@ class Products extends BaseModel
     public function getWarehouse() : ResultsetInterface
     {
         return $this->warehouses;
-    }
-
-    /**
-     * Add attributes to a product.
-     *
-     * @param ModelsAttributes $attribute
-     * @param string $value
-     *
-     * @return Attributes
-     */
-    public function addAttribute(ModelsAttributes $attribute, string $value) : Attributes
-    {
-        $productAttribute = new ProductAttributes($this);
-        return $productAttribute->add($attribute, $value);
-    }
-
-    /**
-     * Add multiped attributes.
-     *
-     * @param array $attributes<int, <'attribute' => ModelsAttributes, 'value' => string>>
-     *
-     * @return array<int, ModelsAttributes>
-     */
-    public function addAttributes(array $attributes) : array
-    {
-        $productAttribute = new ProductAttributes($this);
-        return $productAttribute->addMultiple($attributes);
-    }
-
-    /**
-     * update attributes to a product.
-     *
-     * @param ModelsAttributes $attribute
-     * @param string $value
-     *
-     * @return Attributes
-     */
-    public function updateAttribute(ModelsAttributes $attribute, string $value) : Attributes
-    {
-        $productAttribute = new ProductAttributes($this);
-        return $productAttribute->update($attribute, $value);
-    }
-
-    /**
-     * Remove attribute from product.
-     *
-     * @param ModelsAttributes $attribute
-     *
-     * @return bool
-     */
-    public function removeAttribute(ModelsAttributes $attribute) : bool
-    {
-        $productAttribute = new ProductAttributes($this);
-        return $productAttribute->delete($attribute);
-    }
-
-    /**
-     * Add warehouse for this product.
-     *
-     * @param ModelsWarehouse $warehouse
-     * @param int $isPublished
-     * @param int $rating
-     *
-     * @return ModelsWarehouse
-     */
-    public function addWarehouse(ModelsWarehouse $warehouse, int $isPublished = State::PUBLISHED, int $rating = 0) : ModelsWarehouse
-    {
-        $productWarehouse = new ProductWarehouse($this);
-        return $productWarehouse->add($warehouse, $isPublished, $rating);
-    }
-
-    /**
-     * Add multiped warehouses.
-     *
-     * @param array $warehouses<int, ModelsWarehouse>
-     *
-     * @return array<int, ModelsWarehouse>
-     */
-    public function addWarehouses(array $warehouses) : array
-    {
-        $productWarehouse = new ProductWarehouse($this);
-        return $productWarehouse->addMultiples($warehouses);
     }
 }

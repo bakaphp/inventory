@@ -20,7 +20,7 @@ class ProductsCategoriesCest extends ProductsCest
 
         $category = Category::create($user, $newName, []);
 
-        $productCategory = $product->addCategory($category);
+        $productCategory = $product->categories()->add($category);
 
         $I->assertEquals($productCategory->category->name, $newName);
     }
@@ -36,10 +36,26 @@ class ProductsCategoriesCest extends ProductsCest
         $category = Category::create($user, $newName, []);
         $categoryTwo = Category::create($user, $newNameTwo, []);
 
-        $productCategory = $product->addCategories([$category, $categoryTwo]);
+        $productCategory = $product->categories()->addMultiple([$category, $categoryTwo]);
 
         $I->assertEquals($productCategory[0]->category->name, $newName);
         $I->assertEquals($productCategory[1]->category->name, $newNameTwo);
+    }
+
+    public function testMoveCategory(IntegrationTester $I)
+    {
+        $user = new Users();
+
+        $product = Product::getAll($user)->getFirst();
+        $newName = $I->faker()->name();
+        $newNameTwo = $I->faker()->name();
+
+        $category = Category::create($user, $newName, []);
+        $categoryTwo = Category::create($user, $newNameTwo, []);
+
+        $productCategory = $product->categories()->add($category);
+
+        $I->assertTrue($product->categories()->move($category, $categoryTwo));
     }
 
     public function testRemoveCategory(IntegrationTester $I)
@@ -51,10 +67,9 @@ class ProductsCategoriesCest extends ProductsCest
 
         $category = Category::create($user, $newName, []);
 
-        $productCategory = $product->addCategory($category);
-
+        $productCategory = $product->categories()->add($category);
 
         $I->assertEquals($productCategory->category->name, $newName);
-        $I->assertTrue($product->removeCategory($category));
+        $I->assertTrue($product->categories()->delete($category));
     }
 }
