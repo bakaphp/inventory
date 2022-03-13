@@ -8,7 +8,9 @@ use Canvas\Models\Behaviors\Uuid;
 use Kanvas\Inventory\Attributes\Models\Attributes as ModelsAttributes;
 use Kanvas\Inventory\BaseModel;
 use Kanvas\Inventory\Variants\Attribute;
+use Kanvas\Inventory\Variants\Models\Attributes;
 use Kanvas\Inventory\Variants\Warehouse;
+use Phalcon\Mvc\Model\Resultset\Simple ;
 
 class Variants extends BaseModel
 {
@@ -52,7 +54,7 @@ class Variants extends BaseModel
         $this->hasManyToMany(
             'id',
             Attributes::class,
-            'products_id',
+            'products_variants_id',
             'attributes_id',
             ModelsAttributes::class,
             'id',
@@ -89,6 +91,16 @@ class Variants extends BaseModel
     public function getProduct() : Products
     {
         return $this->product;
+    }
+
+    /**
+     * Get attributes.
+     *
+     * @return Simple
+     */
+    public function getAttributes() : Simple
+    {
+        return $this->attributes;
     }
 
     /**

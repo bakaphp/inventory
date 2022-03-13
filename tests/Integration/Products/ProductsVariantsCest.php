@@ -6,6 +6,7 @@ namespace Kanvas\Inventory\Tests\Integration\Products;
 
 use IntegrationTester;
 use Kanvas\Inventory\Products\Models\Variants as ModelProductVariant;
+use Kanvas\Inventory\Tests\Support\Traits\CanCreateAttribute;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateProductVariant;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateWarehouse;
 use Kanvas\Inventory\Variants\Models\Warehouse;
@@ -14,6 +15,7 @@ class ProductsVariantsCest
 {
     use CanCreateProductVariant;
     use CanCreateWarehouse;
+    use CanCreateAttribute;
 
     public function tesCreate(IntegrationTester $I) : void
     {
@@ -41,5 +43,16 @@ class ProductsVariantsCest
         $productVariantWarehouse = $productVariant->warehouse()->add($warehouse, 1, 1, '33', []);
 
         $I->assertInstanceOf(Warehouse::class, $productVariantWarehouse);
+    }
+
+    public function addVariantsAttributes(IntegrationTester $I) : void
+    {
+        $productVariant = $this->createProductVariant($I);
+        $attribute = $this->createAttribute($I);
+
+        $productVariant->attribute()->add($attribute, 'test');
+
+        //we dont need the attribute tue the value of the attribute for this variant
+        $I->assertEquals($productVariant->getAttributes()->count(), 1);
     }
 }
