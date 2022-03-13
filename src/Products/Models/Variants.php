@@ -82,6 +82,16 @@ class Variants extends BaseModel
     }
 
     /**
+     * Get product.
+     *
+     * @return Products
+     */
+    public function getProduct() : Products
+    {
+        return $this->product;
+    }
+
+    /**
      * Variant Warehouse domain.
      *
      * @return Warehouse

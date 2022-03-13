@@ -5,6 +5,7 @@ namespace Kanvas\Inventory\Variants;
 
 use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Products\Models\Variants as ModelProductVariant;
+use Kanvas\Inventory\Products\Warehouse as ProductsWarehouse;
 use Kanvas\Inventory\Variants\Models\Warehouse as ModelsVariantWarehouse;
 use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
 
@@ -40,6 +41,11 @@ class Warehouse
         string $sku,
         array $options = []
     ) : ModelsVariantWarehouse {
+        $isPublished = isset($options['is_published']) ? (int) $options['is_published'] : State::PUBLISHED;
+
+        $productWarehouse = new ProductsWarehouse($this->productVariant->getProduct());
+        $productWarehouse->add($warehouse, $isPublished, 0);
+
         $productVariantWarehouse = new ModelsVariantWarehouse();
         $productVariantWarehouse->products_variants_id = $this->productVariant->getId();
         $productVariantWarehouse->warehouse_id = $warehouse->getId();
@@ -56,7 +62,7 @@ class Warehouse
         $productVariantWarehouse->is_coming_soon = $options['is_coming_soon'] ?? 0;
         $productVariantWarehouse->is_new = $options['is_new'] ?? 0;
         $productVariantWarehouse->position = isset($options['position']) && (int) $options['position'] > 0 ? $options['position'] : State::DEFAULT_POSITION;
-        $productVariantWarehouse->is_published = isset($options['is_published']) ? (int) $options['is_published'] : State::PUBLISHED;
+        $productVariantWarehouse->is_published = $isPublished;
         $productVariantWarehouse->saveOrFail();
 
         //missing price history
