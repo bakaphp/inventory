@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Tests\Integration\Products;
 
 use IntegrationTester;
-use Kanvas\Inventory\Products\Models\Variants as ModelProductVariant;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateAttribute;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateProductVariant;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateWarehouse;
-use Kanvas\Inventory\Variants\Models\Warehouse;
+use Kanvas\Inventory\Variants\Models\ProductVariants as ModelProductVariant;
+use Kanvas\Inventory\Variants\Models\ProductVariantWarehouse;
 
 class ProductsVariantsCest
 {
@@ -42,7 +42,7 @@ class ProductsVariantsCest
 
         $productVariantWarehouse = $productVariant->warehouse()->add($warehouse, 1, 1, '33', []);
 
-        $I->assertInstanceOf(Warehouse::class, $productVariantWarehouse);
+        $I->assertInstanceOf(ProductVariantWarehouse::class, $productVariantWarehouse);
     }
 
     public function addVariantsAttributes(IntegrationTester $I) : void

@@ -4,10 +4,9 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Variants\Models;
 
 use Kanvas\Inventory\Attributes\Models\Attributes as ModelsAttributes;
-use Kanvas\Inventory\Products\Models\Attributes as ProductsModelsAttributes;
-use Kanvas\Inventory\Products\Models\Variants;
+use Kanvas\Inventory\Products\Models\ProductAttributes;
 
-class Attributes extends ProductsModelsAttributes
+class ProductVariantAttributes extends ProductAttributes
 {
     public int $products_variants_id;
     public int $attributes_id;
@@ -26,7 +25,7 @@ class Attributes extends ProductsModelsAttributes
 
         $this->belongsTo(
             'products_variants_id',
-            Variants::class,
+            ProductVariants::class,
             'id',
             [
                 'alias' => 'variant',

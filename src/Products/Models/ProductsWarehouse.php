@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Products\Models;
 
 use Kanvas\Inventory\BaseModel;
-use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
+use Kanvas\Inventory\Warehouses\Models\Warehouses;
 
-class Warehouse extends BaseModel
+class ProductsWarehouse extends BaseModel
 {
     public int $products_id;
     public int $warehouse_id;
@@ -36,7 +36,7 @@ class Warehouse extends BaseModel
 
         $this->belongsTo(
             'warehouse_id',
-            ModelsWarehouse::class,
+            Warehouses::class,
             'id',
             [
                 'alias' => 'warehouse',

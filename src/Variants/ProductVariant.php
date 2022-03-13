@@ -7,10 +7,10 @@ use Baka\Contracts\Auth\UserInterface;
 use Baka\Contracts\Database\ModelInterface;
 use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Products\Models\Products;
-use Kanvas\Inventory\Products\Models\Variants as ModelsProductVariant;
 use Kanvas\Inventory\Traits\Searchable;
+use Kanvas\Inventory\Variants\Models\ProductVariants as ModelsProductVariant;
 
-class Variant
+class ProductVariant
 {
     use Searchable;
 

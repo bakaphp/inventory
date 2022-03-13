@@ -8,10 +8,10 @@ use Canvas\Models\Behaviors\Uuid;
 use Kanvas\Inventory\Attributes\Models\Attributes as ModelsAttributes;
 use Kanvas\Inventory\BaseModel;
 use Kanvas\Inventory\Categories\Models\Categories as ModelsCategories;
-use Kanvas\Inventory\Products\Attribute as ProductAttributes;
-use Kanvas\Inventory\Products\Category as ProductCategory;
-use Kanvas\Inventory\Products\Variant as ProductVariant;
-use Kanvas\Inventory\Products\Warehouse as ProductWarehouse;
+use Kanvas\Inventory\Products\ProductAttribute;
+use Kanvas\Inventory\Products\ProductCategory;
+use Kanvas\Inventory\Products\ProductVariant;
+use Kanvas\Inventory\Products\ProductWarehouse;
 use Kanvas\Inventory\Traits\Publishable;
 use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
 use Phalcon\Mvc\Model\ResultsetInterface;
@@ -128,11 +128,11 @@ class Products extends BaseModel
     /**
      * Product Attribute domain.
      *
-     * @return ProductAttributes
+     * @return ProductAttribute
      */
-    public function attributes() : ProductAttributes
+    public function attributes() : ProductAttribute
     {
-        return new ProductAttributes($this);
+        return new ProductAttribute($this);
     }
 
     /**

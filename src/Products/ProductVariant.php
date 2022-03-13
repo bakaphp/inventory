@@ -5,10 +5,10 @@ namespace Kanvas\Inventory\Products;
 
 use Baka\Contracts\Auth\UserInterface;
 use Kanvas\Inventory\Products\Models\Products;
-use Kanvas\Inventory\Products\Models\Variants as ModelProductVariant;
-use Kanvas\Inventory\Variants\Variant as ProductVariant;
+use Kanvas\Inventory\Variants\Models\ProductVariants;
+use Kanvas\Inventory\Variants\ProductVariant as DomainProductVariant;
 
-class Variant
+class ProductVariant
 {
     protected Products $product;
 
@@ -28,8 +28,8 @@ class Variant
         string $sku,
         string $description = null,
         array $options = []
-    ) : ModelProductVariant {
-        return ProductVariant::create(
+    ) : ProductVariants {
+        return DomainProductVariant::create(
             $this->product,
             $user,
             $name,

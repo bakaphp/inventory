@@ -6,8 +6,9 @@ namespace Kanvas\Inventory\Categories\Models;
 use Baka\Support\Str;
 use Canvas\Models\Behaviors\Uuid;
 use Kanvas\Inventory\BaseModel;
-use Kanvas\Inventory\Products\Models\Categories as ProductCategory;
+use Kanvas\Inventory\Products\Models\ProductCategories as ProductCategory;
 use Kanvas\Inventory\Products\Models\Products;
+use Kanvas\Inventory\Products\ProductCategory as DomainProductCategory;
 use Kanvas\Inventory\Traits\Publishable;
 
 class Categories extends BaseModel
@@ -98,15 +99,8 @@ class Categories extends BaseModel
      */
     public function addProduct(Products $product) : ProductCategory
     {
-        return ProductCategory::findFirstOrCreate([
-            'conditions' => 'products_id = :products_id: AND categories_id = :categories_id:',
-            'bind' => [
-                'products_id' => $product->getId(),
-                'categories_id' => $this->getId(),
-            ]
-        ], [
-            'categories_id' => $this->getId(),
-            'products_id' => $product->getId(),
-        ]);
+        $productCategory = new DomainProductCategory($product);
+
+        return $productCategory->add($this);
     }
 }

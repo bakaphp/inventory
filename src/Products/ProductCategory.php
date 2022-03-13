@@ -4,10 +4,10 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Products;
 
 use Kanvas\Inventory\Categories\Models\Categories as ModelsCategories;
-use Kanvas\Inventory\Products\Models\Categories as ModelProductCategory;
+use Kanvas\Inventory\Products\Models\ProductCategories;
 use Kanvas\Inventory\Products\Models\Products;
 
-class Category
+class ProductCategory
 {
     protected Products $product;
 
@@ -26,11 +26,11 @@ class Category
      *
      * @param ModelsCategories $category
      *
-     * @return ModelProductCategory
+     * @return ProductCategories
      */
-    public function add(ModelsCategories $category) : ModelProductCategory
+    public function add(ModelsCategories $category) : ProductCategories
     {
-        return ModelProductCategory::findFirstOrCreate([
+        return ProductCategories::findFirstOrCreate([
             'conditions' => 'products_id = :products_id: AND categories_id = :categories_id:',
             'bind' => [
                 'products_id' => $this->product->getId(),
@@ -69,7 +69,7 @@ class Category
      */
     public function move(ModelsCategories $category, ModelsCategories $newCategory) : bool
     {
-        $productCategory = ModelProductCategory::findFirst([
+        $productCategory = ProductCategories::findFirst([
             'conditions' => 'products_id = :products_id: AND categories_id = :categories_id:',
             'bind' => [
                 'products_id' => $this->product->getId(),
@@ -94,7 +94,7 @@ class Category
      */
     public function delete(ModelsCategories $category) : bool
     {
-        $productCategory = ModelProductCategory::findFirst([
+        $productCategory = ProductCategories::findFirst([
             'conditions' => 'products_id = :products_id: AND categories_id = :categories_id:',
             'bind' => [
                 'products_id' => $this->product->getId(),

@@ -1,18 +1,18 @@
 <?php
 declare(strict_types=1);
 
-namespace Kanvas\Inventory\Products\Models;
+namespace Kanvas\Inventory\Variants\Models;
 
 use Baka\Support\Str;
 use Canvas\Models\Behaviors\Uuid;
 use Kanvas\Inventory\Attributes\Models\Attributes as ModelsAttributes;
 use Kanvas\Inventory\BaseModel;
-use Kanvas\Inventory\Variants\Attribute;
-use Kanvas\Inventory\Variants\Models\Attributes;
-use Kanvas\Inventory\Variants\Warehouse;
+use Kanvas\Inventory\Products\Models\Products;
+use Kanvas\Inventory\Variants\ProductVariantAttribute;
+use Kanvas\Inventory\Variants\ProductVariantWarehouse;
 use Phalcon\Mvc\Model\Resultset\Simple ;
 
-class Variants extends BaseModel
+class ProductVariants extends BaseModel
 {
     public int $products_id;
     public string $uuid;
@@ -53,7 +53,7 @@ class Variants extends BaseModel
 
         $this->hasManyToMany(
             'id',
-            Attributes::class,
+            ProductVariantAttributes::class,
             'products_variants_id',
             'attributes_id',
             ModelsAttributes::class,
@@ -106,20 +106,20 @@ class Variants extends BaseModel
     /**
      * Variant Warehouse domain.
      *
-     * @return Warehouse
+     * @return ProductVariantWarehouse
      */
-    public function warehouse() : Warehouse
+    public function warehouse() : ProductVariantWarehouse
     {
-        return new Warehouse($this);
+        return new ProductVariantWarehouse($this);
     }
 
     /**
      * Variant Attribute domain.
      *
-     * @return Attribute
+     * @return ProductVariantAttribute
      */
-    public function attribute() : Attribute
+    public function attribute() : ProductVariantAttribute
     {
-        return new Attribute($this);
+        return new ProductVariantAttribute($this);
     }
 }

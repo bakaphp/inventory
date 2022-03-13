@@ -4,21 +4,21 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Variants;
 
 use Kanvas\Inventory\Enums\State;
-use Kanvas\Inventory\Products\Models\Variants as ModelProductVariant;
-use Kanvas\Inventory\Products\Warehouse as ProductsWarehouse;
-use Kanvas\Inventory\Variants\Models\Warehouse as ModelsVariantWarehouse;
+use Kanvas\Inventory\Products\ProductWarehouse;
+use Kanvas\Inventory\Variants\Models\ProductVariants;
+use Kanvas\Inventory\Variants\Models\ProductVariantWarehouse as ModelsProductVariantWarehouse;
 use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
 
-class Warehouse
+class ProductVariantWarehouse
 {
-    protected ModelProductVariant $productVariant;
+    protected ProductVariants $productVariant;
 
     /**
      * Construct.
      *
-     * @param ModelProductVariant $variant
+     * @param ProductVariants $variant
      */
-    public function __construct(ModelProductVariant $productVariant)
+    public function __construct(ProductVariants $productVariant)
     {
         $this->productVariant = $productVariant;
     }
@@ -32,7 +32,7 @@ class Warehouse
      * @param string $sku
      * @param array $options
      *
-     * @return ModelsVariantWarehouse
+     * @return ModelsProductVariantWarehouse
      */
     public function add(
         ModelsWarehouse $warehouse,
@@ -40,13 +40,13 @@ class Warehouse
         float $price,
         string $sku,
         array $options = []
-    ) : ModelsVariantWarehouse {
+    ) : ModelsProductVariantWarehouse {
         $isPublished = isset($options['is_published']) ? (int) $options['is_published'] : State::PUBLISHED;
 
-        $productWarehouse = new ProductsWarehouse($this->productVariant->getProduct());
+        $productWarehouse = new ProductWarehouse($this->productVariant->getProduct());
         $productWarehouse->add($warehouse, $isPublished, 0);
 
-        $productVariantWarehouse = new ModelsVariantWarehouse();
+        $productVariantWarehouse = new ModelsProductVariantWarehouse();
         $productVariantWarehouse->products_variants_id = $this->productVariant->getId();
         $productVariantWarehouse->warehouse_id = $warehouse->getId();
         $productVariantWarehouse->quantity = $quantity;
@@ -80,7 +80,7 @@ class Warehouse
      */
     public function move(ModelsWarehouse $warehouse, ModelsWarehouse $newWarehouse) : bool
     {
-        $productVariantWarehouse = ModelsVariantWarehouse::findFirst([
+        $productVariantWarehouse = ModelsProductVariantWarehouse::findFirst([
             'conditions' => 'products_variants_id = ?0 AND warehouses_id = ?1',
             'bind' => [
                 $this->productVariant->getId(),
@@ -107,7 +107,7 @@ class Warehouse
      */
     public function delete(ModelsWarehouse $warehouse) : bool
     {
-        $productVariantWarehouse = ModelsVariantWarehouse::findFirst([
+        $productVariantWarehouse = ModelsProductVariantWarehouse::findFirst([
             'conditions' => 'products_variants_id = ?0 AND warehouses_id = ?1 AND is_deleted = 0',
             'bind' => [
                 $this->productVariant->getId(),

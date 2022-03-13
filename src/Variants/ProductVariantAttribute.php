@@ -4,19 +4,19 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Variants;
 
 use Kanvas\Inventory\Attributes\Models\Attributes as ModelsAttributes;
-use Kanvas\Inventory\Products\Models\Variants as ModelProductVariant;
-use Kanvas\Inventory\Variants\Models\Attributes as ModelsProductVariantAttributes;
+use Kanvas\Inventory\Variants\Models\ProductVariantAttributes;
+use Kanvas\Inventory\Variants\Models\ProductVariants;
 
-class Attribute
+class ProductVariantAttribute
 {
-    protected ModelProductVariant $productVariant;
+    protected ProductVariants $productVariant;
 
     /**
      * Constructor.
      *
      * @param Products $product
      */
-    public function __construct(ModelProductVariant $productVariant)
+    public function __construct(ProductVariants $productVariant)
     {
         $this->productVariant = $productVariant;
     }
@@ -27,11 +27,11 @@ class Attribute
      * @param ModelsAttributes $attribute
      * @param string $value
      *
-     * @return ModelsProductVariantAttributes
+     * @return ProductVariantAttributes
      */
-    public function add(ModelsAttributes $attribute, string $value) : ModelsProductVariantAttributes
+    public function add(ModelsAttributes $attribute, string $value) : ProductVariantAttributes
     {
-        return ModelsProductVariantAttributes::findFirstOrCreate([
+        return ProductVariantAttributes::findFirstOrCreate([
             'conditions' => 'products_variants_id = :products_variants_id: AND attributes_id = :attributes_id:',
             'bind' => [
                 'products_variants_id' => $this->productVariant->getId(),
@@ -49,7 +49,7 @@ class Attribute
      *
      * @param array $attributes<int, <'attribute' => Attributes, 'value' => string>>
      *
-     * @return array<int, ModelsProductVariantAttributes>
+     * @return array<int, ProductVariantAttributes>
      */
     public function addMultiple(array $attributes) : array
     {
@@ -70,11 +70,11 @@ class Attribute
      * @param ModelsAttributes $attribute
      * @param string $value
      *
-     * @return ModelsProductVariantAttributes
+     * @return ProductVariantAttributes
      */
-    public function update(ModelsAttributes $attribute, string $value) : ModelsProductVariantAttributes
+    public function update(ModelsAttributes $attribute, string $value) : ProductVariantAttributes
     {
-        return ModelsProductVariantAttributes::updateOrCreate([
+        return ProductVariantAttributes::updateOrCreate([
             'conditions' => 'products_variants_id = :products_variants_id: AND attributes_id = :attributes_id:',
             'bind' => [
                 'products_variants_id' => $this->productVariant->getId(),
@@ -96,7 +96,7 @@ class Attribute
      */
     public function delete(ModelsAttributes $attribute) : bool
     {
-        $productAttribute = ModelsProductVariantAttributes::findFirst([
+        $productAttribute = ProductVariantAttributes::findFirst([
             'conditions' => 'products_variants_id = :products_variants_id: AND attributes_id = :attributes_id:',
             'bind' => [
                 'products_variants_id' => $this->productVariant->getId(),

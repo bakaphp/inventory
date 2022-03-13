@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Regions;
 
 use Baka\Contracts\Auth\UserInterface;
+use Baka\Contracts\Database\ModelInterface;
 use Canvas\Enums\App;
 use Canvas\Models\Currencies;
 use Kanvas\Inventory\Enums\State;

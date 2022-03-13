@@ -5,10 +5,10 @@ namespace Kanvas\Inventory\Products;
 
 use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Products\Models\Products;
-use Kanvas\Inventory\Products\Models\Warehouse as ProductsModelsWarehouse;
+use Kanvas\Inventory\Products\Models\ProductsWarehouse;
 use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
 
-class Warehouse
+class ProductWarehouse
 {
     protected Products $product;
 
@@ -29,11 +29,11 @@ class Warehouse
      * @param int $isPublished
      * @param int $rating
      *
-     * @return ProductsModelsWarehouse
+     * @return ProductsWarehouse
      */
-    public function add(ModelsWarehouse $warehouse, int $isPublished = State::PUBLISHED, int $rating = 0) : ProductsModelsWarehouse
+    public function add(ModelsWarehouse $warehouse, int $isPublished = State::PUBLISHED, int $rating = 0) : ProductsWarehouse
     {
-        return ProductsModelsWarehouse::findFirstOrCreate([
+        return ProductsWarehouse::findFirstOrCreate([
             'conditions' => 'products_id = :products_id: AND warehouse_id = :warehouses_id:',
             'bind' => [
                 'products_id' => $this->product->getId(),
@@ -73,7 +73,7 @@ class Warehouse
      */
     public function delete(ModelsWarehouse $warehouse) : bool
     {
-        $productWarehouse = ProductsModelsWarehouse::findFirst([
+        $productWarehouse = ProductsWarehouse::findFirst([
             'conditions' => 'products_id = :products_id: AND warehouse_id = :warehouses_id:',
             'bind' => [
                 'products_id' => $this->product->getId(),

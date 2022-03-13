@@ -8,7 +8,7 @@ use Kanvas\Inventory\Products\Models\Variants;
 use Kanvas\Inventory\Products\Models\Variants\Warehouse\PriceHistory;
 use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
 
-class Warehouse extends BaseModel
+class ProductVariantWarehouse extends BaseModel
 {
     public int $products_variants_id;
     public int $warehouse_id;

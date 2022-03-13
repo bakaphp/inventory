@@ -4,10 +4,10 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Products\Models;
 
 use Canvas\Models\Behaviors\Uuid;
-use Kanvas\Inventory\Attributes\Models\Attributes as ModelsAttributes;
+use Kanvas\Inventory\Attributes\Models\Attributes;
 use Kanvas\Inventory\BaseModel;
 
-class Attributes extends BaseModel
+class ProductAttributes extends BaseModel
 {
     public int $products_id;
     public int $attributes_id;
@@ -39,7 +39,7 @@ class Attributes extends BaseModel
 
         $this->belongsTo(
             'attributes_id',
-            ModelsAttributes::class,
+            Attributes::class,
             'id',
             [
                 'alias' => 'attribute',

@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Kanvas\Inventory\Variants\Models\Warehouse;
+namespace Kanvas\Inventory\Variants\Models;
 
 use Kanvas\Inventory\BaseModel;
 use Kanvas\Inventory\Products\Models\Variants;
 use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
 
-class PriceHistory extends BaseModel
+class ProductVariantWarehouse extends BaseModel
 {
     public int $products_variants_id;
     public int $warehouse_id;
