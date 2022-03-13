@@ -53,7 +53,7 @@ class ProductWarehouse
      *
      * @param array $warehouses<int, ModelsWarehouse>
      *
-     * @return array<int, ModelsWarehouse>
+     * @return list <ModelsWarehouse>
      */
     public function addMultiples(array $warehouses) : array
     {
@@ -75,7 +75,7 @@ class ProductWarehouse
     public function delete(ModelsWarehouse $warehouse) : bool
     {
         $productWarehouse = ProductsModelsWarehouse::findFirst([
-            'conditions' => 'products_id = :products_id: AND warehouses_id = :warehouses_id:',
+            'conditions' => 'products_id = :products_id: AND warehouse_id = :warehouses_id:',
             'bind' => [
                 'products_id' => $this->product->getId(),
                 'warehouses_id' => $warehouse->getId(),
