@@ -4,10 +4,10 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Products;
 
 use Kanvas\Inventory\Attributes\Models\Attributes as ModelsAttributes;
-use Kanvas\Inventory\Products\Models\Attributes;
+use Kanvas\Inventory\Products\Models\Attributes as ModelProductsAttributes;
 use Kanvas\Inventory\Products\Models\Products;
 
-class ProductAttributes
+class Attribute
 {
     protected Products $product;
 
@@ -27,11 +27,11 @@ class ProductAttributes
      * @param ModelsAttributes $attribute
      * @param string $value
      *
-     * @return Attributes
+     * @return ModelProductsAttributes
      */
-    public function add(ModelsAttributes $attribute, string $value) : Attributes
+    public function add(ModelsAttributes $attribute, string $value) : ModelProductsAttributes
     {
-        return Attributes::findFirstOrCreate([
+        return ModelProductsAttributes::findFirstOrCreate([
             'conditions' => 'products_id = :products_id: AND attributes_id = :attributes_id:',
             'bind' => [
                 'products_id' => $this->product->getId(),
@@ -49,7 +49,7 @@ class ProductAttributes
      *
      * @param array $attributes<int, <'attribute' => Attributes, 'value' => string>>
      *
-     * @return array<int, ModelsAttributes>
+     * @return array<int, ModelProductsAttributes>
      */
     public function addMultiple(array $attributes) : array
     {
@@ -70,11 +70,11 @@ class ProductAttributes
      * @param ModelsAttributes $attribute
      * @param string $value
      *
-     * @return Attributes
+     * @return ModelProductsAttributes
      */
-    public function update(ModelsAttributes $attribute, string $value) : Attributes
+    public function update(ModelsAttributes $attribute, string $value) : ModelProductsAttributes
     {
-        return Attributes::updateOrCreate([
+        return ModelProductsAttributes::updateOrCreate([
             'conditions' => 'products_id = :products_id: AND attributes_id = :attributes_id:',
             'bind' => [
                 'products_id' => $this->product->getId(),
@@ -96,7 +96,7 @@ class ProductAttributes
      */
     public function delete(ModelsAttributes $attribute) : bool
     {
-        $productAttribute = Attributes::findFirst([
+        $productAttribute = ModelProductsAttributes::findFirst([
             'conditions' => 'products_id = :products_id: AND attributes_id = :attributes_id:',
             'bind' => [
                 'products_id' => $this->product->getId(),

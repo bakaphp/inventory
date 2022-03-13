@@ -6,10 +6,9 @@ namespace Kanvas\Inventory\Products;
 use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Products\Models\Products;
 use Kanvas\Inventory\Products\Models\Warehouse as ProductsModelsWarehouse;
-use Kanvas\Inventory\Variants\Models\Warehouse;
 use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
 
-class ProductWarehouse
+class Warehouse
 {
     protected Products $product;
 

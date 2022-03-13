@@ -7,7 +7,7 @@ use Kanvas\Inventory\Categories\Models\Categories as ModelsCategories;
 use Kanvas\Inventory\Products\Models\Categories as ModelProductCategory;
 use Kanvas\Inventory\Products\Models\Products;
 
-class ProductCategory
+class Category
 {
     protected Products $product;
 
