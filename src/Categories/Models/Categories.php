@@ -6,6 +6,9 @@ namespace Kanvas\Inventory\Categories\Models;
 use Baka\Support\Str;
 use Canvas\Models\Behaviors\Uuid;
 use Kanvas\Inventory\BaseModel;
+use Kanvas\Inventory\Products\Models\ProductCategories as ProductCategory;
+use Kanvas\Inventory\Products\Models\Products;
+use Kanvas\Inventory\Products\ProductCategory as DomainProductCategory;
 use Kanvas\Inventory\Traits\Publishable;
 
 class Categories extends BaseModel
@@ -85,5 +88,19 @@ class Categories extends BaseModel
     {
         $child->parent_id = $this->getId();
         $child->saveOrFail();
+    }
+
+    /**
+     * Add a product to a specify category.
+     *
+     * @param Products $product
+     *
+     * @return ProductCategory
+     */
+    public function addProduct(Products $product) : ProductCategory
+    {
+        $productCategory = new DomainProductCategory($product);
+
+        return $productCategory->add($this);
     }
 }

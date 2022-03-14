@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Products\Models;
 
 use Kanvas\Inventory\BaseModel;
-use Kanvas\Inventory\Categories\Models\Categories as ModelsCategories;
+use Kanvas\Inventory\Categories\Models\Categories;
 
-class Categories extends BaseModel
+class ProductCategories extends BaseModel
 {
     public int $categories_id;
     public int $products_id;
@@ -23,7 +23,7 @@ class Categories extends BaseModel
 
         $this->belongsTo(
             'categories_id',
-            ModelsCategories::class,
+            Categories::class,
             'id',
             [
                 'alias' => 'category',

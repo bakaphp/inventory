@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Kanvas\Guild\Tests\Integration\Categories;
+namespace Kanvas\Inventory\Tests\Support\Traits;
 
 use Canvas\Models\Currencies;
 use IntegrationTester;
@@ -11,7 +11,7 @@ use Kanvas\Inventory\Regions\Models\Regions;
 use Kanvas\Inventory\Regions\Region;
 use Kanvas\Inventory\Tests\Support\Models\Users;
 
-class RegionsCest
+trait CanCreateRegion
 {
     /**
      * Create a Regions.
@@ -35,14 +35,5 @@ class RegionsCest
         );
 
         return $regions;
-    }
-
-    public function tesCreate(IntegrationTester $I) : void
-    {
-        $user = new Users();
-
-        $regions = $this->createRegion($I);
-
-        $I->assertInstanceOf(Regions::class, $regions);
     }
 }

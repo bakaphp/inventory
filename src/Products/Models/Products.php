@@ -8,10 +8,18 @@ use Canvas\Models\Behaviors\Uuid;
 use Kanvas\Inventory\Attributes\Models\Attributes as ModelsAttributes;
 use Kanvas\Inventory\BaseModel;
 use Kanvas\Inventory\Categories\Models\Categories as ModelsCategories;
+use Kanvas\Inventory\Products\ProductAttribute;
+use Kanvas\Inventory\Products\ProductCategory;
+use Kanvas\Inventory\Products\ProductVariant;
+use Kanvas\Inventory\Products\ProductWarehouse;
+use Kanvas\Inventory\Traits\Publishable;
 use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
+use Phalcon\Mvc\Model\ResultsetInterface;
 
 class Products extends BaseModel
 {
+    use Publishable;
+
     public int $apps_id;
     public int $companies_id;
     public string $uuid;
@@ -105,5 +113,85 @@ class Products extends BaseModel
             $this->slug = Str::slug($this->name);
             $this->short_slug = $this->slug;
         }
+    }
+
+    /**
+     * Product Category domain.
+     *
+     * @return ProductCategory
+     */
+    public function categories() : ProductCategory
+    {
+        return new ProductCategory($this);
+    }
+
+    /**
+     * Product Attribute domain.
+     *
+     * @return ProductAttribute
+     */
+    public function attributes() : ProductAttribute
+    {
+        return new ProductAttribute($this);
+    }
+
+    /**
+     * Product warehouse domain.
+     *
+     * @return ProductWarehouse
+     */
+    public function warehouse() : ProductWarehouse
+    {
+        return new ProductWarehouse($this);
+    }
+
+    /**
+     * Product warehouse domain.
+     *
+     * @return ProductVariant
+     */
+    public function variant()
+    {
+        return new ProductVariant($this);
+    }
+
+    /**
+     * Get categories.
+     *
+     * @return ResultsetInterface <Categories>
+     */
+    public function getCategories() : ResultsetInterface
+    {
+        return $this->categories;
+    }
+
+    /**
+     * Get Attributes.
+     *
+     * @return ResultsetInterface <Attributes>
+     */
+    public function getAttributes() : ResultsetInterface
+    {
+        return $this->attributes;
+    }
+
+    /**
+     * Get warehouse.
+     *
+     * @return ResultsetInterface <ModelsWarehouse>
+     */
+    public function getWarehouse() : ResultsetInterface
+    {
+        return $this->warehouses;
+    }
+
+    /**
+     * Get variants.
+     *
+     * @return ResultsetInterface <ModelsWarehouse>
+     */
+    public function getVariants() : ResultsetInterface
+    {
+        return $this->variants;
     }
 }

@@ -17,7 +17,7 @@ use Canvas\Providers\ResponseProvider;
 use Canvas\Providers\UserProvider;
 use Canvas\Providers\ViewProvider;
 use Kanvas\Inventory\Providers\DatabaseProvider;
-use Kanvas\Moderation\Test\Support\Providers\ConfigProvider;
+use Kanvas\Inventory\Tests\Support\Providers\ConfigProvider;
 
 return [
     KanvasDatabaseProvider::class,
