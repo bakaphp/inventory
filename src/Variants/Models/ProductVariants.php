@@ -4,16 +4,21 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Variants\Models;
 
 use Baka\Support\Str;
+use Canvas\Contracts\FileSystemModelTrait;
 use Canvas\Models\Behaviors\Uuid;
 use Kanvas\Inventory\Attributes\Models\Attributes as ModelsAttributes;
 use Kanvas\Inventory\BaseModel;
 use Kanvas\Inventory\Products\Models\Products;
+use Kanvas\Inventory\Traits\Publishable;
 use Kanvas\Inventory\Variants\ProductVariantAttribute;
 use Kanvas\Inventory\Variants\ProductVariantWarehouse;
 use Phalcon\Mvc\Model\Resultset\Simple ;
 
 class ProductVariants extends BaseModel
 {
+    use FileSystemModelTrait;
+    use Publishable;
+
     public int $products_id;
     public string $uuid;
     public string $name;
