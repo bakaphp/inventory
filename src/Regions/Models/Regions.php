@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Regions\Models;
 
 use Baka\Support\Str;
+use Canvas\Contracts\FileSystemModelTrait;
 use Canvas\Models\Behaviors\Uuid;
 use Canvas\Models\Currencies;
 use Kanvas\Inventory\BaseModel;
@@ -12,6 +13,7 @@ use Kanvas\Inventory\Traits\Publishable;
 class Regions extends BaseModel
 {
     use Publishable;
+    use FileSystemModelTrait;
 
     public int $apps_id;
     public int $companies_id;

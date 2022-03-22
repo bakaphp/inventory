@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Categories\Models;
 
 use Baka\Support\Str;
+use Canvas\Contracts\FileSystemModelTrait;
 use Canvas\Models\Behaviors\Uuid;
 use Kanvas\Inventory\BaseModel;
 use Kanvas\Inventory\Products\Models\ProductCategories as ProductCategory;
@@ -14,6 +15,7 @@ use Kanvas\Inventory\Traits\Publishable;
 class Categories extends BaseModel
 {
     use Publishable;
+    use FileSystemModelTrait;
 
     public int $apps_id;
     public int $companies_id;
