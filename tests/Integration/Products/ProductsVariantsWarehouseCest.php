@@ -6,18 +6,16 @@ namespace Kanvas\Inventory\Tests\Integration\Products;
 
 use IntegrationTester;
 use Kanvas\Inventory\Tests\Support\Models\Users;
-use Kanvas\Inventory\Tests\Support\Traits\CanCreateAttribute;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateProductVariant;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateWarehouse;
 use Kanvas\Inventory\Variants\Models\ProductVariantWarehouse;
 use Kanvas\Inventory\Variants\ProductVariantWarehouse as VariantsProductVariantWarehouse;
 use Phalcon\Utils\Slug;
 
-class ProductsVariantsCest
+class ProductsVariantsWarehouseCest
 {
     use CanCreateProductVariant;
     use CanCreateWarehouse;
-    use CanCreateAttribute;
 
     public function testGetAll(IntegrationTester $I) : void
     {
