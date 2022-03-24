@@ -97,6 +97,26 @@ class CategoriesCest
         $I->assertInstanceOf(Categories::class, $category);
     }
 
+    public function testGetDefault(IntegrationTester $I) : void
+    {
+        $user = new Users();
+
+        $category = Category::create(
+            $user,
+            'default',
+            [
+                'position' => 1,
+                'isPublished()' => 1,
+                'code' => 'test_code',
+                'slug' => $I->faker()->slug(),
+            ]
+        );
+
+        $category = Category::getDefault($user);
+
+        $I->assertInstanceOf(Categories::class, $category);
+    }
+
     public function testGetAll(IntegrationTester $I) : void
     {
         $user = new Users();
