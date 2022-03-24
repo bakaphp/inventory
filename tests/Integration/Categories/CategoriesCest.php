@@ -103,12 +103,11 @@ class CategoriesCest
 
         $category = Category::create(
             $user,
-            'default',
+            State::DEFAULT_NAME,
             [
                 'position' => 1,
                 'isPublished()' => 1,
                 'code' => 'test_code',
-                'slug' => $I->faker()->slug(),
             ]
         );
 
