@@ -4,20 +4,21 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Variants;
 
 use Kanvas\Inventory\Variants\Models\ProductVariantWarehouse;
+use Kanvas\Inventory\Variants\Models\ProductVariantWarehouseChannels;
 use Kanvas\Inventory\Variants\Models\ProductVariantWarehousePriceHistory;
 
-class ProductVariantWarehousePrice
+class ProductVariantWarehouseChannelPrice
 {
-    protected ProductVariantWarehouse $productVariantWarehouse;
+    protected ProductVariantWarehouseChannels $productVariantWarehouseChannel;
 
     /**
      * Construct.
      *
      * @param ProductVariantWarehouse $variant
      */
-    public function __construct(ProductVariantWarehouse $productVariantWarehouse)
+    public function __construct(ProductVariantWarehouseChannels $productVariantWarehouseChannel)
     {
-        $this->productVariantWarehouse = $productVariantWarehouse;
+        $this->productVariantWarehouseChannel = $productVariantWarehouseChannel;
     }
 
     /**
@@ -32,19 +33,20 @@ class ProductVariantWarehousePrice
         return ProductVariantWarehousePriceHistory::findFirstOrCreate([
             'conditions' => 'products_variants_id = :products_variants_id: 
                             AND warehouse_id = :warehouse_id:
-                            AND channels_id = 0
+                            AND channels_id = :channels_id:
                             AND price = :price:',
             'bind' => [
-                'products_variants_id' => $this->productVariantWarehouse->products_variants_id,
-                'warehouse_id' => $this->productVariantWarehouse->warehouse_id,
+                'products_variants_id' => $this->productVariantWarehouseChannel->products_variants_id,
+                'warehouse_id' => $this->productVariantWarehouseChannel->warehouse_id,
+                'channels_id' => $this->productVariantWarehouseChannel->channels_id,
                 'price' => $price,
             ],
             'order' => 'from_date desc'
         ], [
-            'products_variants_id' => $this->productVariantWarehouse->products_variants_id,
-            'warehouse_id' => $this->productVariantWarehouse->warehouse_id,
+            'products_variants_id' => $this->productVariantWarehouseChannel->products_variants_id,
+            'warehouse_id' => $this->productVariantWarehouseChannel->warehouse_id,
             'price' => $price,
-            'channels_id' => 0,
+            'channels_id' => $this->productVariantWarehouseChannel->channels_id,
             'from_date' => date('Y-m-d H:i:s')
         ]);
     }
