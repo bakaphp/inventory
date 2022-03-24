@@ -5,6 +5,7 @@ namespace Kanvas\Inventory\Variants;
 
 use Baka\Contracts\Auth\UserInterface;
 use Kanvas\Inventory\Enums\State;
+use Kanvas\Inventory\Products\Models\Products;
 use Kanvas\Inventory\Products\ProductWarehouse;
 use Kanvas\Inventory\Variants\Models\ProductVariants;
 use Kanvas\Inventory\Variants\Models\ProductVariantWarehouse as ModelsProductVariantWarehouse;
@@ -135,9 +136,9 @@ class ProductVariantWarehouse
      * @param int $page
      * @param int $limit
      *
-     * @return ResultsetInterface
+     * @return ResultsetInterface<ModelsProductVariantWarehouse>
      */
-    public static function getAll(UserInterface $user, Warehouses $warehouse, int $page = 1, int $limit = 10, $isPublished = State::PUBLISHED) : ResultsetInterface
+    public static function getAll(UserInterface $user, Warehouses $warehouse, int $page = 1, int $limit = 25) : ResultsetInterface
     {
         $offset = ($page - 1) * $limit;
 
@@ -153,17 +154,14 @@ class ProductVariantWarehouse
                 AND p.companies_id = ?
                 AND w.products_variants_id = v.id
                 AND w.warehouse_id = ?
-                AND v.is_published = v.is_published
-                AND w.is_published = ?
                 AND w.is_deleted = p.is_deleted
                 AND w.is_deleted = 0
             LIMIT ?, ?',
             [
-                $user->getCompanyId(),
+                $user->currentCompanyId(),
                 $warehouse->getId(),
                 $offset,
-                $limit,
-                $isPublished,
+                $limit
             ]
         );
     }
@@ -171,13 +169,13 @@ class ProductVariantWarehouse
     /**
      * Get variant by uuid.
      *
+     * @param string $uuid
      * @param UserInterface $user
      * @param Warehouses $warehouse
-     * @param string $uuid
      *
      * @return ResultsetInterface
      */
-    public static function getByVariantUuid(UserInterface $user, Warehouses $warehouse, string $uuid) : ModelsProductVariantWarehouse
+    public static function getByUuid(string $uuid, UserInterface $user, Warehouses $warehouse) : ModelsProductVariantWarehouse
     {
         $variant = ProductVariant::getByUuid($uuid, $user);
 
@@ -192,16 +190,16 @@ class ProductVariantWarehouse
                 v.products_id = p.id
                 AND p.companies_id = ?
                 AND w.products_variants_id = v.id
-                AND w.product_variant_id = ?
+                AND w.products_variants_id = ?
                 AND w.warehouse_id = ?
                 AND w.is_deleted = p.is_deleted
                 AND w.is_deleted = v.is_deleted
                 AND w.is_deleted = 0
             LIMIT 1',
             [
-                $user->getCompanyId(),
-                $warehouse->getId(),
+                $user->currentCompanyId(),
                 $variant->getId(),
+                $warehouse->getId(),
             ]
         )->getFirst();
     }
@@ -216,11 +214,11 @@ class ProductVariantWarehouse
      *
      * @return ResultsetInterface
      */
-    public static function getAllVariants(UserInterface $user, Warehouses $warehouse, int $page = 1, int $limit = 10, $isPublished = State::PUBLISHED) : ResultsetInterface
+    public static function getAllByProduct(UserInterface $user, Warehouses $warehouse, Products $product, int $page = 1, int $limit = 10) : ResultsetInterface
     {
         $offset = ($page - 1) * $limit;
 
-        return ProductVariants::findByRawSql(
+        return ModelsProductVariantWarehouse::findByRawSql(
             'SELECT 
             v.*
             FROM 
@@ -229,21 +227,20 @@ class ProductVariantWarehouse
                 products_variants_warehouse w
             WHERE
                 v.products_id = p.id
+                AND p.id = ?
                 AND p.companies_id = ?
                 AND w.products_variants_id = v.id
                 AND w.warehouse_id = ?
-                AND v.is_published = v.is_published
-                AND w.is_published = ?
                 AND w.is_deleted = p.is_deleted
                 AND w.is_deleted = v.is_deleted
                 AND w.is_deleted = 0
             LIMIT ?, ?',
             [
-                $user->getCompanyId(),
+                $product->getId(),
+                $user->currentCompanyId(),
                 $warehouse->getId(),
                 $offset,
-                $limit,
-                $isPublished,
+                $limit
             ]
         );
     }

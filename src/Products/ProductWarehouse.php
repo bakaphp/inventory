@@ -101,7 +101,7 @@ class ProductWarehouse
      *
      * @return ResultsetInterface
      */
-    public static function getAll(UserInterface $user, Warehouses $warehouse, int $page = 1, int $limit = 10, $isPublished = State::PUBLISHED) : ResultsetInterface
+    public static function getAll(UserInterface $user, Warehouses $warehouse, int $page = 1, int $limit = 25) : ResultsetInterface
     {
         $offset = ($page - 1) * $limit;
 
@@ -113,19 +113,16 @@ class ProductWarehouse
                 products_warehouse w
             WHERE
                 p.id = w.products_id
-                p.companies_id = ?
+                AND p.companies_id = ?
                 AND w.warehouse_id = ?
-                AND w.is_published = p.is_published
-                AND w.is_published = ?
                 AND w.is_deleted = 0
                 AND p.is_deleted = w.is_deleted
             LIMIT ?, ?',
             [
-                $user->getCompanyId(),
+                $user->currentCompanyId(),
                 $warehouse->getId(),
                 $offset,
-                $limit,
-                $isPublished
+                $limit
             ]
         );
     }
@@ -133,13 +130,13 @@ class ProductWarehouse
     /**
      * Get one product from this warehouse.
      *
+     * @param string $uuid
      * @param UserInterface $user
      * @param Warehouses $warehouse
-     * @param string $uuid
      *
      * @return Products
      */
-    public static function getByUuid(UserInterface $user, Warehouses $warehouse, string $uuid) : Products
+    public static function getByUuid(string $uuid, UserInterface $user, Warehouses $warehouse) : Products
     {
         Product::getByUuid($uuid, $user);
 
@@ -153,7 +150,7 @@ class ProductWarehouse
                 p.id = w.products_id
                 AND w.warehouse_id = ?
                 AND p.uuid = ?
-                AND is_deleted = 0
+                AND w.is_deleted = 0
                 AND p.is_deleted = w.is_deleted
             LIMIT 1',
             [

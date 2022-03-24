@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Tests\Integration\Products;
 
 use IntegrationTester;
-use Kanvas\Inventory\Products\ProductWarehouse;
-use Kanvas\Inventory\Tests\Support\Models\Users;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateAttribute;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateProductVariant;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateWarehouse;
@@ -63,16 +61,5 @@ class ProductsVariantsCest
 
         //we dont need the attribute tue the value of the attribute for this variant
         $I->assertEquals($productVariant->getAttributes()->count(), 1);
-    }
-
-    public function testGetAll(IntegrationTester $I) : void
-    {
-        $productVariant = $this->createProductVariant($I);
-
-        $user = new Users();
-
-        //ProductWarehouse::getAll($user, )
-
-        //$I->assertInstanceOf(ResultsetInterface::class, $productVariant->getAll());
     }
 }
