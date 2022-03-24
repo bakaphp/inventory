@@ -11,4 +11,6 @@ class State
     public const UN_PUBLISHED = 0;
     public const IS_DEFAULT = 0;
     public const DEFAULT = 1;
+    public const DEFAULT_NAME = 'Default';
+    public const DEFAULT_NAME_SLUG = 'default';
 }

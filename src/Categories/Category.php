@@ -43,30 +43,11 @@ class Category
         $category->parent_id = State::DEFAULT_PARENT_ID;
         $category->position = isset($options['position']) && (int) $options['position'] > 0 ? $options['position'] : State::DEFAULT_POSITION;
         $category->is_published = $options['is_published'] ?? State::PUBLISHED;
+        $category->is_default = $options['is_default'] ?? State::IS_DEFAULT;
         $category->code = $options['code'] ?? null;
         $category->slug = $options['slug'] ?? '';
         $category->saveOrFail();
 
         return $category;
-    }
-
-    /**
-     * Get the category by id.
-     *
-     * @param string $slug
-     * @param UserInterface $user
-     *
-     * @return Categories
-     */
-    public static function getBySlug(string $slug, UserInterface $user) : Categories
-    {
-        return Categories::findFirstOrFail([
-            'conditions' => 'slug = :slug: 
-                            AND companies_id = :companies_id:',
-            'bind' => [
-                'slug' => $slug,
-                'companies_id' => $user->currentCompanyId(),
-            ]
-        ]);
     }
 }

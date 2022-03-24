@@ -87,4 +87,26 @@ trait Searchable
             ]
         ]);
     }
+
+    /**
+     * Get the category by id.
+     *
+     * @param string $slug
+     * @param UserInterface $user
+     *
+     * @return Categories
+     */
+    public static function getBySlug(string $slug, UserInterface $user) : ModelInterface
+    {
+        $model = self::getModel();
+
+        return $model::findFirstOrFail([
+            'conditions' => 'slug = :slug: 
+                            AND companies_id = :companies_id:',
+            'bind' => [
+                'slug' => $slug,
+                'companies_id' => $user->currentCompanyId(),
+            ]
+        ]);
+    }
 }

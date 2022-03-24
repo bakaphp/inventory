@@ -7,6 +7,7 @@ use Baka\Support\Str;
 use Canvas\Models\Behaviors\Uuid;
 use Canvas\Models\Currencies;
 use Kanvas\Inventory\BaseModel;
+use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Traits\Publishable;
 
 class Regions extends BaseModel
@@ -21,7 +22,7 @@ class Regions extends BaseModel
     public string $short_slug;
     public int $currency_id;
     public ?string $settings = null;
-    public int $is_default = 0;
+    public int $is_default = State::IS_DEFAULT;
 
     /**
      * Initialize.

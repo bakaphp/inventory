@@ -12,7 +12,7 @@ class Channels extends BaseModel
     public string $uuid;
     public string $name;
     public string $slug;
-    public string $description;
+    public ?string $description = null;
     public string $user_id;
     public int $is_default = State::IS_DEFAULT;
     public int $companies_id;
