@@ -6,6 +6,7 @@ namespace Kanvas\Inventory\Categories\Models;
 use Baka\Support\Str;
 use Canvas\Models\Behaviors\Uuid;
 use Kanvas\Inventory\BaseModel;
+use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Products\Models\ProductCategories as ProductCategory;
 use Kanvas\Inventory\Products\Models\Products;
 use Kanvas\Inventory\Products\ProductCategory as DomainProductCategory;
@@ -21,6 +22,7 @@ class Categories extends BaseModel
     public string $name;
     public string $slug;
     public ?string $code = null;
+    public int $is_default = State::IS_DEFAULT;
     public int $position = 0;
     public int $parent_id = 0;
     public int $is_published = 0;

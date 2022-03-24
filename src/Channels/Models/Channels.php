@@ -14,6 +14,7 @@ class Channels extends BaseModel
     public string $slug;
     public string $description;
     public string $user_id;
+    public int $is_default = State::IS_DEFAULT;
     public int $companies_id;
     public int $apps_id;
     public int $is_published = State::PUBLISHED;
