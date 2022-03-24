@@ -138,8 +138,6 @@ class ProductWarehouse
      */
     public static function getByUuid(string $uuid, UserInterface $user, Warehouses $warehouse) : Products
     {
-        Product::getByUuid($uuid, $user);
-
         return Products::findByRawSql(
             'SELECT 
                 p.*

@@ -177,8 +177,6 @@ class ProductVariantWarehouse
      */
     public static function getByUuid(string $uuid, UserInterface $user, Warehouses $warehouse) : ModelsProductVariantWarehouse
     {
-        $variant = ProductVariant::getByUuid($uuid, $user);
-
         return ModelsProductVariantWarehouse::findByRawSql(
             'SELECT 
             w.*
@@ -190,7 +188,7 @@ class ProductVariantWarehouse
                 v.products_id = p.id
                 AND p.companies_id = ?
                 AND w.products_variants_id = v.id
-                AND w.products_variants_id = ?
+                AND v.uuid = ?
                 AND w.warehouse_id = ?
                 AND w.is_deleted = p.is_deleted
                 AND w.is_deleted = v.is_deleted
@@ -198,7 +196,7 @@ class ProductVariantWarehouse
             LIMIT 1',
             [
                 $user->currentCompanyId(),
-                $variant->getId(),
+                $uuid,
                 $warehouse->getId(),
             ]
         )->getFirst();
