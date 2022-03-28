@@ -6,6 +6,7 @@ namespace Kanvas\Inventory\Traits;
 
 use Baka\Contracts\Auth\UserInterface;
 use Baka\Contracts\Database\ModelInterface;
+use Kanvas\Inventory\Enums\State;
 use Phalcon\Mvc\Model\ResultsetInterface;
 
 trait Searchable
@@ -94,7 +95,7 @@ trait Searchable
      * @param string $slug
      * @param UserInterface $user
      *
-     * @return Categories
+     * @return ModelInterface
      */
     public static function getBySlug(string $slug, UserInterface $user) : ModelInterface
     {
@@ -108,5 +109,17 @@ trait Searchable
                 'companies_id' => $user->currentCompanyId(),
             ]
         ]);
+    }
+
+    /**
+     * Get default Entity.
+     *
+     * @param UserInterface $user
+     *
+     * @return ModelInterface
+     */
+    public static function getDefault(UserInterface $user) : ModelInterface
+    {
+        return self::getBySlug(State::DEFAULT_NAME_SLUG, $user);
     }
 }
