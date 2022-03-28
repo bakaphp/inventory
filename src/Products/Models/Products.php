@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Products\Models;
 
 use Baka\Support\Str;
+use Canvas\Contracts\FileSystemModelTrait;
 use Canvas\Models\Behaviors\Uuid;
 use Kanvas\Inventory\Attributes\Models\Attributes as ModelsAttributes;
 use Kanvas\Inventory\BaseModel;
@@ -13,12 +14,14 @@ use Kanvas\Inventory\Products\ProductCategory;
 use Kanvas\Inventory\Products\ProductVariant;
 use Kanvas\Inventory\Products\ProductWarehouse;
 use Kanvas\Inventory\Traits\Publishable;
+use Kanvas\Inventory\Variants\Models\ProductVariants;
 use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
 use Phalcon\Mvc\Model\ResultsetInterface;
 
 class Products extends BaseModel
 {
     use Publishable;
+    use FileSystemModelTrait;
 
     public int $apps_id;
     public int $companies_id;
@@ -47,7 +50,7 @@ class Products extends BaseModel
 
         $this->hasMany(
             'id',
-            Variants::class,
+            ProductVariants::class,
             'products_id',
             [
                 'alias' => 'variants',
