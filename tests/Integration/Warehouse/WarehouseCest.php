@@ -5,36 +5,16 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Tests\Integration\Categories;
 
 use IntegrationTester;
-use Kanvas\Inventory\Categories\Category;
 use Kanvas\Inventory\Enums\State;
-use Kanvas\Inventory\Regions\Models\Regions;
 use Kanvas\Inventory\Tests\Support\Models\Users;
+use Kanvas\Inventory\Tests\Support\Traits\CanCreateWarehouse;
 use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
 use Kanvas\Inventory\Warehouses\Warehouse;
 
 class WarehouseCest
 {
-    /**
-     * Create a category.
-     *
-     * @return Category
-     */
-    protected function createWarehouse(IntegrationTester $I) : ModelsWarehouse
-    {
-        $user = new Users();
-        $region = Regions::findFirst();
+    use CanCreateWarehouse;
 
-        $warehouse = Warehouse::create(
-            $user,
-            $I->faker()->name(),
-            $region,
-            [
-                'is_published' => State::PUBLISHED,
-            ]
-        );
-
-        return $warehouse;
-    }
 
     public function tesCreate(IntegrationTester $I) : void
     {

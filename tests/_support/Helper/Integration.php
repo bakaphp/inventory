@@ -50,6 +50,7 @@ class Integration extends Module
 
     public function _after(TestInterface $test)
     {
+        $this->diContainer->get('dbInventory')->close();
     }
 
     /**
