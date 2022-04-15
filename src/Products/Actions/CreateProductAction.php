@@ -24,7 +24,7 @@ class CreateProductAction
         UserInterface $user,
         string $name,
         Categories $category,
-        array $options
+        array $options = []
     ) : Products {
         $product = new Products();
         $product->name = $name;
