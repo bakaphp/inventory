@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Kanvas\Inventory\Products;
+namespace Kanvas\Inventory\Products\Repositories;
 
 use Baka\Contracts\Auth\UserInterface;
 use Kanvas\Inventory\Products\Models\Products;

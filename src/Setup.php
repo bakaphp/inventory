@@ -8,18 +8,18 @@ use Canvas\Models\Companies;
 use Canvas\Models\Currencies;
 use Exception;
 use Kanvas\Inventory\Categories\Actions\CreateCategoryAction;
-use Kanvas\Inventory\Categories\CategoryRepository;
 use Kanvas\Inventory\Categories\Models\Categories;
+use Kanvas\Inventory\Categories\Repositories\CategoryRepository;
 use Kanvas\Inventory\Channels\Actions\CreateChannelAction;
 use Kanvas\Inventory\Channels\ChannelRepository;
 use Kanvas\Inventory\Channels\Models\Channels as ChannelsModel;
 use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Regions\Actions\CreateRegionAction;
 use Kanvas\Inventory\Regions\Models\Regions;
-use Kanvas\Inventory\Regions\RegionRepository;
+use Kanvas\Inventory\Regions\Repositories\RegionRepository;
 use Kanvas\Inventory\Warehouses\Actions\CreateWarehouseAction;
 use Kanvas\Inventory\Warehouses\Models\Warehouses;
-use Kanvas\Inventory\Warehouses\WarehouseRepository;
+use Kanvas\Inventory\Warehouses\Repositories\WarehouseRepository;
 
 class Setup
 {

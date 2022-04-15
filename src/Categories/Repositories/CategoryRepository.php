@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Kanvas\Inventory\Categories;
+namespace Kanvas\Inventory\Categories\Repositories;
 
 use Baka\Contracts\Database\ModelInterface;
 use Kanvas\Inventory\Categories\Models\Categories;

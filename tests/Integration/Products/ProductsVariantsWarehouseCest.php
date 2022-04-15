@@ -9,7 +9,7 @@ use Kanvas\Inventory\Tests\Support\Models\Users;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateProductVariant;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateWarehouse;
 use Kanvas\Inventory\Variants\Models\ProductVariantWarehouse;
-use Kanvas\Inventory\Variants\ProductVariantWarehouseRepository;
+use Kanvas\Inventory\Variants\Repositories\ProductVariantWarehouseRepository;
 use Phalcon\Utils\Slug;
 
 class ProductsVariantsWarehouseCest

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Tests\Integration\Attributes;
 
 use IntegrationTester;
-use Kanvas\Inventory\Attributes\AttributeRepository;
 use Kanvas\Inventory\Attributes\Models\Attributes;
+use Kanvas\Inventory\Attributes\Repositories\AttributeRepository;
 use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Tests\Support\Models\Users;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateAttribute;

@@ -9,7 +9,7 @@ use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Tests\Support\Models\Users;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateWarehouse;
 use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
-use Kanvas\Inventory\Warehouses\WarehouseRepository;
+use Kanvas\Inventory\Warehouses\Repositories\WarehouseRepository;
 
 class WarehouseCest
 {

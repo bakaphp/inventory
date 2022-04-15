@@ -6,7 +6,7 @@ namespace Kanvas\Inventory\Tests\Integration\Products;
 
 use IntegrationTester;
 use Kanvas\Inventory\Categories\Actions\CreateCategoryAction;
-use Kanvas\Inventory\Products\ProductRepository;
+use Kanvas\Inventory\Products\Repositories\ProductRepository;
 use Kanvas\Inventory\Tests\Support\Models\Users;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateProducts;
 

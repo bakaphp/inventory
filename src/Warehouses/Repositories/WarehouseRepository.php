@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Kanvas\Inventory\Warehouses;
+namespace Kanvas\Inventory\Warehouses\Repositories;
 
 use Baka\Contracts\Database\ModelInterface;
 use Kanvas\Inventory\Traits\Searchable;

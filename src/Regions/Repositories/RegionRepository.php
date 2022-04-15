@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Kanvas\Inventory\Products;
+namespace Kanvas\Inventory\Regions\Repositories;
 
 use Baka\Contracts\Database\ModelInterface;
-use Kanvas\Inventory\Products\Models\Products;
+use Kanvas\Inventory\Regions\Models\Regions;
 use Kanvas\Inventory\Traits\Searchable;
 
-class ProductRepository
+class RegionRepository
 {
     use Searchable;
 
@@ -18,6 +18,6 @@ class ProductRepository
      */
     public static function getModel() : ModelInterface
     {
-        return new Products();
+        return new Regions();
     }
 }

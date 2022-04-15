@@ -7,8 +7,8 @@ namespace Kanvas\Inventory\Tests\Integration\Categories;
 use IntegrationTester;
 use Kanvas\Inventory\Categories\Actions\CreateCategoryAction;
 use Kanvas\Inventory\Categories\Category;
-use Kanvas\Inventory\Categories\CategoryRepository;
 use Kanvas\Inventory\Categories\Models\Categories;
+use Kanvas\Inventory\Categories\Repositories\CategoryRepository;
 use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Tests\Support\Models\Users;
 
@@ -103,14 +103,19 @@ class CategoriesCest
     {
         $user = new Users();
 
+        $default = CategoryRepository::getDefault($user);
+        if ($default) {
+            $default->delete();
+        }
+
         $category = CreateCategoryAction::execute(
             $user,
             State::DEFAULT_NAME,
             [
                 'position' => 1,
-                'isPublished()' => 1,
+                'isPublished' => 1,
                 'code' => 'test_code',
-                'slug' => $I->faker()->slug(),
+                'slug' => State::DEFAULT_NAME_SLUG
             ]
         );
 
