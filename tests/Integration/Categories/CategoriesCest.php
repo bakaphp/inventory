@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kanvas\Inventory\Tests\Integration\Categories;
 
+use Exception;
 use IntegrationTester;
 use Kanvas\Inventory\Categories\Actions\CreateCategoryAction;
 use Kanvas\Inventory\Categories\Category;
@@ -103,17 +104,20 @@ class CategoriesCest
     {
         $user = new Users();
 
-        $default = CategoryRepository::getDefault($user);
-        if ($default) {
+        try {
+            $default = CategoryRepository::getDefault($user);
             $default->delete();
+        } catch (Exception $e) {
         }
+
 
         $category = CreateCategoryAction::execute(
             $user,
             State::DEFAULT_NAME,
             [
                 'position' => 1,
-                'isPublished' => 1,
+                'is_published' => 1,
+                'is_default' => State::DEFAULT,
                 'code' => 'test_code',
                 'slug' => State::DEFAULT_NAME_SLUG
             ]

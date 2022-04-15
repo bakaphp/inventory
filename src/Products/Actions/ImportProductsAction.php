@@ -1,14 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace Kanvas\Inventory\Products;
+namespace Kanvas\Inventory\Products\Actions;
 
 use Baka\Contracts\Auth\UserInterface;
 use Canvas\Models\Apps;
 use Canvas\Models\Companies;
 use Kanvas\Inventory\Contracts\ExportableInterface;
+use Kanvas\Inventory\Products\Models\Products;
+use Kanvas\Inventory\Products\Repositories\ProductRepository;
+use RuntimeException;
 
-class Importer
+class ImportProductsAction
 {
     protected UserInterface $user;
     protected Companies $company;
@@ -30,7 +33,7 @@ class Importer
         $this->app = $app;
     }
 
-    public function run(ExportableInterface $exportableEntities) : void
+    public function execute(ExportableInterface $exportableEntities) : void
     {
         /**
          * [
@@ -54,12 +57,31 @@ class Importer
          * ].
          */
         foreach ($exportableEntities->getAllEntities() as $entity) {
+            $this->validateEntity('handle', $entity);
+            $this->validateEntity('sku', $entity);
+            $this->validateEntity('price', $entity);
+            $this->validateEntity('variants_attributes', $entity);
 
-            //verify if the product exists by sky if not create it?
+            //create category
+
+            //verify if the product exists by sku if not create it?
+            $product = ProductRepository::getBySlug($entity['handle'], $this->user);
+
+            if (!$product) {
+                //$product = CreateProductAction::execute($this->user, $entity['name']);
+            }
+
             //verify if the attribute exists by name if not create it?
             //verify if the attribute value exists by name if not create it?
             //assign the attributes
             //assign price
+        }
+    }
+
+    protected function validateEntity(string $key, array $entity)
+    {
+        if (!isset($entity['sku'])) {
+            throw new RuntimeException('Product Import must have a ' . $key);
         }
     }
 }
