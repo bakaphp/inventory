@@ -3,13 +3,14 @@ declare(strict_types=1);
 
 namespace Kanvas\Inventory\Variants\Managers;
 
+use Kanvas\Inventory\Contracts\ManagerInterface;
 use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Products\Managers\ProductWarehouseManager;
 use Kanvas\Inventory\Variants\Models\ProductVariants;
 use Kanvas\Inventory\Variants\Models\ProductVariantWarehouse as ModelsProductVariantWarehouse;
 use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
 
-class ProductVariantWarehouseManager
+class ProductVariantWarehouseManager implements ManagerInterface
 {
     protected ProductVariants $productVariant;
 

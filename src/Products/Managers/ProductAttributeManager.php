@@ -4,10 +4,11 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Products\Managers;
 
 use Kanvas\Inventory\Attributes\Models\Attributes as ModelsAttributes;
+use Kanvas\Inventory\Contracts\ManagerInterface;
 use Kanvas\Inventory\Products\Models\ProductAttributes;
 use Kanvas\Inventory\Products\Models\Products;
 
-class ProductAttributeManager
+class ProductAttributeManager implements ManagerInterface
 {
     protected Products $product;
 

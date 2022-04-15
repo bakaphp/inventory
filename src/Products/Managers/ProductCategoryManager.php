@@ -4,10 +4,11 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Products\Managers;
 
 use Kanvas\Inventory\Categories\Models\Categories as ModelsCategories;
+use Kanvas\Inventory\Contracts\ManagerInterface;
 use Kanvas\Inventory\Products\Models\ProductCategories;
 use Kanvas\Inventory\Products\Models\Products;
 
-class ProductCategoryManager
+class ProductCategoryManager implements ManagerInterface
 {
     protected Products $product;
 

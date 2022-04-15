@@ -4,11 +4,12 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Products\Managers;
 
 use Baka\Contracts\Auth\UserInterface;
+use Kanvas\Inventory\Contracts\ManagerInterface;
 use Kanvas\Inventory\Products\Models\Products;
 use Kanvas\Inventory\Variants\Actions\CreateProductVariantAction;
 use Kanvas\Inventory\Variants\Models\ProductVariants;
 
-class ProductVariantManager
+class ProductVariantManager implements ManagerInterface
 {
     protected Products $product;
 

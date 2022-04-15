@@ -4,10 +4,11 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Variants\Managers;
 
 use Kanvas\Inventory\Attributes\Models\Attributes as ModelsAttributes;
+use Kanvas\Inventory\Contracts\ManagerInterface;
 use Kanvas\Inventory\Variants\Models\ProductVariantAttributes;
 use Kanvas\Inventory\Variants\Models\ProductVariants;
 
-class ProductVariantAttributeManager
+class ProductVariantAttributeManager implements ManagerInterface
 {
     protected ProductVariants $productVariant;
 
