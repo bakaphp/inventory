@@ -7,14 +7,14 @@ namespace Kanvas\Inventory\Tests\Integration\Products;
 use IntegrationTester;
 use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Products\Models\Products;
-use Kanvas\Inventory\Products\Product;
-use Kanvas\Inventory\Products\ProductWarehouse;
+use Kanvas\Inventory\Products\ProductRepository;
+use Kanvas\Inventory\Products\ProductWarehouseRepository;
 use Kanvas\Inventory\Regions\Models\Regions;
 use Kanvas\Inventory\Tests\Support\Models\Users;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateProducts;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateRegion;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateWarehouse;
-use Kanvas\Inventory\Warehouses\Warehouse;
+use Kanvas\Inventory\Warehouses\Actions\CreateWarehouseAction;
 
 class ProductsWarehouseCest
 {
@@ -26,11 +26,11 @@ class ProductsWarehouseCest
     {
         $user = new Users();
 
-        $product = Product::getAll($user)->getFirst();
+        $product = ProductRepository::getAll($user)->getFirst();
         $newName = $I->faker()->name();
         $region = $this->createRegion($I);
 
-        $warehouse = Warehouse::create(
+        $warehouse = CreateWarehouseAction::execute(
             $user,
             $newName,
             $region,
@@ -48,12 +48,12 @@ class ProductsWarehouseCest
     {
         $user = new Users();
 
-        $product = Product::getAll($user)->getFirst();
+        $product = ProductRepository::getAll($user)->getFirst();
         $newName = $I->faker()->name();
         $newNameTwo = $I->faker()->name();
         $region = Regions::findFirst();
 
-        $warehouse = Warehouse::create(
+        $warehouse = CreateWarehouseAction::execute(
             $user,
             $newName,
             $region,
@@ -61,7 +61,7 @@ class ProductsWarehouseCest
                 'is_published' => State::PUBLISHED,
             ]
         );
-        $warehouseTwo = Warehouse::create(
+        $warehouseTwo = CreateWarehouseAction::execute(
             $user,
             $newNameTwo,
             $region,
@@ -80,11 +80,11 @@ class ProductsWarehouseCest
     {
         $user = new Users();
 
-        $product = Product::getAll($user)->getFirst();
+        $product = ProductRepository::getAll($user)->getFirst();
         $newName = $I->faker()->name();
         $region = Regions::findFirst();
 
-        $warehouse = Warehouse::create(
+        $warehouse = CreateWarehouseAction::execute(
             $user,
             $newName,
             $region,
@@ -103,10 +103,10 @@ class ProductsWarehouseCest
         $warehouse = $this->createWarehouse($I);
 
         $user = new Users();
-        $product = Product::getAll($user)->getFirst();
+        $product = ProductRepository::getAll($user)->getFirst();
         $productWarehouse = $product->warehouse()->add($warehouse);
 
-        $products = ProductWarehouse::getAll($user, $warehouse);
+        $products = ProductWarehouseRepository::getAll($user, $warehouse);
 
         $I->assertEquals(1, $products->count());
     }
@@ -116,10 +116,10 @@ class ProductsWarehouseCest
         $warehouse = $this->createWarehouse($I);
 
         $user = new Users();
-        $product = Product::getAll($user)->getFirst();
+        $product = ProductRepository::getAll($user)->getFirst();
         $productWarehouse = $product->warehouse()->add($warehouse);
 
-        $products = ProductWarehouse::getByUuid($product->uuid, $user, $warehouse);
+        $products = ProductWarehouseRepository::getByUuid($product->uuid, $user, $warehouse);
 
         $I->assertEquals(Products::class, get_class($products));
     }

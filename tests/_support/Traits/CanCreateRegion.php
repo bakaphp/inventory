@@ -7,8 +7,8 @@ namespace Kanvas\Inventory\Tests\Support\Traits;
 use Canvas\Models\Currencies;
 use IntegrationTester;
 use Kanvas\Inventory\Enums\State;
+use Kanvas\Inventory\Regions\Actions\CreateRegionAction;
 use Kanvas\Inventory\Regions\Models\Regions;
-use Kanvas\Inventory\Regions\Region;
 use Kanvas\Inventory\Tests\Support\Models\Users;
 
 trait CanCreateRegion
@@ -24,7 +24,7 @@ trait CanCreateRegion
         $region = Regions::findFirst();
         $currency = Currencies::findFirst();
 
-        $regions = Region::create(
+        $regions = CreateRegionAction::execute(
             $user,
             $I->faker()->name(),
             $currency,

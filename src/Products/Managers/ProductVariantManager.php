@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Kanvas\Inventory\Products;
+namespace Kanvas\Inventory\Products\Managers;
 
 use Baka\Contracts\Auth\UserInterface;
 use Kanvas\Inventory\Products\Models\Products;
+use Kanvas\Inventory\Variants\Actions\CreateProductVariantAction;
 use Kanvas\Inventory\Variants\Models\ProductVariants;
-use Kanvas\Inventory\Variants\ProductVariant as DomainProductVariant;
 
-class ProductVariant
+class ProductVariantManager
 {
     protected Products $product;
 
@@ -40,7 +40,7 @@ class ProductVariant
         string $description = null,
         array $options = []
     ) : ProductVariants {
-        return DomainProductVariant::create(
+        return CreateProductVariantAction::execute(
             $this->product,
             $user,
             $name,

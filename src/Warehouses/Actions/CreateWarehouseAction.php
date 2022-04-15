@@ -1,30 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace Kanvas\Inventory\Warehouses;
+namespace Kanvas\Inventory\Warehouses\Actions;
 
 use Baka\Contracts\Auth\UserInterface;
-use Baka\Contracts\Database\ModelInterface;
 use Canvas\Enums\App;
 use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Regions\Models\Regions;
-use Kanvas\Inventory\Traits\Searchable;
 use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
 
-class Warehouse
+class CreateWarehouseAction
 {
-    use Searchable;
-
-    /**
-     * Get model.
-     *
-     * @return ModelInterface
-     */
-    public static function getModel() : ModelInterface
-    {
-        return new ModelsWarehouse();
-    }
-
     /**
      * Create new Warehouse.
      *
@@ -34,7 +20,7 @@ class Warehouse
      *
      * @return ModelsWarehouse
      */
-    public static function create(UserInterface $user, string $name, Regions $region, array $options) : ModelsWarehouse
+    public static function execute(UserInterface $user, string $name, Regions $region, array $options) : ModelsWarehouse
     {
         $warehouse = new ModelsWarehouse();
         $warehouse->name = $name;

@@ -9,7 +9,7 @@ use Kanvas\Inventory\Tests\Support\Models\Users;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateProductVariant;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateWarehouse;
 use Kanvas\Inventory\Variants\Models\ProductVariantWarehouse;
-use Kanvas\Inventory\Variants\ProductVariantWarehouse as VariantsProductVariantWarehouse;
+use Kanvas\Inventory\Variants\ProductVariantWarehouseRepository;
 use Phalcon\Utils\Slug;
 
 class ProductsVariantsWarehouseCest
@@ -33,7 +33,7 @@ class ProductsVariantsWarehouseCest
         $I->assertInstanceOf(ProductVariantWarehouse::class, $productVariantWarehouse);
 
         $user = new Users();
-        $productVariantsWarehouse = VariantsProductVariantWarehouse::getAll($user, $warehouse);
+        $productVariantsWarehouse = ProductVariantWarehouseRepository::getAll($user, $warehouse);
 
         $I->assertEquals(ProductVariantWarehouse::class, get_class($productVariantsWarehouse->getFirst()));
     }
@@ -54,7 +54,7 @@ class ProductsVariantsWarehouseCest
         $I->assertInstanceOf(ProductVariantWarehouse::class, $productVariantWarehouse);
 
         $user = new Users();
-        $productVariantsWarehouse = VariantsProductVariantWarehouse::getByUuid($productVariant->uuid, $user, $warehouse);
+        $productVariantsWarehouse = ProductVariantWarehouseRepository::getByUuid($productVariant->uuid, $user, $warehouse);
         $I->assertEquals(ProductVariantWarehouse::class, get_class($productVariantsWarehouse));
     }
 
@@ -74,7 +74,7 @@ class ProductsVariantsWarehouseCest
         $I->assertInstanceOf(ProductVariantWarehouse::class, $productVariantWarehouse);
 
         $user = new Users();
-        $productVariantsWarehouse = VariantsProductVariantWarehouse::getAllByProduct($user, $warehouse, $productVariant->getProduct());
+        $productVariantsWarehouse = ProductVariantWarehouseRepository::getAllByProduct($user, $warehouse, $productVariant->getProduct());
         $I->assertEquals(ProductVariantWarehouse::class, get_class($productVariantsWarehouse->getFirst()));
     }
 }

@@ -1,45 +1,45 @@
 <?php
 declare(strict_types=1);
 
-namespace Kanvas\Inventory\Variants;
+namespace Kanvas\Inventory\Products\Managers;
 
 use Kanvas\Inventory\Attributes\Models\Attributes as ModelsAttributes;
-use Kanvas\Inventory\Variants\Models\ProductVariantAttributes;
-use Kanvas\Inventory\Variants\Models\ProductVariants;
+use Kanvas\Inventory\Products\Models\ProductAttributes;
+use Kanvas\Inventory\Products\Models\Products;
 
-class ProductVariantAttribute
+class ProductAttributeManager
 {
-    protected ProductVariants $productVariant;
+    protected Products $product;
 
     /**
      * Constructor.
      *
      * @param Products $product
      */
-    public function __construct(ProductVariants $productVariant)
+    public function __construct(Products $product)
     {
-        $this->productVariant = $productVariant;
+        $this->product = $product;
     }
 
     /**
-     * Add attributes to product variants.
+     * Add attributes to a product.
      *
      * @param ModelsAttributes $attribute
      * @param string $value
      *
-     * @return ProductVariantAttributes
+     * @return ProductAttributes
      */
-    public function add(ModelsAttributes $attribute, string $value) : ProductVariantAttributes
+    public function add(ModelsAttributes $attribute, string $value) : ProductAttributes
     {
-        return ProductVariantAttributes::findFirstOrCreate([
-            'conditions' => 'products_variants_id = :products_variants_id: AND attributes_id = :attributes_id:',
+        return ProductAttributes::findFirstOrCreate([
+            'conditions' => 'products_id = :products_id: AND attributes_id = :attributes_id:',
             'bind' => [
-                'products_variants_id' => $this->productVariant->getId(),
+                'products_id' => $this->product->getId(),
                 'attributes_id' => $attribute->getId(),
             ]
         ], [
             'attributes_id' => $attribute->getId(),
-            'products_variants_id' => $this->productVariant->getId(),
+            'products_id' => $this->product->getId(),
             'value' => $value,
         ]);
     }
@@ -49,7 +49,7 @@ class ProductVariantAttribute
      *
      * @param array $attributes<int, <'attribute' => Attributes, 'value' => string>>
      *
-     * @return array<int, ProductVariantAttributes>
+     * @return array<int, ProductAttributes>
      */
     public function addMultiple(array $attributes) : array
     {
@@ -70,19 +70,19 @@ class ProductVariantAttribute
      * @param ModelsAttributes $attribute
      * @param string $value
      *
-     * @return ProductVariantAttributes
+     * @return ProductAttributes
      */
-    public function update(ModelsAttributes $attribute, string $value) : ProductVariantAttributes
+    public function update(ModelsAttributes $attribute, string $value) : ProductAttributes
     {
-        return ProductVariantAttributes::updateOrCreate([
-            'conditions' => 'products_variants_id = :products_variants_id: AND attributes_id = :attributes_id:',
+        return ProductAttributes::updateOrCreate([
+            'conditions' => 'products_id = :products_id: AND attributes_id = :attributes_id:',
             'bind' => [
-                'products_variants_id' => $this->productVariant->getId(),
+                'products_id' => $this->product->getId(),
                 'attributes_id' => $attribute->getId(),
             ]
         ], [
             'attributes_id' => $attribute->getId(),
-            'products_variants_id' => $this->productVariant->getId(),
+            'products_id' => $this->product->getId(),
             'value' => $value,
         ]);
     }
@@ -96,10 +96,10 @@ class ProductVariantAttribute
      */
     public function delete(ModelsAttributes $attribute) : bool
     {
-        $productAttribute = ProductVariantAttributes::findFirst([
-            'conditions' => 'products_variants_id = :products_variants_id: AND attributes_id = :attributes_id:',
+        $productAttribute = ProductAttributes::findFirst([
+            'conditions' => 'products_id = :products_id: AND attributes_id = :attributes_id:',
             'bind' => [
-                'products_variants_id' => $this->productVariant->getId(),
+                'products_id' => $this->product->getId(),
                 'attributes_id' => $attribute->getId(),
             ]
         ]);

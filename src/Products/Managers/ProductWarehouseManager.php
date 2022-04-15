@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Kanvas\Inventory\Products;
+namespace Kanvas\Inventory\Products\Managers;
 
 use Baka\Contracts\Auth\UserInterface;
 use Kanvas\Inventory\Enums\State;
@@ -11,7 +11,7 @@ use Kanvas\Inventory\Warehouses\Models\Warehouses;
 use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
 use Phalcon\Mvc\Model\ResultsetInterface;
 
-class ProductWarehouse
+class ProductWarehouseManager
 {
     protected Products $product;
 

@@ -1,29 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Kanvas\Inventory\Channels;
+namespace Kanvas\Inventory\Channels\Actions;
 
 use Baka\Contracts\Auth\UserInterface;
-use Baka\Contracts\Database\ModelInterface;
 use Canvas\Enums\App;
 use Kanvas\Inventory\Channels\Models\Channels as ModelsChannels;
 use Kanvas\Inventory\Enums\State;
-use Kanvas\Inventory\Traits\Searchable;
 
-class Channel
+class CreateChannelActions
 {
-    use Searchable;
-
-    /**
-     * Get model.
-     *
-     * @return ModelInterface
-     */
-    public static function getModel() : ModelInterface
-    {
-        return new ModelsChannels();
-    }
-
     /**
      * Create new Channel.
      *
@@ -33,7 +19,7 @@ class Channel
      *
      * @return ModelsChannels
      */
-    public static function create(UserInterface $user, string $name, array $options) : ModelsChannels
+    public static function execute(UserInterface $user, string $name, array $options) : ModelsChannels
     {
         $channel = new ModelsChannels();
         $channel->name = $name;

@@ -1,29 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Kanvas\Inventory\Categories;
+namespace Kanvas\Inventory\Categories\Actions;
 
 use Baka\Contracts\Auth\UserInterface;
-use Baka\Contracts\Database\ModelInterface;
 use Canvas\Enums\App;
 use Kanvas\Inventory\Categories\Models\Categories;
 use Kanvas\Inventory\Enums\State;
-use Kanvas\Inventory\Traits\Searchable;
 
-class Category
+class CreateCategoryAction
 {
-    use Searchable;
-
-    /**
-     * Get model.
-     *
-     * @return ModelInterface
-     */
-    public static function getModel() : ModelInterface
-    {
-        return new Categories();
-    }
-
     /**
      * Create new Category.
      *
@@ -33,7 +19,7 @@ class Category
      *
      * @return Categories
      */
-    public static function create(UserInterface $user, string $name, array $options) : Categories
+    public static function execute(UserInterface $user, string $name, array $options) : Categories
     {
         $category = new Categories();
         $category->name = $name;

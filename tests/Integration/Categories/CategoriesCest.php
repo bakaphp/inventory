@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Tests\Integration\Categories;
 
 use IntegrationTester;
+use Kanvas\Inventory\Categories\Actions\CreateCategoryAction;
 use Kanvas\Inventory\Categories\Category;
+use Kanvas\Inventory\Categories\CategoryRepository;
 use Kanvas\Inventory\Categories\Models\Categories;
 use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Tests\Support\Models\Users;
@@ -20,7 +22,7 @@ class CategoriesCest
     protected function createCategory(IntegrationTester $I) : Categories
     {
         $user = new Users();
-        $category = Category::create(
+        $category = CreateCategoryAction::execute(
             $user,
             $I->faker()->name(),
             [
@@ -61,7 +63,7 @@ class CategoriesCest
 
         $category = $this->createCategory($I);
 
-        $category = Category::getById($category->getId(), $user);
+        $category = CategoryRepository::getById($category->getId(), $user);
 
         $I->assertInstanceOf(Categories::class, $category);
     }
@@ -70,9 +72,9 @@ class CategoriesCest
     {
         $user = new Users();
 
-        $categories = Category::getAll($user);
+        $categories = CategoryRepository::getAll($user);
 
-        $category = Category::getByUuid($categories->getFirst()->uuid, $user);
+        $category = CategoryRepository::getByUuid($categories->getFirst()->uuid, $user);
 
         $I->assertInstanceOf(Categories::class, $category);
     }
@@ -81,7 +83,7 @@ class CategoriesCest
     {
         $user = new Users();
 
-        $category = Category::create(
+        $category = CreateCategoryAction::execute(
             $user,
             $I->faker()->name(),
             [
@@ -92,7 +94,7 @@ class CategoriesCest
             ]
         );
 
-        $category = Category::getBySlug($category->slug, $user);
+        $category = CategoryRepository::getBySlug($category->slug, $user);
 
         $I->assertInstanceOf(Categories::class, $category);
     }
@@ -101,17 +103,18 @@ class CategoriesCest
     {
         $user = new Users();
 
-        $category = Category::create(
+        $category = CreateCategoryAction::execute(
             $user,
             State::DEFAULT_NAME,
             [
                 'position' => 1,
                 'isPublished()' => 1,
                 'code' => 'test_code',
+                'slug' => $I->faker()->slug(),
             ]
         );
 
-        $category = Category::getDefault($user);
+        $category = CategoryRepository::getDefault($user);
 
         $I->assertInstanceOf(Categories::class, $category);
     }
@@ -120,8 +123,8 @@ class CategoriesCest
     {
         $user = new Users();
 
-        $categories = Category::getAll($user);
-        $categoriesSecond = Category::getAll($user, 1, 1);
+        $categories = CategoryRepository::getAll($user);
+        $categoriesSecond = CategoryRepository::getAll($user, 1, 1);
 
         $I->assertTrue($categories->count() > 0);
         $I->assertTrue($categoriesSecond->count() === 1);

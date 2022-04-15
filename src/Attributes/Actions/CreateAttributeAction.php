@@ -1,28 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Kanvas\Inventory\Attributes;
+namespace Kanvas\Inventory\Attributes\Actions;
 
 use Baka\Contracts\Auth\UserInterface;
-use Baka\Contracts\Database\ModelInterface;
 use Canvas\Enums\App;
 use Kanvas\Inventory\Attributes\Models\Attributes;
-use Kanvas\Inventory\Traits\Searchable;
 
-class Attribute
+class CreateAttributeAction
 {
-    use Searchable;
-
-    /**
-     * Get model.
-     *
-     * @return ModelInterface
-     */
-    public static function getModel() : ModelInterface
-    {
-        return new Attributes();
-    }
-
     /**
      * Create new Attribute.
      *
@@ -31,7 +17,7 @@ class Attribute
      *
      * @return Attributes
      */
-    public static function create(UserInterface $user, string $name) : Attributes
+    public static function execute(UserInterface $user, string $name) : Attributes
     {
         $attribute = new Attributes();
         $attribute->name = $name;

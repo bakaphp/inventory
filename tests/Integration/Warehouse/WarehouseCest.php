@@ -9,7 +9,7 @@ use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Tests\Support\Models\Users;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateWarehouse;
 use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
-use Kanvas\Inventory\Warehouses\Warehouse;
+use Kanvas\Inventory\Warehouses\WarehouseRepository;
 
 class WarehouseCest
 {
@@ -44,7 +44,7 @@ class WarehouseCest
 
         $warehouse = $this->createWarehouse($I);
 
-        $warehouse = Warehouse::getById($warehouse->getId(), $user);
+        $warehouse = WarehouseRepository::getById($warehouse->getId(), $user);
 
         $I->assertInstanceOf(ModelsWarehouse::class, $warehouse);
     }
@@ -53,9 +53,9 @@ class WarehouseCest
     {
         $user = new Users();
 
-        $warehouse = Warehouse::getAll($user);
+        $warehouse = WarehouseRepository::getAll($user);
 
-        $warehouse = Warehouse::getByUuid($warehouse->getFirst()->uuid, $user);
+        $warehouse = WarehouseRepository::getByUuid($warehouse->getFirst()->uuid, $user);
 
         $I->assertInstanceOf(ModelsWarehouse::class, $warehouse);
     }
@@ -64,8 +64,8 @@ class WarehouseCest
     {
         $user = new Users();
 
-        $warehouses = Warehouse::getAll($user);
-        $warehousesSecond = Warehouse::getAll($user, 1, 1);
+        $warehouses = WarehouseRepository::getAll($user);
+        $warehousesSecond = WarehouseRepository::getAll($user, 1, 1);
 
         $I->assertTrue($warehouses->count() > 0);
         $I->assertTrue($warehousesSecond->count() === 1);

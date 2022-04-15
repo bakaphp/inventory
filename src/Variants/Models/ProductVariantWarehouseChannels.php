@@ -7,7 +7,7 @@ use Kanvas\Inventory\BaseModel;
 use Kanvas\Inventory\Channels\Models\Channels;
 use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Products\Models\Variants;
-use Kanvas\Inventory\Variants\ProductVariantWarehouseChannelPrice;
+use Kanvas\Inventory\Variants\Actions\UpdateProductVariantWarehouseChannelPriceAction;
 use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
 
 class ProductVariantWarehouseChannels extends BaseModel
@@ -78,7 +78,7 @@ class ProductVariantWarehouseChannels extends BaseModel
      */
     public function afterSave()
     {
-        $priceHistory = new ProductVariantWarehouseChannelPrice($this);
-        $priceHistory->updatePrice($this->price);
+        $priceHistory = new UpdateProductVariantWarehouseChannelPriceAction($this);
+        $priceHistory->execute($this->price);
     }
 }

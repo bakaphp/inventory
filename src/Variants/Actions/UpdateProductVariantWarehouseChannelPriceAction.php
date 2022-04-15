@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Kanvas\Inventory\Variants;
+namespace Kanvas\Inventory\Variants\Actions;
 
 use Kanvas\Inventory\Variants\Models\ProductVariantWarehouse;
 use Kanvas\Inventory\Variants\Models\ProductVariantWarehouseChannels;
 use Kanvas\Inventory\Variants\Models\ProductVariantWarehousePriceHistory;
 
-class ProductVariantWarehouseChannelPrice
+class UpdateProductVariantWarehouseChannelPriceAction
 {
     protected ProductVariantWarehouseChannels $productVariantWarehouseChannel;
 
@@ -28,7 +28,7 @@ class ProductVariantWarehouseChannelPrice
      *
      * @return ProductVariantWarehousePriceHistory
      */
-    public function updatePrice(float $price) : ProductVariantWarehousePriceHistory
+    public function execute(float $price) : ProductVariantWarehousePriceHistory
     {
         return ProductVariantWarehousePriceHistory::findFirstOrCreate([
             'conditions' => 'products_variants_id = :products_variants_id: 

@@ -8,8 +8,8 @@ use IntegrationTester;
 use Kanvas\Inventory\Categories\Category;
 use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Tests\Support\Models\Users;
+use Kanvas\Inventory\Warehouses\Actions\CreateWarehouseAction;
 use Kanvas\Inventory\Warehouses\Models\Warehouses;
-use Kanvas\Inventory\Warehouses\Warehouse;
 
 trait CanCreateWarehouse
 {
@@ -25,7 +25,7 @@ trait CanCreateWarehouse
         $user = new Users();
         $region = $this->createRegion($I);
 
-        $warehouse = Warehouse::create(
+        $warehouse = CreateWarehouseAction::execute(
             $user,
             $I->faker()->name(),
             $region,

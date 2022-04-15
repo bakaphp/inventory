@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Tests\Integration\Products;
 
 use IntegrationTester;
-use Kanvas\Inventory\Categories\Category;
-use Kanvas\Inventory\Products\Product;
+use Kanvas\Inventory\Categories\Actions\CreateCategoryAction;
+use Kanvas\Inventory\Products\ProductRepository;
 use Kanvas\Inventory\Tests\Support\Models\Users;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateProducts;
 
@@ -18,10 +18,10 @@ class ProductsCategoriesCest
     {
         $user = new Users();
 
-        $product = Product::getAll($user)->getFirst();
+        $product = ProductRepository::getAll($user)->getFirst();
         $newName = $I->faker()->name();
 
-        $category = Category::create($user, $newName, []);
+        $category = CreateCategoryAction::execute($user, $newName, []);
 
         $productCategory = $product->categories()->add($category);
 
@@ -32,12 +32,12 @@ class ProductsCategoriesCest
     {
         $user = new Users();
 
-        $product = Product::getAll($user)->getFirst();
+        $product = ProductRepository::getAll($user)->getFirst();
         $newName = $I->faker()->name();
         $newNameTwo = $I->faker()->name();
 
-        $category = Category::create($user, $newName, []);
-        $categoryTwo = Category::create($user, $newNameTwo, []);
+        $category = CreateCategoryAction::execute($user, $newName, []);
+        $categoryTwo = CreateCategoryAction::execute($user, $newNameTwo, []);
 
         $productCategory = $product->categories()->addMultiple([$category, $categoryTwo]);
 
@@ -49,12 +49,12 @@ class ProductsCategoriesCest
     {
         $user = new Users();
 
-        $product = Product::getAll($user)->getFirst();
+        $product = ProductRepository::getAll($user)->getFirst();
         $newName = $I->faker()->name();
         $newNameTwo = $I->faker()->name();
 
-        $category = Category::create($user, $newName, []);
-        $categoryTwo = Category::create($user, $newNameTwo, []);
+        $category = CreateCategoryAction::execute($user, $newName, []);
+        $categoryTwo = CreateCategoryAction::execute($user, $newNameTwo, []);
 
         $productCategory = $product->categories()->add($category);
 
@@ -65,10 +65,10 @@ class ProductsCategoriesCest
     {
         $user = new Users();
 
-        $product = Product::getAll($user)->getFirst();
+        $product = ProductRepository::getAll($user)->getFirst();
         $newName = $I->faker()->name();
 
-        $category = Category::create($user, $newName, []);
+        $category = CreateCategoryAction::execute($user, $newName, []);
 
         $productCategory = $product->categories()->add($category);
 
