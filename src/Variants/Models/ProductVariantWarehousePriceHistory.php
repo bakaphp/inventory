@@ -11,6 +11,7 @@ class ProductVariantWarehousePriceHistory extends BaseModel
 {
     public int $products_variants_id;
     public int $warehouse_id;
+    public int $channels_id;
     public float $price = 0;
     public string $from_date;
 

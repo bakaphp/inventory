@@ -173,7 +173,7 @@ class ProductVariantWarehouse
      * @param UserInterface $user
      * @param Warehouses $warehouse
      *
-     * @return ResultsetInterface
+     * @return ModelsProductVariantWarehouse
      */
     public static function getByUuid(string $uuid, UserInterface $user, Warehouses $warehouse) : ModelsProductVariantWarehouse
     {
