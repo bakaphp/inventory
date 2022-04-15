@@ -10,7 +10,7 @@ use Exception;
 use Kanvas\Inventory\Categories\Actions\CreateCategoryAction;
 use Kanvas\Inventory\Categories\CategoryRepository;
 use Kanvas\Inventory\Categories\Models\Categories;
-use Kanvas\Inventory\Channels\Actions\CreateChannelActions;
+use Kanvas\Inventory\Channels\Actions\CreateChannelAction;
 use Kanvas\Inventory\Channels\ChannelRepository;
 use Kanvas\Inventory\Channels\Models\Channels as ChannelsModel;
 use Kanvas\Inventory\Enums\State;
@@ -64,7 +64,7 @@ class Setup
         try {
             $defaultChannel = ChannelRepository::getBySlug(State::DEFAULT_NAME_SLUG, $this->user);
         } catch (Exception $e) {
-            $defaultChannel = CreateChannelActions::execute(
+            $defaultChannel = CreateChannelAction::execute(
                 $this->user,
                 State::DEFAULT_NAME,
                 [

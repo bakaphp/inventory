@@ -8,7 +8,7 @@ use Canvas\Enums\App;
 use Kanvas\Inventory\Channels\Models\Channels as ModelsChannels;
 use Kanvas\Inventory\Enums\State;
 
-class CreateChannelActions
+class CreateChannelAction
 {
     /**
      * Create new Channel.
