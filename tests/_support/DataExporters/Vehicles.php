@@ -31,8 +31,17 @@ class Vehicles implements ExportableInterface
                 'categories' => [
                     'name' => $faker->name,
                 ],
-                'images' => [
-                    'image_url' => $faker->name,
+                'product_images' => [
+                    [
+                        'name' => $faker->name,
+                        'url' => $faker->imageUrl(),
+                    ]
+                ],
+                'variants_attributes' => [
+                    [
+                        'name' => $faker->name,
+                        'url' => $faker->imageUrl(),
+                    ]
                 ],
                 'product_attributes' => [
                     [

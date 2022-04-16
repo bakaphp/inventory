@@ -18,8 +18,9 @@ class ExternalProduct
     public string $sku;
     public float $price;
     public int $quantity = 0;
+    public array $productImages = [];
     public array $categories = [];
-    public array $images = [];
+    public array $variantImages = [];
     public array $productAttributes = [];
     public array $variantsAttributes = [];
 
@@ -49,9 +50,10 @@ class ExternalProduct
         $product->price = $data['price'];
         $product->quantity = $data['quantity'] ?? 0;
         $product->categories = $data['categories'];
-        $product->images = $data['images'];
-        $product->productAttributes = $data['product_attributes'];
-        $product->variantsAttributes = $data['variants_attributes'];
+        $product->productImages = $data['product_images'] ?? [];
+        $product->variantImages = $data['images'] ?? [];
+        $product->productAttributes = $data['product_attributes'] ?? [];
+        $product->variantsAttributes = $data['variants_attributes'] ?? [];
 
         return $product;
     }

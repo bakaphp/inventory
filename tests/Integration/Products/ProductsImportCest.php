@@ -6,15 +6,18 @@ namespace Kanvas\Inventory\Tests\Integration\Products;
 
 use Canvas\Models\Apps;
 use Canvas\Models\Companies;
+use Canvas\Models\SystemModules;
 use IntegrationTester;
 use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Products\Actions\ImportProductsAction;
+use Kanvas\Inventory\Products\Models\Products;
 use Kanvas\Inventory\Tests\Support\DataExporters\Vehicles;
 use Kanvas\Inventory\Tests\Support\Models\Users;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateRegion;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateWarehouse;
 use Kanvas\Inventory\Variants\Models\ProductVariants;
 use Kanvas\Inventory\Warehouses\Actions\CreateWarehouseAction;
+use Kanvas\Inventory\Warehouses\Models\Warehouses;
 
 class ProductsImportCest
 {
@@ -29,6 +32,9 @@ class ProductsImportCest
 
         $region = $this->createRegion($I);
 
+        $app = new Apps();
+        $app->id = 1;
+
         $warehouse = CreateWarehouseAction::execute(
             $user,
             $I->faker()->name(),
@@ -39,10 +45,14 @@ class ProductsImportCest
             ]
         );
 
+        SystemModules::createForApp(Products::class, $app);
+        SystemModules::createForApp(ProductVariants::class, $app);
+        SystemModules::createForApp(Warehouses::class, $app);
+
         $importProduct = new ImportProductsAction(
             $user,
             $company,
-            new Apps()
+            $app
         );
 
         $exportedVehicles = new Vehicles();

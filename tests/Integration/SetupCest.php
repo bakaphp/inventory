@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kanvas\Inventory\Tests\Integration\Categories;
 
+use Canvas\Models\Apps;
 use Canvas\Models\Companies;
 use IntegrationTester;
 use Kanvas\Inventory\Setup;
@@ -17,7 +18,9 @@ class SetupCest
         $company = new Companies();
         $company->id = 1;
 
-        $setup = new Setup($user, $company);
+        $app = new Apps();
+        $app->id = 1;
+        $setup = new Setup($user, $company, $app);
 
         $I->assertTrue($setup->run());
     }

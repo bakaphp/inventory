@@ -4,8 +4,10 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Products\Actions;
 
 use Baka\Contracts\Auth\UserInterface;
+use Baka\Contracts\Database\ModelInterface;
 use Canvas\Models\Apps;
 use Canvas\Models\Companies;
+use Canvas\Models\FileSystem;
 use Exception;
 use Kanvas\Inventory\Attributes\Actions\CreateAttributeAction;
 use Kanvas\Inventory\Attributes\Repositories\AttributeRepository;
@@ -57,8 +59,19 @@ class ImportProductsAction
      *  'categories' => [
      *     'name' => '',
      *  ],
+     *  'product_images' => [
+     *     [
+     *      'name' => '',
+     *      'url' => '',
+     *      'field_name' => '',
+     *    ],
+     *   ],
      *  'images' => [
-     *     'image_url' => '',
+     *     [
+     *      'name' => '',
+     *      'url' => '',
+     *      'field_name' => '',
+     *    ],
      *  ],
      *  'product_attributes' => [
      *    [
@@ -123,6 +136,10 @@ class ImportProductsAction
                 $product->attributes()->addMultiple($productAttributes);
             }
 
+            if (count($externalProduct->productImages)) {
+                $this->handleImages($product, $externalProduct->productImages);
+            }
+
             try {
                 $productVariant = ProductVariantRepository::getBySku($externalProduct->sku, $this->user);
             } catch (Exception $e) {
@@ -137,6 +154,10 @@ class ImportProductsAction
                         'is_published' => $externalProduct->isPublished,
                     ]
                 );
+            }
+
+            if (count($externalProduct->variantImages)) {
+                $this->handleImages($productVariant, $externalProduct->variantImages);
             }
 
             $productVariant->attribute()->addMultiple($variantsAttributes);
@@ -202,5 +223,53 @@ class ImportProductsAction
         }
 
         return $attributesModels;
+    }
+
+    /**
+     * Handle product images.
+     *
+     * @param ModelInterface $entity
+     * @param array $files
+     *
+     * @return void
+     */
+    protected function handleImages(ModelInterface $entity, array $files) : void
+    {
+        $i = 0;
+        foreach ($files as $file) {
+            $fileUrl = trim($file['url']);
+            $fileName = trim($file['name']);
+            $fieldName = $file['field_name'] ?? 'imported_image_' . $i;
+
+            $fileSystem = FileSystem::findFirstOrCreate([
+                'conditions' => 'url = :url:',
+                'bind' => [
+                    'url' => $fileUrl,
+                ],
+            ], [
+                'companies_id' => $this->company->getId(),
+                'apps_id' => $this->app->getId(),
+                'url' => $fileUrl,
+                'name' => $fileName,
+                'path' => $fileUrl,
+                'users_id' => $this->user->getId(),
+                'file_type' => 'png',
+                'size' => 0
+            ]);
+
+            $images = $entity->getAttachmentsByName($fileName);
+            $fileSystemImage = $images->getLast();
+            if (!isset($fileSystemImage->file)) {
+                $entity->attach([
+                    [
+                        'id' => 0,
+                        'field_name' => $fieldName,
+                        'file' => $fileSystem
+                    ]
+                ]);
+            }
+
+            $i++;
+        }
     }
 }
