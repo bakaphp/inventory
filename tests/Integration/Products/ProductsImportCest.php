@@ -17,10 +17,12 @@ class ProductsImportCest
     public function testImport(IntegrationTester $I) : void
     {
         $user = new Users();
+        $company = new Companies();
+        $company->id = 1;
 
         $importProduct = new ImportProductsAction(
             $user,
-            new Companies(),
+            $company,
             new Apps()
         );
 

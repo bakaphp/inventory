@@ -8,6 +8,7 @@ use Faker\Factory;
 use Generator;
 use Kanvas\Inventory\Contracts\ExportableInterface;
 use Kanvas\Inventory\Enums\State;
+use Kanvas\Inventory\Products\DataTransferObject\ExternalProduct;
 use Phalcon\Utils\Slug;
 
 class Vehicles implements ExportableInterface
@@ -15,9 +16,10 @@ class Vehicles implements ExportableInterface
     public function getAllEntities() : Generator
     {
         $faker = Factory::create();
+        $externalProduct = new ExternalProduct();
 
         foreach (range(1, 10) as $index) {
-            yield [
+            $vehicle = [
                 'name' => $faker->name,
                 'description' => $faker->realText(50),
                 'handler' => $faker->slug,
@@ -49,6 +51,8 @@ class Vehicles implements ExportableInterface
                     ],
                 ]
             ];
+
+            yield $externalProduct->fromArray($vehicle);
         }
     }
 }

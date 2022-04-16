@@ -18,6 +18,7 @@ use Kanvas\Inventory\Products\Repositories\ProductRepository;
 use Kanvas\Inventory\Variants\Actions\CreateProductVariantAction;
 use Kanvas\Inventory\Variants\Repositories\ProductVariantRepository;
 use Kanvas\Inventory\Warehouses\Models\Warehouses;
+use RuntimeException;
 
 class ImportProductsAction
 {
@@ -85,11 +86,12 @@ class ImportProductsAction
             ],
         ]);
 
-        $externalProduct = new ExternalProduct();
         $importedProducts = [];
 
-        foreach ($exportableEntities->getAllEntities() as $entity) {
-            $externalProduct = $externalProduct->fromArray($entity);
+        foreach ($exportableEntities->getAllEntities() as $externalProduct) {
+            if (!$externalProduct instanceof ExternalProduct) {
+                throw new RuntimeException('The product must be an instance of ExternalProduct');
+            }
 
             $categories = $this->handleCategories($externalProduct->categories);
             $variantsAttributes = $this->handleAttributes($externalProduct->variantsAttributes);
