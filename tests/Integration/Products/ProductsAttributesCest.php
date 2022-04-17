@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Tests\Integration\Products;
 
 use IntegrationTester;
-use Kanvas\Inventory\Attributes\Attribute;
+use Kanvas\Inventory\Attributes\Actions\CreateAttributeAction;
 use Kanvas\Inventory\Tests\Support\Models\Users;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateProducts;
 
@@ -20,7 +20,7 @@ class ProductsAttributesCest
         $newName = $I->faker()->name();
         $value = $I->faker()->name();
         $product = $this->createProduct($I);
-        $attribute = Attribute::create($user, $newName, []);
+        $attribute = CreateAttributeAction::execute($user, $newName, []);
 
         $productAttribute = $product->attributes()->add($attribute, $value);
 
@@ -35,8 +35,8 @@ class ProductsAttributesCest
         $newName = $I->faker()->name();
         $newNameTwo = $I->faker()->name();
 
-        $attribute = Attribute::create($user, $newName, []);
-        $attributeTwo = Attribute::create($user, $newNameTwo, []);
+        $attribute = CreateAttributeAction::execute($user, $newName, []);
+        $attributeTwo = CreateAttributeAction::execute($user, $newNameTwo, []);
 
         $productAttribute = $product->attributes()->addMultiple(
             [
@@ -57,7 +57,7 @@ class ProductsAttributesCest
         $value = $I->faker()->name();
         $newValue = $I->faker()->name();
         $product = $this->createProduct($I);
-        $attribute = Attribute::create($user, $newName, []);
+        $attribute = CreateAttributeAction::execute($user, $newName, []);
 
         $productAttribute = $product->attributes()->add($attribute, $value);
         $productAttributeUpdate = $product->attributes()->update($attribute, $newValue);
@@ -73,7 +73,7 @@ class ProductsAttributesCest
         $newName = $I->faker()->name();
         $value = $I->faker()->name();
         $product = $this->createProduct($I);
-        $attribute = Attribute::create($user, $newName, []);
+        $attribute = CreateAttributeAction::execute($user, $newName, []);
 
         $product->attributes()->add($attribute, $value);
 

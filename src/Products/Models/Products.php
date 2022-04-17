@@ -9,10 +9,10 @@ use Canvas\Models\Behaviors\Uuid;
 use Kanvas\Inventory\Attributes\Models\Attributes as ModelsAttributes;
 use Kanvas\Inventory\BaseModel;
 use Kanvas\Inventory\Categories\Models\Categories as ModelsCategories;
-use Kanvas\Inventory\Products\ProductAttribute;
-use Kanvas\Inventory\Products\ProductCategory;
-use Kanvas\Inventory\Products\ProductVariant;
-use Kanvas\Inventory\Products\ProductWarehouse;
+use Kanvas\Inventory\Products\Managers\ProductAttributeManager;
+use Kanvas\Inventory\Products\Managers\ProductCategoryManager;
+use Kanvas\Inventory\Products\Managers\ProductVariantManager;
+use Kanvas\Inventory\Products\Managers\ProductWarehouseManager;
 use Kanvas\Inventory\Traits\Publishable;
 use Kanvas\Inventory\Variants\Models\ProductVariants;
 use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
@@ -121,41 +121,41 @@ class Products extends BaseModel
     /**
      * Product Category domain.
      *
-     * @return ProductCategory
+     * @return ProductCategoryManager
      */
-    public function categories() : ProductCategory
+    public function categories() : ProductCategoryManager
     {
-        return new ProductCategory($this);
+        return new ProductCategoryManager($this);
     }
 
     /**
      * Product Attribute domain.
      *
-     * @return ProductAttribute
+     * @return ProductAttributeManager
      */
-    public function attributes() : ProductAttribute
+    public function attributes() : ProductAttributeManager
     {
-        return new ProductAttribute($this);
+        return new ProductAttributeManager($this);
     }
 
     /**
      * Product warehouse domain.
      *
-     * @return ProductWarehouse
+     * @return ProductWarehouseManager
      */
-    public function warehouse() : ProductWarehouse
+    public function warehouse() : ProductWarehouseManager
     {
-        return new ProductWarehouse($this);
+        return new ProductWarehouseManager($this);
     }
 
     /**
      * Product warehouse domain.
      *
-     * @return ProductVariant
+     * @return ProductVariantManager
      */
     public function variant()
     {
-        return new ProductVariant($this);
+        return new ProductVariantManager($this);
     }
 
     /**

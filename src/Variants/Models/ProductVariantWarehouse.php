@@ -5,7 +5,7 @@ namespace Kanvas\Inventory\Variants\Models;
 
 use Kanvas\Inventory\BaseModel;
 use Kanvas\Inventory\Products\Models\Variants;
-use Kanvas\Inventory\Variants\ProductVariantWarehousePrice;
+use Kanvas\Inventory\Variants\Actions\UpdateProductVariantWarehousePriceAction;
 use Kanvas\Inventory\Warehouses\Models\Warehouses as ModelsWarehouse;
 
 class ProductVariantWarehouse extends BaseModel
@@ -77,7 +77,7 @@ class ProductVariantWarehouse extends BaseModel
      */
     public function afterSave()
     {
-        $priceHistory = new ProductVariantWarehousePrice($this);
-        $priceHistory->updatePrice($this->price);
+        $priceHistory = new UpdateProductVariantWarehousePriceAction($this);
+        $priceHistory->execute($this->price);
     }
 }

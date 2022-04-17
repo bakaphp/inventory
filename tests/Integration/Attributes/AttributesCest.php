@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Kanvas\Inventory\Tests\Integration\Attributes;
 
 use IntegrationTester;
-use Kanvas\Inventory\Attributes\Attribute;
 use Kanvas\Inventory\Attributes\Models\Attributes;
+use Kanvas\Inventory\Attributes\Repositories\AttributeRepository;
 use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Tests\Support\Models\Users;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateAttribute;
@@ -43,7 +43,7 @@ class AttributesCest
 
         $attribute = $this->createAttribute($I);
 
-        $attribute = Attribute::getById($attribute->getId(), $user);
+        $attribute = AttributeRepository::getById($attribute->getId(), $user);
 
         $I->assertInstanceOf(Attributes::class, $attribute);
     }
@@ -52,9 +52,9 @@ class AttributesCest
     {
         $user = new Users();
 
-        $categories = Attribute::getAll($user);
+        $categories = AttributeRepository::getAll($user);
 
-        $attribute = Attribute::getByUuid($categories->getFirst()->uuid, $user);
+        $attribute = AttributeRepository::getByUuid($categories->getFirst()->uuid, $user);
 
         $I->assertInstanceOf(Attributes::class, $attribute);
     }
@@ -65,8 +65,8 @@ class AttributesCest
     {
         $user = new Users();
 
-        $categories = Attribute::getAll($user);
-        $categoriesSecond = Attribute::getAll($user, 1, 1);
+        $categories = AttributeRepository::getAll($user);
+        $categoriesSecond = AttributeRepository::getAll($user, 1, 1);
 
         $I->assertTrue($categories->count() > 0);
         $I->assertTrue($categoriesSecond->count() === 1);

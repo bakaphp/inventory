@@ -7,7 +7,7 @@ namespace Kanvas\Inventory\Tests\Integration\Products;
 use IntegrationTester;
 use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Products\Models\Products;
-use Kanvas\Inventory\Products\Product;
+use Kanvas\Inventory\Products\Repositories\ProductRepository;
 use Kanvas\Inventory\Tests\Support\Models\Users;
 use Kanvas\Inventory\Tests\Support\Traits\CanCreateProducts;
 
@@ -41,7 +41,7 @@ class ProductsCest
 
         $product = $this->createProduct($I);
 
-        $product = Product::getById($product->getId(), $user);
+        $product = ProductRepository::getById($product->getId(), $user);
 
         $I->assertInstanceOf(Products::class, $product);
     }
@@ -50,9 +50,9 @@ class ProductsCest
     {
         $user = new Users();
 
-        $product = Product::getAll($user);
+        $product = ProductRepository::getAll($user);
 
-        $product = Product::getByUuid($product->getFirst()->uuid, $user);
+        $product = ProductRepository::getByUuid($product->getFirst()->uuid, $user);
 
         $I->assertInstanceOf(Products::class, $product);
     }
@@ -61,8 +61,8 @@ class ProductsCest
     {
         $user = new Users();
 
-        $product = Product::getAll($user);
-        $productSecond = Product::getAll($user, 1, 1);
+        $product = ProductRepository::getAll($user);
+        $productSecond = ProductRepository::getAll($user, 1, 1);
 
         $I->assertTrue($product->count() > 0);
         $I->assertTrue($productSecond->count() === 1);

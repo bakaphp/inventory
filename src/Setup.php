@@ -7,15 +7,19 @@ use Baka\Contracts\Auth\UserInterface;
 use Canvas\Models\Companies;
 use Canvas\Models\Currencies;
 use Exception;
-use Kanvas\Inventory\Categories\Category;
+use Kanvas\Inventory\Categories\Actions\CreateCategoryAction;
 use Kanvas\Inventory\Categories\Models\Categories;
-use Kanvas\Inventory\Channels\Channel;
+use Kanvas\Inventory\Categories\Repositories\CategoryRepository;
+use Kanvas\Inventory\Channels\Actions\CreateChannelAction;
+use Kanvas\Inventory\Channels\ChannelRepository;
 use Kanvas\Inventory\Channels\Models\Channels as ChannelsModel;
 use Kanvas\Inventory\Enums\State;
+use Kanvas\Inventory\Regions\Actions\CreateRegionAction;
 use Kanvas\Inventory\Regions\Models\Regions;
-use Kanvas\Inventory\Regions\Region;
+use Kanvas\Inventory\Regions\Repositories\RegionRepository;
+use Kanvas\Inventory\Warehouses\Actions\CreateWarehouseAction;
 use Kanvas\Inventory\Warehouses\Models\Warehouses;
-use Kanvas\Inventory\Warehouses\Warehouse;
+use Kanvas\Inventory\Warehouses\Repositories\WarehouseRepository;
 
 class Setup
 {
@@ -42,9 +46,9 @@ class Setup
     public function run() : bool
     {
         try {
-            $defaultCategory = Category::getBySlug(State::DEFAULT_NAME_SLUG, $this->user);
+            $defaultCategory = CategoryRepository::getBySlug(State::DEFAULT_NAME_SLUG, $this->user);
         } catch (Exception $e) {
-            $defaultCategory = Category::create(
+            $defaultCategory = CreateCategoryAction::execute(
                 $this->user,
                 State::DEFAULT_NAME,
                 [
@@ -58,9 +62,9 @@ class Setup
         }
 
         try {
-            $defaultChannel = Channel::getBySlug(State::DEFAULT_NAME_SLUG, $this->user);
+            $defaultChannel = ChannelRepository::getBySlug(State::DEFAULT_NAME_SLUG, $this->user);
         } catch (Exception $e) {
-            $defaultChannel = Channel::create(
+            $defaultChannel = CreateChannelAction::execute(
                 $this->user,
                 State::DEFAULT_NAME,
                 [
@@ -74,10 +78,10 @@ class Setup
         }
 
         try {
-            $defaultRegion = Region::getBySlug(State::DEFAULT_NAME_SLUG, $this->user);
+            $defaultRegion = RegionRepository::getBySlug(State::DEFAULT_NAME_SLUG, $this->user);
         } catch (Exception $e) {
             $currency = Currencies::findFirstOrFail('code = "USD"');
-            $defaultRegion = Region::create(
+            $defaultRegion = CreateRegionAction::execute(
                 $this->user,
                 State::DEFAULT_NAME,
                 $currency,
@@ -89,9 +93,9 @@ class Setup
         }
 
         try {
-            $defaultWarehouse = Warehouse::getBySlug(State::DEFAULT_NAME_SLUG, $this->user);
+            $defaultWarehouse = WarehouseRepository::getBySlug(State::DEFAULT_NAME_SLUG, $this->user);
         } catch (Exception $e) {
-            $defaultWarehouse = Warehouse::create(
+            $defaultWarehouse = CreateWarehouseAction::execute(
                 $this->user,
                 State::DEFAULT_NAME,
                 $defaultRegion,

@@ -120,6 +120,15 @@ trait Searchable
      */
     public static function getDefault(UserInterface $user) : ModelInterface
     {
-        return self::getBySlug(State::DEFAULT_NAME_SLUG, $user);
+        $model = self::getModel();
+
+        return $model::findFirstOrFail([
+            'conditions' => 'is_default = :is_default:
+                            AND companies_id = :companies_id:',
+            'bind' => [
+                'is_default' => State::DEFAULT,
+                'companies_id' => $user->currentCompanyId(),
+            ]
+        ]);
     }
 }

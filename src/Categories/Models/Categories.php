@@ -8,9 +8,9 @@ use Canvas\Contracts\FileSystemModelTrait;
 use Canvas\Models\Behaviors\Uuid;
 use Kanvas\Inventory\BaseModel;
 use Kanvas\Inventory\Enums\State;
+use Kanvas\Inventory\Products\Managers\ProductCategoryManager;
 use Kanvas\Inventory\Products\Models\ProductCategories as ProductCategory;
 use Kanvas\Inventory\Products\Models\Products;
-use Kanvas\Inventory\Products\ProductCategory as DomainProductCategory;
 use Kanvas\Inventory\Traits\Publishable;
 
 class Categories extends BaseModel
@@ -103,7 +103,7 @@ class Categories extends BaseModel
      */
     public function addProduct(Products $product) : ProductCategory
     {
-        $productCategory = new DomainProductCategory($product);
+        $productCategory = new ProductCategoryManager($product);
 
         return $productCategory->add($this);
     }

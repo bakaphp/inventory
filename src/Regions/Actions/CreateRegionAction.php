@@ -1,30 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace Kanvas\Inventory\Regions;
+namespace Kanvas\Inventory\Regions\Actions;
 
 use Baka\Contracts\Auth\UserInterface;
-use Baka\Contracts\Database\ModelInterface;
 use Canvas\Enums\App;
 use Canvas\Models\Currencies;
 use Kanvas\Inventory\Enums\State;
 use Kanvas\Inventory\Regions\Models\Regions;
-use Kanvas\Inventory\Traits\Searchable;
 
-class Region
+class CreateRegionAction
 {
-    use Searchable;
-
-    /**
-     * Get model.
-     *
-     * @return ModelInterface
-     */
-    public static function getModel() : ModelInterface
-    {
-        return new Regions();
-    }
-
     /**
      * Create new Region.
      *
@@ -34,7 +20,7 @@ class Region
      *
      * @return Regions
      */
-    public static function create(UserInterface $user, string $name, Currencies $currency, array $options) : Regions
+    public static function execute(UserInterface $user, string $name, Currencies $currency, array $options) : Regions
     {
         $warehouse = new Regions();
         $warehouse->name = $name;

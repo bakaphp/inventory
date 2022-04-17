@@ -10,8 +10,8 @@ use Kanvas\Inventory\Attributes\Models\Attributes as ModelsAttributes;
 use Kanvas\Inventory\BaseModel;
 use Kanvas\Inventory\Products\Models\Products;
 use Kanvas\Inventory\Traits\Publishable;
-use Kanvas\Inventory\Variants\ProductVariantAttribute;
-use Kanvas\Inventory\Variants\ProductVariantWarehouse;
+use Kanvas\Inventory\Variants\Managers\ProductVariantAttributeManager;
+use Kanvas\Inventory\Variants\Managers\ProductVariantWarehouseManager;
 use Phalcon\Mvc\Model\Resultset\Simple ;
 
 class ProductVariants extends BaseModel
@@ -111,20 +111,20 @@ class ProductVariants extends BaseModel
     /**
      * Variant Warehouse domain.
      *
-     * @return ProductVariantWarehouse
+     * @return ProductVariantWarehouseManager
      */
-    public function warehouse() : ProductVariantWarehouse
+    public function warehouse() : ProductVariantWarehouseManager
     {
-        return new ProductVariantWarehouse($this);
+        return new ProductVariantWarehouseManager($this);
     }
 
     /**
      * Variant Attribute domain.
      *
-     * @return ProductVariantAttribute
+     * @return ProductVariantAttributeManager
      */
-    public function attribute() : ProductVariantAttribute
+    public function attribute() : ProductVariantAttributeManager
     {
-        return new ProductVariantAttribute($this);
+        return new ProductVariantAttributeManager($this);
     }
 }
