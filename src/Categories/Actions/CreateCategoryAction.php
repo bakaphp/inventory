@@ -19,7 +19,7 @@ class CreateCategoryAction
      *
      * @return Categories
      */
-    public static function execute(UserInterface $user, string $name, array $options) : Categories
+    public static function execute(UserInterface $user, string $name, array $options = []) : Categories
     {
         $category = new Categories();
         $category->name = $name;

@@ -11,6 +11,7 @@ use Canvas\Providers\MapperProvider;
 use Canvas\Providers\ModelsCacheProvider;
 use Canvas\Providers\ModelsMetadataProvider;
 use Canvas\Providers\QueueProvider;
+use Canvas\Providers\RedisProvider;
 use Canvas\Providers\RegistryProvider;
 use Canvas\Providers\RequestProvider;
 use Canvas\Providers\ResponseProvider;
@@ -28,6 +29,7 @@ return [
     DatabaseProvider::class,
     RequestProvider::class,
     ResponseProvider::class,
+    RedisProvider::class,
     CacheDataProvider::class,
     ModelsCacheProvider::class,
     MapperProvider::class,

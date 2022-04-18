@@ -56,6 +56,10 @@ class ProductAttributeManager implements ManagerInterface
     {
         $results = [];
         foreach ($attributes as $attribute) {
+            if (!isset($attribute['attribute']) || !isset($attribute['value'])) {
+                continue;
+            }
+
             $results[] = $this->add(
                 $attribute['attribute'],
                 $attribute['value']

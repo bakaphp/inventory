@@ -553,13 +553,13 @@ return array (
             'Index_comment' => '',
           ),
         ),
-        'channeles_id_products_variants_id_warehouse_id_is_published' => 
+        'channels_id_is_published' => 
         array (
           1 => 
           array (
             'Table' => 'products_variants_warehouse_channels',
             'Non_unique' => '1',
-            'Key_name' => 'channeles_id_products_variants_id_warehouse_id_is_published',
+            'Key_name' => 'channels_id_is_published',
             'Seq_in_index' => '1',
             'Column_name' => 'channels_id',
             'Collation' => 'A',
@@ -574,7 +574,7 @@ return array (
           array (
             'Table' => 'products_variants_warehouse_channels',
             'Non_unique' => '1',
-            'Key_name' => 'channeles_id_products_variants_id_warehouse_id_is_published',
+            'Key_name' => 'channels_id_is_published',
             'Seq_in_index' => '2',
             'Column_name' => 'products_variants_id',
             'Collation' => 'A',
@@ -589,7 +589,7 @@ return array (
           array (
             'Table' => 'products_variants_warehouse_channels',
             'Non_unique' => '1',
-            'Key_name' => 'channeles_id_products_variants_id_warehouse_id_is_published',
+            'Key_name' => 'channels_id_is_published',
             'Seq_in_index' => '3',
             'Column_name' => 'warehouse_id',
             'Collation' => 'A',
@@ -604,7 +604,7 @@ return array (
           array (
             'Table' => 'products_variants_warehouse_channels',
             'Non_unique' => '1',
-            'Key_name' => 'channeles_id_products_variants_id_warehouse_id_is_published',
+            'Key_name' => 'channels_id_is_published',
             'Seq_in_index' => '4',
             'Column_name' => 'is_published',
             'Collation' => 'A',
@@ -616,13 +616,13 @@ return array (
             'Index_comment' => '',
           ),
         ),
-        'channeles_list_deleted' => 
+        'channels_list_deleted' => 
         array (
           1 => 
           array (
             'Table' => 'products_variants_warehouse_channels',
             'Non_unique' => '1',
-            'Key_name' => 'channeles_list_deleted',
+            'Key_name' => 'channels_list_deleted',
             'Seq_in_index' => '1',
             'Column_name' => 'channels_id',
             'Collation' => 'A',
@@ -637,7 +637,7 @@ return array (
           array (
             'Table' => 'products_variants_warehouse_channels',
             'Non_unique' => '1',
-            'Key_name' => 'channeles_list_deleted',
+            'Key_name' => 'channels_list_deleted',
             'Seq_in_index' => '2',
             'Column_name' => 'products_variants_id',
             'Collation' => 'A',
@@ -652,7 +652,7 @@ return array (
           array (
             'Table' => 'products_variants_warehouse_channels',
             'Non_unique' => '1',
-            'Key_name' => 'channeles_list_deleted',
+            'Key_name' => 'channels_list_deleted',
             'Seq_in_index' => '3',
             'Column_name' => 'warehouse_id',
             'Collation' => 'A',
@@ -667,7 +667,7 @@ return array (
           array (
             'Table' => 'products_variants_warehouse_channels',
             'Non_unique' => '1',
-            'Key_name' => 'channeles_list_deleted',
+            'Key_name' => 'channels_list_deleted',
             'Seq_in_index' => '4',
             'Column_name' => 'is_published',
             'Collation' => 'A',
@@ -682,7 +682,7 @@ return array (
           array (
             'Table' => 'products_variants_warehouse_channels',
             'Non_unique' => '1',
-            'Key_name' => 'channeles_list_deleted',
+            'Key_name' => 'channels_list_deleted',
             'Seq_in_index' => '5',
             'Column_name' => 'is_deleted',
             'Collation' => 'A',
@@ -694,8 +694,76 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'FK_product_variants_channels_variants' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'products_variants_warehouse_channels',
+            'Non_unique' => '1',
+            'Key_name' => 'FK_product_variants_channels_variants',
+            'Seq_in_index' => '1',
+            'Column_name' => 'products_variants_id',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'FK_product_variants_channels_warehouse' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'products_variants_warehouse_channels',
+            'Non_unique' => '1',
+            'Key_name' => 'FK_product_variants_channels_warehouse',
+            'Seq_in_index' => '1',
+            'Column_name' => 'warehouse_id',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
       ),
-      'foreign_keys' => NULL,
+      'foreign_keys' => 
+      array (
+        'FK_product_variants_channels_channels' => 
+        array (
+          'TABLE_NAME' => 'products_variants_warehouse_channels',
+          'COLUMN_NAME' => 'channels_id',
+          'CONSTRAINT_NAME' => 'FK_product_variants_channels_channels',
+          'REFERENCED_TABLE_NAME' => 'channels',
+          'REFERENCED_COLUMN_NAME' => 'id',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'FK_product_variants_channels_variants' => 
+        array (
+          'TABLE_NAME' => 'products_variants_warehouse_channels',
+          'COLUMN_NAME' => 'products_variants_id',
+          'CONSTRAINT_NAME' => 'FK_product_variants_channels_variants',
+          'REFERENCED_TABLE_NAME' => 'products_variants',
+          'REFERENCED_COLUMN_NAME' => 'id',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'FK_product_variants_channels_warehouse' => 
+        array (
+          'TABLE_NAME' => 'products_variants_warehouse_channels',
+          'COLUMN_NAME' => 'warehouse_id',
+          'CONSTRAINT_NAME' => 'FK_product_variants_channels_warehouse',
+          'REFERENCED_TABLE_NAME' => 'warehouses',
+          'REFERENCED_COLUMN_NAME' => 'id',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+      ),
     ),
     'products_attributes' => 
     array (
@@ -1005,18 +1073,18 @@ return array (
           'CONSTRAINT_NAME' => 'FK_products_attributes_attributes',
           'REFERENCED_TABLE_NAME' => 'attributes',
           'REFERENCED_COLUMN_NAME' => 'id',
-          'UPDATE_RULE' => 'NO ACTION',
-          'DELETE_RULE' => 'NO ACTION',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
         ),
-        'FK_products_attributes_products' => 
+        'FK_products_attributes_categories' => 
         array (
           'TABLE_NAME' => 'products_attributes',
           'COLUMN_NAME' => 'products_id',
-          'CONSTRAINT_NAME' => 'FK_products_attributes_products',
+          'CONSTRAINT_NAME' => 'FK_products_attributes_categories',
           'REFERENCED_TABLE_NAME' => 'products',
           'REFERENCED_COLUMN_NAME' => 'id',
-          'UPDATE_RULE' => 'NO ACTION',
-          'DELETE_RULE' => 'NO ACTION',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
         ),
       ),
     ),
@@ -1146,7 +1214,7 @@ return array (
           'CHARACTER_SET_NAME' => 'utf8mb4',
           'COLLATION_NAME' => 'utf8mb4_unicode_520_ci',
           'COLUMN_TYPE' => 'char(190)',
-          'COLUMN_KEY' => 'MUL',
+          'COLUMN_KEY' => 'UNI',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
@@ -1549,6 +1617,24 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'uniquesku' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'products_variants_warehouse',
+            'Non_unique' => '0',
+            'Key_name' => 'uniquesku',
+            'Seq_in_index' => '1',
+            'Column_name' => 'sku',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => 'YES',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
         'quantity' => 
         array (
           1 => 
@@ -1894,15 +1980,15 @@ return array (
       ),
       'foreign_keys' => 
       array (
-        'FK_products_variants_warehouse_products_variants' => 
+        'FK_products_variants_warehouse_products_variant' => 
         array (
           'TABLE_NAME' => 'products_variants_warehouse',
           'COLUMN_NAME' => 'products_variants_id',
-          'CONSTRAINT_NAME' => 'FK_products_variants_warehouse_products_variants',
+          'CONSTRAINT_NAME' => 'FK_products_variants_warehouse_products_variant',
           'REFERENCED_TABLE_NAME' => 'products_variants',
           'REFERENCED_COLUMN_NAME' => 'id',
-          'UPDATE_RULE' => 'NO ACTION',
-          'DELETE_RULE' => 'NO ACTION',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
         ),
         'FK_products_variants_warehouse_warehouse' => 
         array (
@@ -1911,8 +1997,8 @@ return array (
           'CONSTRAINT_NAME' => 'FK_products_variants_warehouse_warehouse',
           'REFERENCED_TABLE_NAME' => 'warehouses',
           'REFERENCED_COLUMN_NAME' => 'id',
-          'UPDATE_RULE' => 'NO ACTION',
-          'DELETE_RULE' => 'NO ACTION',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
         ),
       ),
     ),
@@ -2007,7 +2093,7 @@ return array (
           'TABLE_NAME' => 'products_categories',
           'COLUMN_NAME' => 'created_at',
           'ORDINAL_POSITION' => '4',
-          'COLUMN_DEFAULT' => 'current_timestamp()',
+          'COLUMN_DEFAULT' => NULL,
           'IS_NULLABLE' => 'NO',
           'DATA_TYPE' => 'datetime',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -2172,13 +2258,13 @@ return array (
             'Index_comment' => '',
           ),
         ),
-        'FK_categories_products_products' => 
+        'FK_products_categories_products' => 
         array (
           1 => 
           array (
             'Table' => 'products_categories',
             'Non_unique' => '1',
-            'Key_name' => 'FK_categories_products_products',
+            'Key_name' => 'FK_products_categories_products',
             'Seq_in_index' => '1',
             'Column_name' => 'products_id',
             'Collation' => 'A',
@@ -2193,25 +2279,25 @@ return array (
       ),
       'foreign_keys' => 
       array (
-        'FK_categories_products_categories' => 
+        'FK_products_categories_categories' => 
         array (
           'TABLE_NAME' => 'products_categories',
           'COLUMN_NAME' => 'categories_id',
-          'CONSTRAINT_NAME' => 'FK_categories_products_categories',
+          'CONSTRAINT_NAME' => 'FK_products_categories_categories',
           'REFERENCED_TABLE_NAME' => 'categories',
           'REFERENCED_COLUMN_NAME' => 'id',
-          'UPDATE_RULE' => 'NO ACTION',
-          'DELETE_RULE' => 'NO ACTION',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
         ),
-        'FK_categories_products_products' => 
+        'FK_products_categories_products' => 
         array (
           'TABLE_NAME' => 'products_categories',
           'COLUMN_NAME' => 'products_id',
-          'CONSTRAINT_NAME' => 'FK_categories_products_products',
+          'CONSTRAINT_NAME' => 'FK_products_categories_products',
           'REFERENCED_TABLE_NAME' => 'products',
           'REFERENCED_COLUMN_NAME' => 'id',
-          'UPDATE_RULE' => 'NO ACTION',
-          'DELETE_RULE' => 'NO ACTION',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
         ),
       ),
     ),
@@ -2461,7 +2547,7 @@ return array (
           'CHARACTER_SET_NAME' => 'utf8mb4',
           'COLLATION_NAME' => 'utf8mb4_unicode_520_ci',
           'COLUMN_TYPE' => 'varchar(64)',
-          'COLUMN_KEY' => 'MUL',
+          'COLUMN_KEY' => 'UNI',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
@@ -2708,6 +2794,24 @@ return array (
             'Index_comment' => '',
           ),
         ),
+        'uniquesku' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'products_variants',
+            'Non_unique' => '0',
+            'Key_name' => 'uniquesku',
+            'Seq_in_index' => '1',
+            'Column_name' => 'sku',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
         'products_id' => 
         array (
           1 => 
@@ -2916,8 +3020,8 @@ return array (
           'CONSTRAINT_NAME' => 'FK_products_variants_products',
           'REFERENCED_TABLE_NAME' => 'products',
           'REFERENCED_COLUMN_NAME' => 'id',
-          'UPDATE_RULE' => 'NO ACTION',
-          'DELETE_RULE' => 'NO ACTION',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
         ),
       ),
     ),
@@ -4061,36 +4165,12 @@ return array (
           'IS_GENERATED' => 'NEVER',
           'GENERATION_EXPRESSION' => NULL,
         ),
-        'uuid' => 
-        array (
-          'TABLE_CATALOG' => 'def',
-          'TABLE_NAME' => 'warehouses',
-          'COLUMN_NAME' => 'uuid',
-          'ORDINAL_POSITION' => '2',
-          'COLUMN_DEFAULT' => NULL,
-          'IS_NULLABLE' => 'NO',
-          'DATA_TYPE' => 'char',
-          'CHARACTER_MAXIMUM_LENGTH' => '36',
-          'CHARACTER_OCTET_LENGTH' => '144',
-          'NUMERIC_PRECISION' => NULL,
-          'NUMERIC_SCALE' => NULL,
-          'DATETIME_PRECISION' => NULL,
-          'CHARACTER_SET_NAME' => 'utf8mb4',
-          'COLLATION_NAME' => 'utf8mb4_unicode_520_ci',
-          'COLUMN_TYPE' => 'char(36)',
-          'COLUMN_KEY' => 'UNI',
-          'EXTRA' => '',
-          'PRIVILEGES' => 'select,insert,update,references',
-          'COLUMN_COMMENT' => '',
-          'IS_GENERATED' => 'NEVER',
-          'GENERATION_EXPRESSION' => NULL,
-        ),
         'apps_id' => 
         array (
           'TABLE_CATALOG' => 'def',
           'TABLE_NAME' => 'warehouses',
           'COLUMN_NAME' => 'apps_id',
-          'ORDINAL_POSITION' => '3',
+          'ORDINAL_POSITION' => '2',
           'COLUMN_DEFAULT' => NULL,
           'IS_NULLABLE' => 'NO',
           'DATA_TYPE' => 'int',
@@ -4114,7 +4194,7 @@ return array (
           'TABLE_CATALOG' => 'def',
           'TABLE_NAME' => 'warehouses',
           'COLUMN_NAME' => 'companies_id',
-          'ORDINAL_POSITION' => '4',
+          'ORDINAL_POSITION' => '3',
           'COLUMN_DEFAULT' => NULL,
           'IS_NULLABLE' => 'NO',
           'DATA_TYPE' => 'int',
@@ -4138,7 +4218,7 @@ return array (
           'TABLE_CATALOG' => 'def',
           'TABLE_NAME' => 'warehouses',
           'COLUMN_NAME' => 'users_id',
-          'ORDINAL_POSITION' => '5',
+          'ORDINAL_POSITION' => '4',
           'COLUMN_DEFAULT' => NULL,
           'IS_NULLABLE' => 'NO',
           'DATA_TYPE' => 'int',
@@ -4162,7 +4242,7 @@ return array (
           'TABLE_CATALOG' => 'def',
           'TABLE_NAME' => 'warehouses',
           'COLUMN_NAME' => 'regions_id',
-          'ORDINAL_POSITION' => '6',
+          'ORDINAL_POSITION' => '5',
           'COLUMN_DEFAULT' => NULL,
           'IS_NULLABLE' => 'NO',
           'DATA_TYPE' => 'int',
@@ -4175,6 +4255,30 @@ return array (
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
           'COLUMN_KEY' => 'MUL',
+          'EXTRA' => '',
+          'PRIVILEGES' => 'select,insert,update,references',
+          'COLUMN_COMMENT' => '',
+          'IS_GENERATED' => 'NEVER',
+          'GENERATION_EXPRESSION' => NULL,
+        ),
+        'uuid' => 
+        array (
+          'TABLE_CATALOG' => 'def',
+          'TABLE_NAME' => 'warehouses',
+          'COLUMN_NAME' => 'uuid',
+          'ORDINAL_POSITION' => '6',
+          'COLUMN_DEFAULT' => NULL,
+          'IS_NULLABLE' => 'NO',
+          'DATA_TYPE' => 'char',
+          'CHARACTER_MAXIMUM_LENGTH' => '36',
+          'CHARACTER_OCTET_LENGTH' => '144',
+          'NUMERIC_PRECISION' => NULL,
+          'NUMERIC_SCALE' => NULL,
+          'DATETIME_PRECISION' => NULL,
+          'CHARACTER_SET_NAME' => 'utf8mb4',
+          'COLLATION_NAME' => 'utf8mb4_unicode_520_ci',
+          'COLUMN_TYPE' => 'char(36)',
+          'COLUMN_KEY' => 'UNI',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
@@ -4578,8 +4682,8 @@ return array (
           'CONSTRAINT_NAME' => 'FK_warehouse_regions',
           'REFERENCED_TABLE_NAME' => 'regions',
           'REFERENCED_COLUMN_NAME' => 'id',
-          'UPDATE_RULE' => 'NO ACTION',
-          'DELETE_RULE' => 'NO ACTION',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
         ),
       ),
     ),
@@ -5241,7 +5345,7 @@ return array (
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
           'COLUMN_TYPE' => 'int(11)',
-          'COLUMN_KEY' => 'PRI',
+          'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
           'COLUMN_COMMENT' => '',
@@ -5379,21 +5483,6 @@ return array (
             'Comment' => '',
             'Index_comment' => '',
           ),
-          3 => 
-          array (
-            'Table' => 'products_variants_warehouse_price_history',
-            'Non_unique' => '0',
-            'Key_name' => 'PRIMARY',
-            'Seq_in_index' => '3',
-            'Column_name' => 'channels_id',
-            'Collation' => 'A',
-            'Sub_part' => NULL,
-            'Packed' => NULL,
-            'Null' => '',
-            'Index_type' => 'BTREE',
-            'Comment' => '',
-            'Index_comment' => '',
-          ),
         ),
         'from_date' => 
         array (
@@ -5449,13 +5538,13 @@ return array (
             'Index_comment' => '',
           ),
         ),
-        'FK_products_variants_warehouse_price_history_warehouse' => 
+        'FK_products_variants_warehouse_price_warehouse' => 
         array (
           1 => 
           array (
             'Table' => 'products_variants_warehouse_price_history',
             'Non_unique' => '1',
-            'Key_name' => 'FK_products_variants_warehouse_price_history_warehouse',
+            'Key_name' => 'FK_products_variants_warehouse_price_warehouse',
             'Seq_in_index' => '1',
             'Column_name' => 'warehouse_id',
             'Collation' => 'A',
@@ -5554,25 +5643,25 @@ return array (
       ),
       'foreign_keys' => 
       array (
-        'FK_products_variants_warehouse_price_history_products_variants' => 
+        'FK_products_variants_warehouse_price_products_variant' => 
         array (
           'TABLE_NAME' => 'products_variants_warehouse_price_history',
           'COLUMN_NAME' => 'products_variants_id',
-          'CONSTRAINT_NAME' => 'FK_products_variants_warehouse_price_history_products_variants',
+          'CONSTRAINT_NAME' => 'FK_products_variants_warehouse_price_products_variant',
           'REFERENCED_TABLE_NAME' => 'products_variants',
           'REFERENCED_COLUMN_NAME' => 'id',
-          'UPDATE_RULE' => 'NO ACTION',
-          'DELETE_RULE' => 'NO ACTION',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
         ),
-        'FK_products_variants_warehouse_price_history_warehouse' => 
+        'FK_products_variants_warehouse_price_warehouse' => 
         array (
           'TABLE_NAME' => 'products_variants_warehouse_price_history',
           'COLUMN_NAME' => 'warehouse_id',
-          'CONSTRAINT_NAME' => 'FK_products_variants_warehouse_price_history_warehouse',
+          'CONSTRAINT_NAME' => 'FK_products_variants_warehouse_price_warehouse',
           'REFERENCED_TABLE_NAME' => 'warehouses',
           'REFERENCED_COLUMN_NAME' => 'id',
-          'UPDATE_RULE' => 'NO ACTION',
-          'DELETE_RULE' => 'NO ACTION',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
         ),
       ),
     ),
@@ -6433,13 +6522,13 @@ return array (
             'Index_comment' => '',
           ),
         ),
-        'FK_products_variants_attribute_values_products_attribute_values' => 
+        'FK_products_Variants_attributes_products_attribute' => 
         array (
           1 => 
           array (
             'Table' => 'products_variants_attributes',
             'Non_unique' => '1',
-            'Key_name' => 'FK_products_variants_attribute_values_products_attribute_values',
+            'Key_name' => 'FK_products_Variants_attributes_products_attribute',
             'Seq_in_index' => '1',
             'Column_name' => 'attributes_id',
             'Collation' => 'A',
@@ -6454,25 +6543,25 @@ return array (
       ),
       'foreign_keys' => 
       array (
-        'FK_products_variants_attribute_values_products_variants' => 
-        array (
-          'TABLE_NAME' => 'products_variants_attributes',
-          'COLUMN_NAME' => 'products_variants_id',
-          'CONSTRAINT_NAME' => 'FK_products_variants_attribute_values_products_variants',
-          'REFERENCED_TABLE_NAME' => 'products_variants',
-          'REFERENCED_COLUMN_NAME' => 'id',
-          'UPDATE_RULE' => 'NO ACTION',
-          'DELETE_RULE' => 'NO ACTION',
-        ),
-        'FK_products_variants_attributes_attributes' => 
+        'FK_products_Variants_attributes_products_attribute' => 
         array (
           'TABLE_NAME' => 'products_variants_attributes',
           'COLUMN_NAME' => 'attributes_id',
-          'CONSTRAINT_NAME' => 'FK_products_variants_attributes_attributes',
+          'CONSTRAINT_NAME' => 'FK_products_Variants_attributes_products_attribute',
           'REFERENCED_TABLE_NAME' => 'attributes',
           'REFERENCED_COLUMN_NAME' => 'id',
-          'UPDATE_RULE' => 'NO ACTION',
-          'DELETE_RULE' => 'NO ACTION',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
+        ),
+        'FK_products_Variants_attributes_products_variants' => 
+        array (
+          'TABLE_NAME' => 'products_variants_attributes',
+          'COLUMN_NAME' => 'products_variants_id',
+          'CONSTRAINT_NAME' => 'FK_products_Variants_attributes_products_variants',
+          'REFERENCED_TABLE_NAME' => 'products_variants',
+          'REFERENCED_COLUMN_NAME' => 'id',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
         ),
       ),
     ),
@@ -6811,8 +6900,8 @@ return array (
           'CONSTRAINT_NAME' => 'FK_products_warehouse_products',
           'REFERENCED_TABLE_NAME' => 'products',
           'REFERENCED_COLUMN_NAME' => 'id',
-          'UPDATE_RULE' => 'NO ACTION',
-          'DELETE_RULE' => 'NO ACTION',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
         ),
         'FK_products_warehouse_warehouse' => 
         array (
@@ -6821,8 +6910,8 @@ return array (
           'CONSTRAINT_NAME' => 'FK_products_warehouse_warehouse',
           'REFERENCED_TABLE_NAME' => 'warehouses',
           'REFERENCED_COLUMN_NAME' => 'id',
-          'UPDATE_RULE' => 'NO ACTION',
-          'DELETE_RULE' => 'NO ACTION',
+          'UPDATE_RULE' => 'RESTRICT',
+          'DELETE_RULE' => 'RESTRICT',
         ),
       ),
     ),
@@ -7047,7 +7136,7 @@ return array (
           'DATETIME_PRECISION' => NULL,
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'mediumint(9)',
+          'COLUMN_TYPE' => 'mediumint(8)',
           'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
@@ -7095,7 +7184,7 @@ return array (
           'DATETIME_PRECISION' => NULL,
           'CHARACTER_SET_NAME' => NULL,
           'COLLATION_NAME' => NULL,
-          'COLUMN_TYPE' => 'mediumint(9)',
+          'COLUMN_TYPE' => 'mediumint(8)',
           'COLUMN_KEY' => 'MUL',
           'EXTRA' => '',
           'PRIVILEGES' => 'select,insert,update,references',
@@ -7157,7 +7246,7 @@ return array (
           'TABLE_NAME' => 'categories',
           'COLUMN_NAME' => 'created_at',
           'ORDINAL_POSITION' => '14',
-          'COLUMN_DEFAULT' => 'current_timestamp()',
+          'COLUMN_DEFAULT' => NULL,
           'IS_NULLABLE' => 'NO',
           'DATA_TYPE' => 'datetime',
           'CHARACTER_MAXIMUM_LENGTH' => NULL,
@@ -7343,24 +7432,6 @@ return array (
             'Index_comment' => '',
           ),
         ),
-        'code' => 
-        array (
-          1 => 
-          array (
-            'Table' => 'categories',
-            'Non_unique' => '1',
-            'Key_name' => 'code',
-            'Seq_in_index' => '1',
-            'Column_name' => 'code',
-            'Collation' => 'A',
-            'Sub_part' => NULL,
-            'Packed' => NULL,
-            'Null' => 'YES',
-            'Index_type' => 'BTREE',
-            'Comment' => '',
-            'Index_comment' => '',
-          ),
-        ),
         'position' => 
         array (
           1 => 
@@ -7482,6 +7553,24 @@ return array (
             'Sub_part' => NULL,
             'Packed' => NULL,
             'Null' => '',
+            'Index_type' => 'BTREE',
+            'Comment' => '',
+            'Index_comment' => '',
+          ),
+        ),
+        'code' => 
+        array (
+          1 => 
+          array (
+            'Table' => 'categories',
+            'Non_unique' => '1',
+            'Key_name' => 'code',
+            'Seq_in_index' => '1',
+            'Column_name' => 'code',
+            'Collation' => 'A',
+            'Sub_part' => NULL,
+            'Packed' => NULL,
+            'Null' => 'YES',
             'Index_type' => 'BTREE',
             'Comment' => '',
             'Index_comment' => '',

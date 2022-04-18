@@ -112,6 +112,28 @@ trait Searchable
     }
 
     /**
+     * Get the category by id.
+     *
+     * @param string $slug
+     * @param UserInterface $user
+     *
+     * @return ModelInterface
+     */
+    public static function getByName(string $name, UserInterface $user) : ModelInterface
+    {
+        $model = self::getModel();
+
+        return $model::findFirstOrFail([
+            'conditions' => 'name = :name: 
+                            AND companies_id = :companies_id:',
+            'bind' => [
+                'name' => trim($name),
+                'companies_id' => $user->currentCompanyId(),
+            ]
+        ]);
+    }
+
+    /**
      * Get default Entity.
      *
      * @param UserInterface $user
