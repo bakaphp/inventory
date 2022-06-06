@@ -34,6 +34,7 @@ class CreateProductAction
         $product->is_published = isset($options['is_published']) ? (int) $options['is_published'] : State::PUBLISHED;
         $product->description = $options['description'] ?? null;
         $product->short_description = $options['short_description'] ?? null;
+        $product->slug = $options['slug'] ?? null;
         $product->saveOrFail();
 
         $category->addProduct($product);
