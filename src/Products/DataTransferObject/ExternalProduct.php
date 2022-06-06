@@ -12,8 +12,10 @@ class ExternalProduct
     public string $name;
     public ?string $description = null;
     public string $slug;
+    public ?string $variantSlug = null;
     public int $isPublished = State::PUBLISHED;
     public int $position = 0;
+    public int $isNew = 0;
     public int $isDefault = State::IS_DEFAULT;
     public string $sku;
     public float $price;
@@ -43,7 +45,9 @@ class ExternalProduct
         $product->name = $data['name'];
         $product->description = $data['description'] ?? '';
         $product->slug = $data['handler'] ?? $data['slug'] ?? Slug::generate($data['name']);
+        $product->variantSlug = $data['variantSlug'] ?? '';
         $product->isPublished = $data['is_published'] ?? State::PUBLISHED;
+        $product->isNew = $data['is_new'] ?? 0;
         $product->position = $data['position'];
         $product->isDefault = $data['is_default'] ?? State::IS_DEFAULT;
         $product->sku = $data['sku'];

@@ -141,7 +141,7 @@ class ImportProductsAction
             }
 
             try {
-                $productVariant = ProductVariantRepository::getBySku($externalProduct->sku, $this->user);
+                $productVariant = ProductVariantRepository::getBySku($externalProduct->sku, $product);
             } catch (Exception $e) {
                 $productVariant = CreateProductVariantAction::execute(
                     $product,
@@ -152,6 +152,7 @@ class ImportProductsAction
                     [
                         'is_default' => $externalProduct->isDefault,
                         'is_published' => $externalProduct->isPublished,
+                        'slug' => $externalProduct->variantSlug,
                     ]
                 );
             }
@@ -161,15 +162,21 @@ class ImportProductsAction
             }
 
             $productVariant->attribute()->addMultiple($variantsAttributes);
-            $productVariant->warehouse()->add(
-                $warehouse,
-                $externalProduct->quantity,
-                $externalProduct->price,
-                $externalProduct->sku,
-                [
-                    'is_published' => $externalProduct->isPublished,
-                ]
-            );
+
+            try {
+                $productVariant->warehouse()->add(
+                    $warehouse,
+                    $externalProduct->quantity,
+                    $externalProduct->price,
+                    $externalProduct->sku,
+                    [
+                        'is_published' => $externalProduct->isPublished,
+                        'is_new' => $externalProduct->isNew,
+                    ]
+                );
+            } catch (Exception $e) {
+                //product already in warehouse
+            }
 
             $importedProducts[] = $productVariant;
         }
