@@ -5,6 +5,7 @@ namespace Kanvas\Inventory\Variants\Repositories;
 
 use Baka\Contracts\Auth\UserInterface;
 use Baka\Contracts\Database\ModelInterface;
+use Kanvas\Inventory\Products\Models\Products;
 use Kanvas\Inventory\Traits\Searchable;
 use Kanvas\Inventory\Variants\Models\ProductVariants as ModelsProductVariant;
 
@@ -26,20 +27,20 @@ class ProductVariantRepository
      *  get by sku.
      *
      * @param string $uui
-     * @param UserInterface $user
+     * @param Products $product
      *
      * @return ModelInterface
      */
-    public static function getBySku(string $sku, UserInterface $user) : ModelInterface
+    public static function getBySku(string $sku, Products $product) : ModelInterface
     {
         $model = self::getModel();
 
         return $model::findFirstOrFail([
             'conditions' => 'sku = :sku: 
-                            AND companies_id = :companies_id: AND is_deleted = 0',
+                            AND products_id = :product_id: AND is_deleted = 0',
             'bind' => [
                 'sku' => $sku,
-                'companies_id' => $user->currentCompanyId(),
+                'product_id' => $product->getId(),
             ]
         ]);
     }

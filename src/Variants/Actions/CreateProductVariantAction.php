@@ -41,6 +41,7 @@ class CreateProductVariantAction
         $variant->ean = $options['ean'] ?? null;
         $variant->serial_number = $options['serial_number'] ?? null;
         $variant->barcode = $options['barcode'] ?? null;
+        $variant->slug = $options['slug'] ?? '';
         $variant->position = isset($options['position']) && (int) $options['position'] > 0 ? $options['position'] : State::DEFAULT_POSITION;
         $variant->saveOrFail();
 
