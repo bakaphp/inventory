@@ -60,7 +60,7 @@ class Products extends BaseModel
 
         $this->hasManyToMany(
             'id',
-            Attributes::class,
+            ProductAttributes::class,
             'products_id',
             'attributes_id',
             ModelsAttributes::class,

@@ -6,6 +6,7 @@ namespace Kanvas\Inventory\Products\Managers;
 use Kanvas\Inventory\Attributes\Models\Attributes as ModelsAttributes;
 use Kanvas\Inventory\Contracts\ManagerInterface;
 use Kanvas\Inventory\Products\Models\ProductAttributes;
+
 use Kanvas\Inventory\Products\Models\Products;
 
 class ProductAttributeManager implements ManagerInterface
@@ -41,7 +42,7 @@ class ProductAttributeManager implements ManagerInterface
         ], [
             'attributes_id' => $attribute->getId(),
             'products_id' => $this->product->getId(),
-            'value' => $value,
+            'value' => !is_array($value) ? $value : json_encode($value),
         ]);
     }
 
@@ -88,7 +89,7 @@ class ProductAttributeManager implements ManagerInterface
         ], [
             'attributes_id' => $attribute->getId(),
             'products_id' => $this->product->getId(),
-            'value' => $value,
+            'value' => !is_array($value) ? $value : json_encode($value),
         ]);
     }
 

@@ -13,6 +13,7 @@ class Attributes extends BaseModel
 
     public string $uuid;
     public string $name;
+    public string $label;
     public int $is_published = 1;
 
     /**

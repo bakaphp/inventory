@@ -41,7 +41,7 @@ class ProductVariantAttributeManager implements ManagerInterface
         ], [
             'attributes_id' => $attribute->getId(),
             'products_variants_id' => $this->productVariant->getId(),
-            'value' => $value,
+            'value' => !is_array($value) ? $value : json_encode($value),
         ]);
     }
 
@@ -84,7 +84,7 @@ class ProductVariantAttributeManager implements ManagerInterface
         ], [
             'attributes_id' => $attribute->getId(),
             'products_variants_id' => $this->productVariant->getId(),
-            'value' => $value,
+            'value' => !is_array($value) ? $value : json_encode($value),
         ]);
     }
 
