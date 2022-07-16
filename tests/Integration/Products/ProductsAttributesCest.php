@@ -45,8 +45,10 @@ class ProductsAttributesCest
             ]
         );
 
-        $I->assertEquals($productAttribute[0]->attribute->name, $newName);
-        $I->assertEquals($productAttribute[1]->attribute->name, $newNameTwo);
+        $I->assertEquals($productAttribute[0]->attribute->label, $newName);
+        $I->assertEquals($productAttribute[0]->attribute->name, strtolower($newName));
+        $I->assertEquals($productAttribute[1]->attribute->label, $newNameTwo);
+        $I->assertEquals($productAttribute[1]->attribute->name, strtolower($newNameTwo));
     }
 
     public function testUpdateAttribute(IntegrationTester $I)

@@ -63,7 +63,7 @@ class ProductAttributeManager implements ManagerInterface
 
             $results[] = $this->add(
                 $attribute['attribute'],
-                $attribute['value']
+                $attribute['value'],
             );
         }
 
