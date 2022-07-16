@@ -20,7 +20,7 @@ class ProductsAttributesCest
         $newName = $I->faker()->name();
         $value = $I->faker()->name();
         $product = $this->createProduct($I);
-        $attribute = CreateAttributeAction::execute($user, $newName, []);
+        $attribute = CreateAttributeAction::execute($user, $newName, $newName);
 
         $productAttribute = $product->attributes()->add($attribute, $value);
 
@@ -35,8 +35,8 @@ class ProductsAttributesCest
         $newName = $I->faker()->name();
         $newNameTwo = $I->faker()->name();
 
-        $attribute = CreateAttributeAction::execute($user, $newName, []);
-        $attributeTwo = CreateAttributeAction::execute($user, $newNameTwo, []);
+        $attribute = CreateAttributeAction::execute($user, $newName, $newName);
+        $attributeTwo = CreateAttributeAction::execute($user, $newNameTwo, $newName);
 
         $productAttribute = $product->attributes()->addMultiple(
             [
@@ -57,7 +57,7 @@ class ProductsAttributesCest
         $value = $I->faker()->name();
         $newValue = $I->faker()->name();
         $product = $this->createProduct($I);
-        $attribute = CreateAttributeAction::execute($user, $newName, []);
+        $attribute = CreateAttributeAction::execute($user, $newName, $newName);
 
         $productAttribute = $product->attributes()->add($attribute, $value);
         $productAttributeUpdate = $product->attributes()->update($attribute, $newValue);
@@ -73,7 +73,7 @@ class ProductsAttributesCest
         $newName = $I->faker()->name();
         $value = $I->faker()->name();
         $product = $this->createProduct($I);
-        $attribute = CreateAttributeAction::execute($user, $newName, []);
+        $attribute = CreateAttributeAction::execute($user, $newName, $newName);
 
         $product->attributes()->add($attribute, $value);
 

@@ -6,6 +6,7 @@ namespace Kanvas\Inventory\Products\Models;
 use Baka\Support\Str;
 use Canvas\Contracts\FileSystemModelTrait;
 use Canvas\Models\Behaviors\Uuid;
+use Canvas\Models\Companies;
 use Kanvas\Inventory\Attributes\Models\Attributes as ModelsAttributes;
 use Kanvas\Inventory\BaseModel;
 use Kanvas\Inventory\Categories\Models\Categories as ModelsCategories;
@@ -47,6 +48,16 @@ class Products extends BaseModel
         );
 
         $this->setSource('products');
+
+        $this->belongsTo(
+            'companies_id',
+            Companies::class,
+            'id',
+            [
+                'alias' => 'company',
+                'reusable' => true
+            ]
+        );
 
         $this->hasMany(
             'id',
