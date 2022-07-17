@@ -20,7 +20,7 @@ class ProductsAttributesCest
         $newName = $I->faker()->name();
         $value = $I->faker()->name();
         $product = $this->createProduct($I);
-        $attribute = CreateAttributeAction::execute($user, $newName, []);
+        $attribute = CreateAttributeAction::execute($user, $newName, $newName);
 
         $productAttribute = $product->attributes()->add($attribute, $value);
 
@@ -35,8 +35,8 @@ class ProductsAttributesCest
         $newName = $I->faker()->name();
         $newNameTwo = $I->faker()->name();
 
-        $attribute = CreateAttributeAction::execute($user, $newName, []);
-        $attributeTwo = CreateAttributeAction::execute($user, $newNameTwo, []);
+        $attribute = CreateAttributeAction::execute($user, $newName, $newName);
+        $attributeTwo = CreateAttributeAction::execute($user, $newNameTwo, $newNameTwo);
 
         $productAttribute = $product->attributes()->addMultiple(
             [
@@ -45,8 +45,12 @@ class ProductsAttributesCest
             ]
         );
 
-        $I->assertEquals($productAttribute[0]->attribute->name, $newName);
-        $I->assertEquals($productAttribute[1]->attribute->name, $newNameTwo);
+        $I->assertEquals($productAttribute[0]->attribute->label, $newName);
+        $I->assertEquals($productAttribute[0]->attribute->name, strtolower($newName));
+        $I->assertEquals($productAttribute[1]->attribute->label, $newNameTwo);
+        $I->assertEquals($productAttribute[1]->attribute->name, strtolower($newNameTwo));
+        $I->assertEquals($product->getAttributesValues()[0]->value, 'value');
+        $I->assertEquals($product->getAttributesValues()[1]->value, 'value');
     }
 
     public function testUpdateAttribute(IntegrationTester $I)
@@ -57,7 +61,7 @@ class ProductsAttributesCest
         $value = $I->faker()->name();
         $newValue = $I->faker()->name();
         $product = $this->createProduct($I);
-        $attribute = CreateAttributeAction::execute($user, $newName, []);
+        $attribute = CreateAttributeAction::execute($user, $newName, $newName);
 
         $productAttribute = $product->attributes()->add($attribute, $value);
         $productAttributeUpdate = $product->attributes()->update($attribute, $newValue);
@@ -73,7 +77,7 @@ class ProductsAttributesCest
         $newName = $I->faker()->name();
         $value = $I->faker()->name();
         $product = $this->createProduct($I);
-        $attribute = CreateAttributeAction::execute($user, $newName, []);
+        $attribute = CreateAttributeAction::execute($user, $newName, $newName);
 
         $product->attributes()->add($attribute, $value);
 

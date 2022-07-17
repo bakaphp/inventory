@@ -6,6 +6,7 @@ namespace Kanvas\Inventory\Products\Managers;
 use Kanvas\Inventory\Attributes\Models\Attributes as ModelsAttributes;
 use Kanvas\Inventory\Contracts\ManagerInterface;
 use Kanvas\Inventory\Products\Models\ProductAttributes;
+
 use Kanvas\Inventory\Products\Models\Products;
 
 class ProductAttributeManager implements ManagerInterface
@@ -26,11 +27,11 @@ class ProductAttributeManager implements ManagerInterface
      * Add attributes to a product.
      *
      * @param ModelsAttributes $attribute
-     * @param string $value
+     * @param mixed $value
      *
      * @return ProductAttributes
      */
-    public function add(ModelsAttributes $attribute, string $value) : ProductAttributes
+    public function add(ModelsAttributes $attribute, $value) : ProductAttributes
     {
         return ProductAttributes::findFirstOrCreate([
             'conditions' => 'products_id = :products_id: AND attributes_id = :attributes_id:',
@@ -41,7 +42,7 @@ class ProductAttributeManager implements ManagerInterface
         ], [
             'attributes_id' => $attribute->getId(),
             'products_id' => $this->product->getId(),
-            'value' => $value,
+            'value' => !is_array($value) ? $value : json_encode($value),
         ]);
     }
 
@@ -62,7 +63,7 @@ class ProductAttributeManager implements ManagerInterface
 
             $results[] = $this->add(
                 $attribute['attribute'],
-                $attribute['value']
+                $attribute['value'],
             );
         }
 
@@ -73,11 +74,11 @@ class ProductAttributeManager implements ManagerInterface
      * update attributes to a product.
      *
      * @param ModelsAttributes $attribute
-     * @param string $value
+     * @param mixed $value
      *
      * @return ProductAttributes
      */
-    public function update(ModelsAttributes $attribute, string $value) : ProductAttributes
+    public function update(ModelsAttributes $attribute, $value) : ProductAttributes
     {
         return ProductAttributes::updateOrCreate([
             'conditions' => 'products_id = :products_id: AND attributes_id = :attributes_id:',
@@ -88,7 +89,7 @@ class ProductAttributeManager implements ManagerInterface
         ], [
             'attributes_id' => $attribute->getId(),
             'products_id' => $this->product->getId(),
-            'value' => $value,
+            'value' => !is_array($value) ? $value : json_encode($value),
         ]);
     }
 

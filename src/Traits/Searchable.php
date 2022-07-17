@@ -29,10 +29,10 @@ trait Searchable
      */
     public static function getAll(UserInterface $user, int $page = 1, int $limit = 10) : ResultsetInterface
     {
-        $offset = ($page - 1) * $limit;
         $model = self::getModel();
+        $offset = ($page - 1) * $limit;
 
-        $data = $model::find([
+        return $model::find([
             'conditions' => 'companies_id = :company_id: AND is_deleted = 0',
             'bind' => [
                 'company_id' => $user->currentCompanyId()
@@ -40,8 +40,6 @@ trait Searchable
             'limit' => $limit,
             'offset' => $offset
         ]);
-
-        return $data;
     }
 
     /**

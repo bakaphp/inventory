@@ -6,6 +6,7 @@ namespace Kanvas\Inventory\Products\Models;
 use Baka\Support\Str;
 use Canvas\Contracts\FileSystemModelTrait;
 use Canvas\Models\Behaviors\Uuid;
+use Canvas\Models\Companies;
 use Kanvas\Inventory\Attributes\Models\Attributes as ModelsAttributes;
 use Kanvas\Inventory\BaseModel;
 use Kanvas\Inventory\Categories\Models\Categories as ModelsCategories;
@@ -48,6 +49,16 @@ class Products extends BaseModel
 
         $this->setSource('products');
 
+        $this->belongsTo(
+            'companies_id',
+            Companies::class,
+            'id',
+            [
+                'alias' => 'company',
+                'reusable' => true
+            ]
+        );
+
         $this->hasMany(
             'id',
             ProductVariants::class,
@@ -60,7 +71,7 @@ class Products extends BaseModel
 
         $this->hasManyToMany(
             'id',
-            Attributes::class,
+            ProductAttributes::class,
             'products_id',
             'attributes_id',
             ModelsAttributes::class,
@@ -176,6 +187,26 @@ class Products extends BaseModel
     public function getAttributes() : ResultsetInterface
     {
         return $this->attributes;
+    }
+
+    /**
+     * Get Attributes Value.
+     *
+     * @return ResultsetInterface
+     */
+    public function getAttributesValues() : ResultsetInterface
+    {
+        return self::findByRawSql(
+            "SELECT
+                products_attributes.attributes_id AS attributes_id,
+                products_attributes.value AS value,
+                attributes.name AS name,
+                attributes.label AS label
+            FROM products_attributes
+            LEFT JOIN attributes ON attributes.id = products_attributes.attributes_id
+            WHERE products_attributes.products_id = {$this->getId()}
+            ORDER BY attributes.name ASC"
+        );
     }
 
     /**

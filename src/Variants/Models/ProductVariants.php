@@ -13,6 +13,7 @@ use Kanvas\Inventory\Traits\Publishable;
 use Kanvas\Inventory\Variants\Managers\ProductVariantAttributeManager;
 use Kanvas\Inventory\Variants\Managers\ProductVariantWarehouseManager;
 use Phalcon\Mvc\Model\Resultset\Simple ;
+use Phalcon\Mvc\Model\ResultsetInterface;
 
 class ProductVariants extends BaseModel
 {
@@ -106,6 +107,26 @@ class ProductVariants extends BaseModel
     public function getAttributes() : Simple
     {
         return $this->attributes;
+    }
+
+    /**
+     * Get Attributes Value.
+     *
+     * @return ResultsetInterface
+     */
+    public function getAttributesValues() : ResultsetInterface
+    {
+        return self::findByRawSql(
+            "SELECT
+                products_variants_attributes.attributes_id AS attributes_id,
+                products_variants_attributes.value AS value,
+                attributes.name AS name,
+                attributes.label AS label
+            FROM products_variants_attributes
+            LEFT JOIN attributes ON attributes.id = products_variants_attributes.attributes_id
+            WHERE products_variants_attributes.products_id = {$this->getId()}
+            ORDER BY attributes.name ASC"
+        );
     }
 
     /**
