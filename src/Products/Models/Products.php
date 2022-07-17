@@ -190,6 +190,26 @@ class Products extends BaseModel
     }
 
     /**
+     * Get Attributes Value.
+     *
+     * @return ResultsetInterface
+     */
+    public function getAttributesValues() : ResultsetInterface
+    {
+        return self::findByRawSql(
+            "SELECT
+                products_attributes.attributes_id AS attributes_id,
+                products_attributes.value AS value,
+                attributes.name AS name,
+                attributes.label AS label
+            FROM products_attributes
+            LEFT JOIN attributes ON attributes.id = products_attributes.attributes_id
+            WHERE products_attributes.products_id = '{$this->id}'
+            ORDER BY attributes.name ASC"
+        );
+    }
+
+    /**
      * Get warehouse.
      *
      * @return ResultsetInterface <ModelsWarehouse>

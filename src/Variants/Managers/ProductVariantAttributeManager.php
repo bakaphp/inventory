@@ -26,11 +26,11 @@ class ProductVariantAttributeManager implements ManagerInterface
      * Add attributes to product variants.
      *
      * @param ModelsAttributes $attribute
-     * @param string $value
+     * @param mixed $value
      *
      * @return ProductVariantAttributes
      */
-    public function add(ModelsAttributes $attribute, string $value) : ProductVariantAttributes
+    public function add(ModelsAttributes $attribute, $value) : ProductVariantAttributes
     {
         return ProductVariantAttributes::findFirstOrCreate([
             'conditions' => 'products_variants_id = :products_variants_id: AND attributes_id = :attributes_id:',
@@ -69,11 +69,11 @@ class ProductVariantAttributeManager implements ManagerInterface
      * update attributes to a product.
      *
      * @param ModelsAttributes $attribute
-     * @param string $value
+     * @param mixed $value
      *
      * @return ProductVariantAttributes
      */
-    public function update(ModelsAttributes $attribute, string $value) : ProductVariantAttributes
+    public function update(ModelsAttributes $attribute, $value) : ProductVariantAttributes
     {
         return ProductVariantAttributes::updateOrCreate([
             'conditions' => 'products_variants_id = :products_variants_id: AND attributes_id = :attributes_id:',

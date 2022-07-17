@@ -27,11 +27,11 @@ class ProductAttributeManager implements ManagerInterface
      * Add attributes to a product.
      *
      * @param ModelsAttributes $attribute
-     * @param string $value
+     * @param mixed $value
      *
      * @return ProductAttributes
      */
-    public function add(ModelsAttributes $attribute, string $value) : ProductAttributes
+    public function add(ModelsAttributes $attribute, $value) : ProductAttributes
     {
         return ProductAttributes::findFirstOrCreate([
             'conditions' => 'products_id = :products_id: AND attributes_id = :attributes_id:',
@@ -74,11 +74,11 @@ class ProductAttributeManager implements ManagerInterface
      * update attributes to a product.
      *
      * @param ModelsAttributes $attribute
-     * @param string $value
+     * @param mixed $value
      *
      * @return ProductAttributes
      */
-    public function update(ModelsAttributes $attribute, string $value) : ProductAttributes
+    public function update(ModelsAttributes $attribute, $value) : ProductAttributes
     {
         return ProductAttributes::updateOrCreate([
             'conditions' => 'products_id = :products_id: AND attributes_id = :attributes_id:',
