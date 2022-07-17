@@ -36,7 +36,7 @@ class ProductsAttributesCest
         $newNameTwo = $I->faker()->name();
 
         $attribute = CreateAttributeAction::execute($user, $newName, $newName);
-        $attributeTwo = CreateAttributeAction::execute($user, $newNameTwo, $newName);
+        $attributeTwo = CreateAttributeAction::execute($user, $newNameTwo, $newNameTwo);
 
         $productAttribute = $product->attributes()->addMultiple(
             [
@@ -49,6 +49,8 @@ class ProductsAttributesCest
         $I->assertEquals($productAttribute[0]->attribute->name, strtolower($newName));
         $I->assertEquals($productAttribute[1]->attribute->label, $newNameTwo);
         $I->assertEquals($productAttribute[1]->attribute->name, strtolower($newNameTwo));
+        $I->assertEquals($product->getAttributesValues()[0]->value, 'value');
+        $I->assertEquals($product->getAttributesValues()[1]->value, 'value');
     }
 
     public function testUpdateAttribute(IntegrationTester $I)

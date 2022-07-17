@@ -204,7 +204,7 @@ class Products extends BaseModel
                 attributes.label AS label
             FROM products_attributes
             LEFT JOIN attributes ON attributes.id = products_attributes.attributes_id
-            WHERE products_attributes.products_id = '{$this->id}'
+            WHERE products_attributes.products_id = {$this->getId()}
             ORDER BY attributes.name ASC"
         );
     }
